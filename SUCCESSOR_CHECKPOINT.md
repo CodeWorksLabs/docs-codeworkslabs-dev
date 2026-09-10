@@ -8,7 +8,9 @@ Updated: 2026-09-10
 - Repository: `https://github.com/CodeWorksLabs/docs-codeworkslabs-dev`
 - Branch: `main`
 - Cloudflare Worker configuration: `docs-codeworkslabs-dev`
-- Repository establishment is a source-control correction; it does not deploy or alter the live Worker.
+- Cloudflare Workers Builds is connected to this repository and deploys pushes
+  to `main` with `npm run build` followed by `npx wrangler deploy`.
+- Non-production branch builds are disabled.
 - The site source is self-contained within this repository root.
 
 ## Verification contract
