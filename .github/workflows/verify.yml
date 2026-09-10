@@ -14,8 +14,8 @@ jobs:
     env:
       BRAND_NAVIGATION_DOCS_REF: ed1640b049763c37694f8c3bb5f9f69cbd21f658
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
