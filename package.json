@@ -1,0 +1,22 @@
+{
+  "name": "codeworkslabs-docs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync:brand-navigation": "node scripts/sync-brand-navigation-docs.mjs",
+    "dev": "astro dev",
+    "prebuild": "npm run sync:brand-navigation",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy:dry-run": "wrangler deploy --dry-run --config wrangler.jsonc",
+    "deploy": "wrangler deploy --config wrangler.jsonc --strict"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.41.2",
+    "astro": "^7.1.1"
+  },
+  "devDependencies": {
+    "wrangler": "4.123.0"
+  }
+}

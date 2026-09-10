@@ -1,0 +1,61 @@
+---
+title: CodeWorksLabs documentation
+description: Guides and technical records for products built and maintained by CodeWorksLabs.
+editUrl: false
+template: splash
+hero:
+  title: Build with the evidence close at hand.
+  tagline: Guides, release records, and practical technical references for CodeWorksLabs products, with independent product documentation clearly identified.
+  actions:
+    - text: Browse product guides
+      link: '#product-guides'
+      icon: right-arrow
+      variant: primary
+    - text: View the product catalog
+      link: https://codeworkslabs.dev/products/
+      icon: external
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Product guides
+
+Choose the platform, then the product. CodeWorksLabs documentation stays here; products with independent documentation open their own site.
+
+### Discourse
+
+<CardGrid>
+  <LinkCard
+    title="Brand Navigation"
+    href="/brand-navigation/"
+    description="Release candidate · Installation, configuration, migration, compatibility, security, and release guidance."
+  />
+  <LinkCard
+    title="DiscussionBridge ↗"
+    href="https://docs.discussionbridge.dev/"
+    description="Independent product documentation · Releases, deployment, live status, support, diagnostics, maintenance, and recovery."
+  />
+</CardGrid>
+
+### Astro
+
+<CardGrid>
+  <LinkCard
+    title="Astro Analytics"
+    href="/astro-analytics/"
+    description="Experimental · Provider-flexible analytics for Astro projects, including Starlight-aware integration work."
+  />
+  <LinkCard
+    title="Astro Bluesky Comments"
+    href="/astro-bluesky-comments/"
+    description="Experimental · Bluesky conversation for Astro publishing while the source page remains authoritative."
+  />
+</CardGrid>
+
+## New and updated
+
+- **Brand Navigation `v1.0.0-rc.1`** — Review the [release notes](/brand-navigation/release-notes/) and staging-first [installation guide](/brand-navigation/install/).
+- **Astro product work** — Scope and current status are available for [Astro Analytics](/astro-analytics/) and [Astro Bluesky Comments](/astro-bluesky-comments/); installation guidance will appear when a public release is ready.
+- **DiscussionBridge live status** — Follow its independent [versions and live status record](https://docs.discussionbridge.dev/versions-and-live-status/).
+
+Release and compatibility claims remain tied to each product's repository and published records.

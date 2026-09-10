@@ -1,0 +1,46 @@
+---
+import SocialIcon from "./SocialIcon.astro";
+
+interface Props { theme?: "dark" | "light" | "docs"; }
+const { theme = "dark" } = Astro.props;
+const socialLinks = [
+  ["bluesky", "Bluesky", "https://bsky.app/profile/codeworkslabs.bsky.social"],
+  ["discord", "Discord", "https://discord.gg/MuddQ27tME"],
+  ["github", "GitHub", "https://github.com/CodeWorksLabs"],
+  ["mastodon", "Mastodon", "https://mastodon.social/@CodeWorksLabs"],
+  ["reddit", "Reddit", "https://www.reddit.com/r/CodeWorksLabs/"],
+  ["x", "X", "https://x.com/codeworkslabs"],
+  ["youtube", "YouTube", "https://www.youtube.com/@codeworkslabs"],
+] as const;
+---
+
+<footer class:list={["ecosystem-footer", theme]}>
+  <p class="ecosystem-ownership"><strong>CodeWorksLabs</strong> builds the tools.<br /><span>© 2026 CodeWorksLabs, a WebSynergetics property.</span></p>
+  <nav class="ecosystem-links" aria-label="CodeWorksLabs ecosystem">
+    <a href="https://codeworkslabs.dev/products/">Products</a>
+    <a href="https://codeworkslabs.dev/platforms/">Platforms</a>
+    <a href="https://demo.codeworkslabs.dev/">Demos</a>
+    <a href="https://docs.codeworkslabs.dev/">Documentation</a>
+    <a href="https://codeworkslabs.dev/blog/">Blog</a>
+    <a href="https://codeworkslabs.dev/support/">Support</a>
+    <a href="https://forum.codeworkslabs.dev/">Forum</a>
+    <a href="https://codeworkslabs.dev/hosting/">Hosting</a>
+    <a href="https://codeworkslabs.dev/hosting/partners/">Hosting partners</a>
+    <a href="https://codeworkslabs.dev/security/">Security</a>
+  </nav>
+  <nav class="ecosystem-socials" aria-label="CodeWorksLabs social links">
+    {socialLinks.map(([icon, label, href]) => <a href={href} aria-label={`CodeWorksLabs on ${label}`} title={label} rel="me"><SocialIcon name={icon} /></a>)}
+  </nav>
+</footer>
+
+<style>
+  .ecosystem-footer{--footer-line:rgba(255,255,255,.16);--footer-copy:#7787a5;--footer-strong:#dce4f2;--footer-muted:#697a9a;--footer-accent:#35d8ff;max-width:1400px;margin:0 auto;padding:2rem 3rem 3rem;display:grid;grid-template-columns:minmax(15rem,auto) minmax(0,1fr);justify-content:space-between;gap:1rem 3rem;border-top:1px solid var(--footer-line);color:var(--footer-copy);font:400 .8rem/1.5 Inter,ui-sans-serif,system-ui,sans-serif}
+  .ecosystem-footer.light{--footer-line:#cfd8e7;--footer-copy:#65738a;--footer-strong:#18243a;--footer-muted:#78859b;--footer-accent:#087c99}
+  .ecosystem-footer.docs{max-width:none;margin-top:2.5rem;padding:1.5rem 0 1rem;grid-template-columns:1fr;border-top-color:var(--sl-color-gray-5);--footer-copy:var(--sl-color-gray-3);--footer-strong:var(--sl-color-white);--footer-muted:var(--sl-color-gray-3);--footer-accent:var(--sl-color-accent)}
+  .ecosystem-ownership{margin:0}.ecosystem-ownership strong{color:var(--footer-strong)}.ecosystem-ownership span{display:inline-block;margin-top:.45rem;color:var(--footer-muted)}
+  .ecosystem-links,.ecosystem-socials{display:flex;justify-content:flex-end;gap:.75rem 1.35rem;flex-wrap:wrap}.ecosystem-socials{grid-column:1/-1;justify-content:flex-start;gap:.65rem}
+  .ecosystem-links a,.ecosystem-socials a{color:inherit;text-decoration:none}.ecosystem-links a:hover,.ecosystem-links a:focus-visible,.ecosystem-socials a:hover,.ecosystem-socials a:focus-visible{color:var(--footer-accent)}
+  .ecosystem-socials a{width:2.25rem;height:2.25rem;display:grid;place-items:center;border-radius:50%;transition:color .2s ease,transform .2s ease}.ecosystem-socials a:hover,.ecosystem-socials a:focus-visible{transform:translateY(-2px)}.ecosystem-socials a:focus-visible{outline:2px solid var(--footer-accent);outline-offset:3px}.ecosystem-socials :global(svg){width:1rem;height:1rem}
+  .docs .ecosystem-links{justify-content:flex-start}.docs .ecosystem-socials{grid-column:auto}
+  @media(max-width:720px){.ecosystem-footer{padding-inline:1.3rem;grid-template-columns:1fr}.ecosystem-links{justify-content:flex-start}.ecosystem-socials{grid-column:auto}.ecosystem-footer.docs{padding-inline:0}}
+</style>

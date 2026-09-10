@@ -1,0 +1,51 @@
+---
+title: "Attribution"
+description: "The complete Brand Navigation attribution record."
+editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/ATTRIBUTION.md
+---
+Brand Navigation was newly authored from its product specifications as an
+independent theme component.
+
+See the [authorship and provenance record](/brand-navigation/source/provenance/) for the AI-assisted
+authorship model, pinned upstream revisions, implementation-history evidence,
+and release controls behind this summary.
+
+## Product inspiration
+
+The following projects informed product discovery, administrator workflows, or
+presentation choices. Brand Navigation does not incorporate source code from
+these projects merely because they inspired a feature or demonstrated a common
+Discourse theme-component pattern.
+
+- [Discourse Brand Header](https://github.com/discourse/discourse-brand-header)
+  demonstrated a distinct, site-wide brand surface.
+- [Discourse Header Submenus](https://github.com/discourse/discourse-header-submenus)
+  demonstrated structured header navigation and exposed administration and
+  usability concerns that Brand Navigation addresses independently.
+- [Pavilion Dropdown Header](https://github.com/paviliondev/discourse-dropdown-header)
+  informed exploration of descriptive dropdown presentation and coexistence
+  with other header components.
+- [Custom Header Links (icons)](https://github.com/discourse/discourse-icon-header-links)
+  demonstrated compact, accessible destinations registered in Discourse's core
+  header.
+
+## Historical implementation study
+
+Brand Navigation's core-header icon integration uses Discourse's documented
+`api.headerIcons` API. During development, an early implementation adapted the
+narrow `curryComponent` registration pattern used by Custom Header Links
+(icons). Before the first tagged release, that implementation was replaced by
+an independently authored lexical component factory.
+
+Permanent upstream reference:
+[initialize-for-header-icon-links.gjs at `dee14e3`](https://github.com/discourse/discourse-icon-header-links/blob/dee14e37185e5e4db38497bd952352405a5826af/javascripts/discourse/initializers/initialize-for-header-icon-links.gjs#L1-L27).
+
+The permanent reference preserves the development history; it does not classify
+the current release tree as containing that adapted expression. No copied or
+adapted external code is currently identified. Brand Navigation declares
+`GPL-2.0-or-later`. If future work copies or adapts code, this record and any
+required copyright or license notice must be updated in the same change.
+
+---
+
+> **Canonical GitHub source** · Pulled from [`docs/ATTRIBUTION.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ed1640b049763c37694f8c3bb5f9f69cbd21f658/docs/ATTRIBUTION.md) at commit [`ed1640b04976`](https://github.com/CodeWorksLabs/brand-navigation/commit/ed1640b049763c37694f8c3bb5f9f69cbd21f658) from source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main) during this site build. Use **Edit this page** below to suggest a correction at the source.
