@@ -78,7 +78,21 @@ export default defineConfig({
           label: "Astro",
           collapsed: true,
           items: [
-            { label: "Astro Analytics", slug: "astro-analytics" },
+            {
+              label: "Analytics for Astro",
+              collapsed: false,
+              items: [
+                { label: "Overview", slug: "analytics-for-astro" },
+                { label: "Getting started", slug: "analytics-for-astro/getting-started" },
+                { label: "Configuration", slug: "analytics-for-astro/configuration" },
+                { label: "API reference", slug: "analytics-for-astro/api-reference" },
+                { label: "Event client", slug: "analytics-for-astro/events" },
+                { label: "Starlight", slug: "analytics-for-astro/starlight" },
+                { label: "Runtime and safety", slug: "analytics-for-astro/runtime-and-safety" },
+                { label: "Versioning and releases", slug: "analytics-for-astro/versioning-and-releases" },
+                { label: "Release notes", slug: "analytics-for-astro/release-notes" },
+              ],
+            },
             { label: "Astro Bluesky Comments", slug: "astro-bluesky-comments" },
           ],
         },
