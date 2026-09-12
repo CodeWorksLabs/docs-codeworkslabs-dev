@@ -55,19 +55,23 @@ function rewriteRelativeLinks(markdown, sourcePath) {
 
 await mkdir(outputDirectory, { recursive: true });
 
-const commitResponse = await fetch(
-  `https://api.github.com/repos/${repository}/commits/${encodeURIComponent(ref)}`,
-  {
-    headers: {
-      accept: "application/vnd.github+json",
-      "user-agent": "CodeWorksLabs-docs-build",
+if (/^[0-9a-f]{40}$/.test(ref)) {
+  resolvedCommit = ref;
+} else {
+  const commitResponse = await fetch(
+    `https://api.github.com/repos/${repository}/commits/${encodeURIComponent(ref)}`,
+    {
+      headers: {
+        accept: "application/vnd.github+json",
+        "user-agent": "CodeWorksLabs-docs-build",
+      },
     },
-  },
-);
-if (!commitResponse.ok) {
-  throw new Error(`Unable to resolve ${ref} to an exact commit: ${commitResponse.status} ${commitResponse.statusText}`);
+  );
+  if (!commitResponse.ok) {
+    throw new Error(`Unable to resolve ${ref} to an exact commit: ${commitResponse.status} ${commitResponse.statusText}`);
+  }
+  resolvedCommit = (await commitResponse.json()).sha;
 }
-resolvedCommit = (await commitResponse.json()).sha;
 if (!/^[0-9a-f]{40}$/.test(resolvedCommit)) {
   throw new Error(`GitHub returned an invalid commit identity for ${ref}`);
 }
