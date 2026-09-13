@@ -11,11 +11,19 @@ release claim.
 
 ## Unreleased
 
-- Prepare public documentation for the Analytics for Astro title and clearly
-  mark Matomo and Umami as planned first-stable providers that are not accepted
-  or loaded by alpha.7.
-- Correct the event guide to include the implemented Google Analytics 4 event
-  path alongside Fathom and Plausible.
+- Add strict Matomo Cloud and self-hosted configuration using an exact public
+  tracker endpoint, site ID, optional script URL, pageview mode, and consent mode.
+- Add a package-owned Matomo `_paq` runtime with Astro-lifecycle pageviews,
+  failure cleanup, readiness reporting, bounded event mapping, and retry-safe
+  same-document coordination.
+- Map the configured Matomo event category and package event name to Matomo's
+  category/action pair, with optional `_name` and `_value` event fields.
+- Preserve completed Astro navigation context across delayed readiness,
+  failed-script retry, and observation gaps without replaying stale pageviews
+  or inventing referrer edges.
+- Complete independent review, stock Astro and Starlight consumer testing,
+  repository-driven sandbox deployment, and provider-side live qualification
+  on self-hosted Matomo site IDs `2` and `3`.
 
 ## 0.1.0-alpha.7 - Candidate
 

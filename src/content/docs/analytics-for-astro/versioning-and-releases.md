@@ -14,17 +14,22 @@ Discourse-specific compatibility branches such as `d-compat/<YYYY>.<M>` do not
 apply to this Astro package. Allowed Astro and Starlight versions are declared
 independently in `peerDependencies`; tested compatibility is a narrower evidence
 record and must be stated separately. The current qualified matrix is Astro
-7.3.2 and Starlight 0.41.11 or 0.42.0 with Astro 7.3.2, all on Node.js
-22.22.2. Other versions admitted by the bounded peer ranges are not yet
-compatibility claims.
+7.3.2 and Starlight 0.42.0 with Astro 7.3.2, both on Node.js 22.22.2.
+Starlight 0.41.11 with Astro 7.3.2 was qualified for alpha.3 on September 11,
+2026; it remains peer-eligible, but that historical result is not current
+alpha.8 execution evidence. Other versions admitted by the bounded peer ranges
+are not yet compatibility claims.
 
 ## Current line
 
-The current Milestone 2 candidate is `0.1.0-alpha.7`:
+The current working Milestone 2 candidate is `0.1.0-alpha.8`:
 
 - `0.1.0` identifies the first pre-stable feature line.
 - `alpha` states that the package is incomplete and not production-ready.
-- `.7` identifies the corrected Google Analytics 4 adapter candidate whose
+- `.8` identifies the reviewed and live-qualified Matomo adapter candidate;
+  its public source tag is `v0.1.0-alpha.8`, while npm publication remains
+  unauthorized and absent.
+- `.7` identifies the published source tag for the corrected Google Analytics 4 adapter candidate whose
   `gtag()` queue follows Google's canonical `arguments`-object contract.
 - `.6` is the superseded initial Google Analytics 4 adapter candidate built on
   the reviewed alpha.5 Fathom/Plausible multi-provider runtime.
@@ -80,10 +85,11 @@ publication, site integration, or deployment. Before any release:
 The current `private: true` manifest is an additional fail-closed publication
 guard. Removing it requires separate release authorization and review.
 
-Matomo and Umami are planned feature additions and therefore require later
-numbered alpha candidates with documentation, review, package, consumer, and
-live-provider evidence. Their placeholder documentation does not make them part
-of alpha.7's public contract. The line may advance to an RC only after all five
+Matomo completed independent review, clean Astro and Starlight package-consumer
+qualification, repository-driven sandbox deployment, and provider-side live
+qualification on September 13, 2026. Umami remains a planned feature addition
+requiring a later numbered alpha candidate. The line may advance to an RC only
+after all five
 accepted providers are implemented and the feature set is believed complete.
 
 The package does not currently advertise the `astro-integration` discovery

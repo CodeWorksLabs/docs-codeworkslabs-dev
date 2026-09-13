@@ -4,21 +4,22 @@ description: Configure privacy-conscious, multi-provider analytics for Astro and
 editUrl: false
 ---
 
-> **Pre-release documentation** · This public snapshot describes private
-> candidate `0.1.0-alpha.7` at product commit `454893359f8588a71d35d51d1a5e0d16bf355c63`.
+> **Pre-release documentation** · This public snapshot describes public-source
+> candidate `0.1.0-alpha.8` at product commit `f480c3ce152c49637efcfea6dc38c7577fa28d82`.
 > The package is not yet published to npm.
 
-These documents describe the private `0.1.0-alpha.7` Milestone 2 candidate of
+These documents describe the public-source `0.1.0-alpha.8` Milestone 2 candidate of
 `@codeworkslabs/astro-analytics`.
 
-Milestone 2 provides real Fathom, Plausible, and Google Analytics 4 adapters for
+Milestone 2 provides real Fathom, Plausible, Google Analytics 4, and Matomo adapters for
 pageviews and bounded custom events. The runtime provides simultaneous-provider
 coordination, exact per-provider outcomes, and provider readiness diagnostics.
 No event queue or runtime consent-transition API is implemented.
 
-Matomo and Umami are approved roadmap providers for the first stable release.
-They are placeholders only in alpha.7: neither provider is accepted by the
-configuration schema, injected into a page, or exposed by the event client.
+Matomo completed independent review, stock Astro and Starlight consumer testing,
+repository-driven sandbox deployment, and provider-side qualification. Umami is
+the remaining approved roadmap provider for the first stable release. It is a
+placeholder only in alpha.8 and is not accepted by the configuration schema.
 
 ## Guides
 
@@ -39,5 +40,6 @@ configuration schema, injected into a page, or exposed by the event client.
 | `@codeworkslabs/astro-analytics/client` | Browser-safe `track()` helper and event types |
 | `@codeworkslabs/astro-analytics/starlight` | Starlight plugin wrapper |
 
-The package is private and unpublished. Installation, release, site integration,
-and deployment remain separate authorized activities.
+The source repository is public. The npm package is currently unpublished and
+retains its publication safeguard. Installation, release, site integration, and
+deployment remain separate authorized activities.

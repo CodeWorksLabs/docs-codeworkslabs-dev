@@ -50,3 +50,21 @@ local Wrangler deployment.
 
 Treat the checked-out \`main\` commit as the exact source identity. Verify it with
 \`git rev-parse HEAD\` and confirm it matches \`origin/main\` before release work.
+
+## Analytics for Astro alpha.8 documentation candidate — 2026-09-13
+
+The nine-page public documentation section is synchronized to public product
+commit `f480c3ce152c49637efcfea6dc38c7577fa28d82` and annotated tag
+`v0.1.0-alpha.8`. It now documents Matomo as an implemented provider, including
+strict tracker/site configuration, pageview and event mapping, consent and
+failure behavior, Astro/Starlight use, package API boundaries, and the current
+versioning status. Umami remains explicitly planned and unsupported.
+
+The status material records that alpha.8 passed independent review, clean stock
+Astro and Starlight package-consumer testing, repository-driven deployment to
+both dedicated CodeWorksLabs sandboxes, and provider-side live qualification
+against self-hosted Matomo site IDs `2` and `3`. The npm package remains
+unpublished and retains its publication safeguard. This candidate must pass the
+repository verification contract before commit and push; Cloudflare publication
+will then occur through the existing repository connection rather than a local
+deployment.

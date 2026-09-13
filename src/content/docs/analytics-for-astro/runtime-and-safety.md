@@ -7,13 +7,13 @@ editUrl: false
 ## Current boundary
 
 Milestone 2 provides a strict configuration boundary, a bounded event helper,
-and real vendor adapters for Fathom, Plausible, and Google Analytics 4. It has
+and real vendor adapters for Fathom, Plausible, Google Analytics 4, and Matomo. It has
 no event queue, storage layer, credential store, authentication system, or
 runtime consent-transition API.
 
-Matomo and Umami are planned providers, not dormant alpha.7 adapters. No code
-path recognizes their provider names, creates their globals, loads their
-scripts, or sends data to them.
+Umami is a planned provider, not a dormant alpha.8 adapter. No code path
+recognizes its provider name, creates its global, loads its script, or sends
+data to it.
 
 ## Injection policy
 
@@ -177,3 +177,31 @@ to 25 validated primitive parameters and add the configured Measurement ID as
 means the command entered the owned Google queue, not that Google's server has
 confirmed delivery. Sites must disable Enhanced Measurement's history-based
 page changes to prevent duplicate SPA pageviews.
+
+The Matomo adapter refuses a pre-existing `_paq` global or occupied package
+script ID instead of adopting unrelated state. It creates the standard startup
+queue, adopts Matomo's validated replacement command proxy, configures the exact
+tracker endpoint and site ID, and loads the configured Matomo script without an
+eager pageview. Script readiness activates Astro-owned pageviews containing
+current URL and title plus the preceding virtual URL as referrer. Completed
+route history survives script failure and remains separate from any pending
+pageview. A single coordinator-owned Astro page-load observer continues
+recording completed routes while a vendor generation is inactive, allowing
+retry and in-flight navigation to recover without replaying an obsolete route.
+
+In events-only mode, completed navigation still updates Matomo's URL, title,
+and virtual referrer but never sends an automatic pageview. Custom events use
+the configured category and event action with optional `_name` and `_value`;
+unrelated properties are not translated into invented Matomo fields. Matomo
+starts only after the singleton navigation observer is registered. After an
+observation gap it waits for the next real Astro page-load completion,
+explicitly clears Matomo's vendor referrer for that first supported route, and
+restores known virtual edges on later observed navigation.
+
+Readiness requires successful script-load validation and the retained command
+proxy's `push` API to remain callable. A matching bootstrap may requalify the
+exact retained, load-proven identities after a transient command exception.
+Script failure removes the package script and only global values attributable
+to that script; unrelated replacements are preserved. Deferred and external
+consent remain fail-closed and create no Matomo global or network-loading
+element.
