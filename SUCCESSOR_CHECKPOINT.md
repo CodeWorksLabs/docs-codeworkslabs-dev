@@ -152,5 +152,14 @@ The final internal review reported no actionable defect.
 The local release gate passed: fresh `npm ci`, production audit with zero
 vulnerabilities, 33-page Starlight build, Pagefind and sitemap generation,
 Wrangler dry-run, and `git diff --check`. The full dependency audit's three high
-findings remain confined to development dependencies. Repository commit/push,
-repository-driven Cloudflare deployment, and live-page verification are next.
+findings remain confined to development dependencies.
+
+Commit `e1bb02b4a3d7bac262afea1a00a94d4ac5b89caf` published the alpha.10
+documentation from this repository's `main`. GitHub verification run
+`34785042143` passed, and the repository-driven Cloudflare build deployed Worker
+version `9b94a90d-5b84-429a-abeb-155a60864a76` at 100 percent. Live browser
+verification confirmed the overview's exact alpha.10 tag/commit identity,
+five-provider and npm-unpublished status, both sandbox qualification links, the
+complete ten-page menu, and the required ownership wording. The versioning page
+identifies RC readiness as the next product decision, and the release notes show
+the alpha.10 same-URL correction and provider-side Umami qualification record.
