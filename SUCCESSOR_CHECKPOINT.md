@@ -1,6 +1,6 @@
 # Successor checkpoint
 
-Updated: 2026-09-10
+Updated: 2026-09-13
 
 ## Current state
 
@@ -51,7 +51,7 @@ local Wrangler deployment.
 Treat the checked-out \`main\` commit as the exact source identity. Verify it with
 \`git rev-parse HEAD\` and confirm it matches \`origin/main\` before release work.
 
-## Analytics for Astro alpha.8 documentation candidate — 2026-09-13
+## Analytics for Astro alpha.8 documentation — 2026-09-13
 
 The nine-page public documentation section is synchronized to public product
 commit `f480c3ce152c49637efcfea6dc38c7577fa28d82` and annotated tag
@@ -64,7 +64,17 @@ The status material records that alpha.8 passed independent review, clean stock
 Astro and Starlight package-consumer testing, repository-driven deployment to
 both dedicated CodeWorksLabs sandboxes, and provider-side live qualification
 against self-hosted Matomo site IDs `2` and `3`. The npm package remains
-unpublished and retains its publication safeguard. This candidate must pass the
-repository verification contract before commit and push; Cloudflare publication
-will then occur through the existing repository connection rather than a local
-deployment.
+unpublished and retains its publication safeguard.
+
+Commits `644bd96d86bd25bcd351e0595fca878ae9361377` and
+`e357c27d6184291e7318222c9eeca1eae81131d1` published the alpha.8 documentation
+and aligned its candidate/source-tag wording. GitHub Actions passed, and the
+first commit deployed successfully through Cloudflare Workers Builds. The
+second Cloudflare build failed before Astro ran because GitHub's anonymous API
+returned `403 rate limit exceeded` while resolving Brand Navigation `main`.
+
+The current repository change retains ordinary live resolution of Brand
+Navigation `main`, but falls back on transient API failures to the exact commit
+already recorded in the synchronized source pages. Invalid refs still fail.
+The full local contract passed: production audit reported zero vulnerabilities,
+32 pages built, Pagefind and sitemap completed, and Wrangler dry-run passed.

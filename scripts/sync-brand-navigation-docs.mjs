@@ -1,10 +1,11 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const repository = "CodeWorksLabs/brand-navigation";
 const ref = process.env.BRAND_NAVIGATION_DOCS_REF || "main";
 const outputDirectory = path.resolve("src/content/docs/brand-navigation/source");
 let resolvedCommit;
+let usedRecordedFallback = false;
 
 const documents = [
   ["docs/USER_GUIDE.md", "administrator-guide.md", "Administrator guide", "The complete administrator workflow from the Brand Navigation repository."],
@@ -55,22 +56,56 @@ function rewriteRelativeLinks(markdown, sourcePath) {
 
 await mkdir(outputDirectory, { recursive: true });
 
+async function readRecordedCommit() {
+  const recordedDocument = path.join(outputDirectory, documents[0][1]);
+  const markdown = await readFile(recordedDocument, "utf8");
+  const match = markdown.match(/https:\/\/github\.com\/CodeWorksLabs\/brand-navigation\/commit\/([0-9a-f]{40})/);
+  if (!match) {
+    throw new Error(`No exact Brand Navigation fallback commit is recorded in ${recordedDocument}`);
+  }
+  return match[1];
+}
+
 if (/^[0-9a-f]{40}$/.test(ref)) {
   resolvedCommit = ref;
 } else {
-  const commitResponse = await fetch(
-    `https://api.github.com/repos/${repository}/commits/${encodeURIComponent(ref)}`,
-    {
-      headers: {
-        accept: "application/vnd.github+json",
-        "user-agent": "CodeWorksLabs-docs-build",
+  let resolutionFailure;
+  try {
+    const commitResponse = await fetch(
+      `https://api.github.com/repos/${repository}/commits/${encodeURIComponent(ref)}`,
+      {
+        headers: {
+          accept: "application/vnd.github+json",
+          "user-agent": "CodeWorksLabs-docs-build",
+        },
       },
-    },
-  );
-  if (!commitResponse.ok) {
-    throw new Error(`Unable to resolve ${ref} to an exact commit: ${commitResponse.status} ${commitResponse.statusText}`);
+    );
+    if (!commitResponse.ok) {
+      const error = new Error(`${commitResponse.status} ${commitResponse.statusText}`);
+      const transientFailure = commitResponse.status === 403
+        || commitResponse.status === 429
+        || commitResponse.status >= 500;
+      if (!transientFailure) throw error;
+      resolutionFailure = error;
+    } else {
+      const candidateCommit = (await commitResponse.json()).sha;
+      if (/^[0-9a-f]{40}$/.test(candidateCommit)) {
+        resolvedCommit = candidateCommit;
+      } else {
+        resolutionFailure = new Error(`GitHub returned an invalid commit identity for ${ref}`);
+      }
+    }
+  } catch (error) {
+    if (!resolutionFailure && /^4\d\d /.test(error.message)) throw error;
+    resolutionFailure = error;
   }
-  resolvedCommit = (await commitResponse.json()).sha;
+  if (!resolvedCommit) {
+    resolvedCommit = await readRecordedCommit();
+    usedRecordedFallback = true;
+    console.warn(
+      `Unable to resolve ${repository}@${ref} through the GitHub API (${resolutionFailure.message}); using recorded commit ${resolvedCommit}`,
+    );
+  }
 }
 if (!/^[0-9a-f]{40}$/.test(resolvedCommit)) {
   throw new Error(`GitHub returned an invalid commit identity for ${ref}`);
@@ -91,7 +126,10 @@ for (const [sourcePath, filename, title, description] of documents) {
     sourcePath,
   );
   const shortCommit = resolvedCommit.slice(0, 12);
-  const sourceNotice = `> **Canonical GitHub source** · Pulled from [\`${sourcePath}\`](${repositoryUrl(sourcePath)}) at commit [\`${shortCommit}\`](https://github.com/${repository}/commit/${resolvedCommit}) from source channel [\`${ref}\`](https://github.com/${repository}/tree/${ref}) during this site build. Use **Edit this page** below to suggest a correction at the source.`;
+  const fallbackNotice = usedRecordedFallback
+    ? " Live ref resolution was unavailable, so this build used the exact commit already recorded by the repository."
+    : "";
+  const sourceNotice = `> **Canonical GitHub source** · Pulled from [\`${sourcePath}\`](${repositoryUrl(sourcePath)}) at commit [\`${shortCommit}\`](https://github.com/${repository}/commit/${resolvedCommit}) from source channel [\`${ref}\`](https://github.com/${repository}/tree/${ref}) during this site build.${fallbackNotice} Use **Edit this page** below to suggest a correction at the source.`;
   const frontmatter = [
     "---",
     `title: ${JSON.stringify(title)}`,
