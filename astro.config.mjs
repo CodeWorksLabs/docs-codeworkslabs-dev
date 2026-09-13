@@ -89,6 +89,7 @@ export default defineConfig({
                 { label: "Event client", slug: "analytics-for-astro/events" },
                 { label: "Starlight", slug: "analytics-for-astro/starlight" },
                 { label: "Runtime and safety", slug: "analytics-for-astro/runtime-and-safety" },
+                { label: "Development and verification", slug: "analytics-for-astro/development" },
                 { label: "Versioning and releases", slug: "analytics-for-astro/versioning-and-releases" },
                 { label: "Release notes", slug: "analytics-for-astro/release-notes" },
               ],

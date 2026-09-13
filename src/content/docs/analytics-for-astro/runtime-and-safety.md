@@ -1,19 +1,15 @@
 ---
 title: Runtime and safety model
-description: Provider coordination, lifecycle ownership, failure handling, and data boundaries.
+description: Browser ownership, lifecycle, failure isolation, and privacy boundaries.
 editUrl: false
 ---
 
 ## Current boundary
 
 Milestone 2 provides a strict configuration boundary, a bounded event helper,
-and real vendor adapters for Fathom, Plausible, Google Analytics 4, and Matomo. It has
+and real vendor adapters for Fathom, Plausible, Google Analytics 4, Matomo, and Umami. It has
 no event queue, storage layer, credential store, authentication system, or
 runtime consent-transition API.
-
-Umami is a planned provider, not a dormant alpha.8 adapter. No code path
-recognizes its provider name, creates its global, loads its script, or sends
-data to it.
 
 ## Injection policy
 
@@ -181,27 +177,81 @@ page changes to prevent duplicate SPA pageviews.
 The Matomo adapter refuses a pre-existing `_paq` global or occupied package
 script ID instead of adopting unrelated state. It creates the standard startup
 queue, adopts Matomo's validated replacement command proxy, configures the exact
-tracker endpoint and site ID, and loads the configured Matomo script without an
-eager pageview. Script readiness activates Astro-owned pageviews containing
-current URL and title plus the preceding virtual URL as referrer. Completed
-route history survives script failure and remains separate from any pending
-pageview. A single coordinator-owned Astro page-load observer continues
-recording completed routes while a vendor generation is inactive, allowing
-retry and in-flight navigation to recover without replaying an obsolete route.
+tracker endpoint and site ID, and loads the configured
+Matomo script without an eager pageview. Script readiness activates Astro-owned
+pageviews containing current URL and title plus the preceding virtual URL as
+referrer. Completed-route history survives script failure and remains separate
+from any pending pageview. A single coordinator-owned Astro page-load observer
+continues recording completed routes while a vendor generation is inactive,
+allowing retry and in-flight navigation to recover without losing the current
+route or replaying an obsolete one. In events-only mode, completed Astro
+navigation still updates Matomo's URL, title, and virtual referrer but never sends
+an automatic pageview. Custom events use an explicit configured-category/event-action mapping
+with optional `_name` and `_value`; unrelated properties are not translated into
+invented Matomo fields. Matomo setup begins only after the singleton navigation
+observer is registered; a missing or throwing registration API keeps readiness
+closed and matching reentry retries it safely. After an observation gap, vendor
+setup waits for the next real Astro page-load completion and does not infer a
+route or referrer from the current location or original document referrer. It
+explicitly clears Matomo's vendor referrer for that first supported route, then
+restores known virtual edges on later observed navigation. This also applies
+when navigation returns to the last known URL. Readiness also
+requires prior successful script-load validation and the retained command proxy's `push`
+API to remain callable. A matching bootstrap may requalify the exact retained,
+load-proven Matomo identities after a transient command exception once that same
+proxy is callable again. A never-validated startup array cannot qualify or
+accept events. Script failure removes the package script and only
+global values assigned while that script was `document.currentScript`; unrelated
+replacement globals are preserved regardless of whether they resemble Matomo.
+The coordinator's navigation observer remains so a later retry has current route
+history.
+Deferred and external consent remain fail-closed and create no Matomo global or
+network-loading element.
 
-In events-only mode, completed navigation still updates Matomo's URL, title,
-and virtual referrer but never sends an automatic pageview. Custom events use
-the configured category and event action with optional `_name` and `_value`;
-unrelated properties are not translated into invented Matomo fields. Matomo
-starts only after the singleton navigation observer is registered. After an
-observation gap it waits for the next real Astro page-load completion,
-explicitly clears Matomo's vendor referrer for that first supported route, and
-restores known virtual edges on later observed navigation.
+The Umami adapter refuses a pre-existing `umami` global or occupied package
+script ID. Before loading, it owns a guarded accessor and records only the
+tracker value assigned while its script is `document.currentScript`; a
+lookalike value assigned by unrelated code cannot establish readiness. At
+execution, load, and every later use it revalidates the original package script's
+exact source, website ID, optional host, automatic-pageview control, and
+classic-script mode. While connected, that exact element must own the package
+DOM ID. After Astro's ClientRouter legitimately removes the loaded head element,
+the original exact element remains valid only while no replacement owns the ID.
+Script load additionally requires a stable callable `track` method. A foreign
+script binding, global, method, or attribute replacement immediately closes
+readiness and event acceptance; restoring the exact proven state restores
+readiness.
 
-Readiness requires successful script-load validation and the retained command
-proxy's `push` API to remain callable. A matching bootstrap may requalify the
-exact retained, load-proven identities after a transient command exception.
-Script failure removes the package script and only global values attributable
-to that script; unrelated replacements are preserved. Deferred and external
-consent remain fail-closed and create no Matomo global or network-loading
-element.
+Umami automatic pageviews are disabled through `data-auto-pageview="false"`.
+This requires Umami 3.2.0 or later.
+The adapter calls `umami.track(payloadFactory)` after ordinary-document DOM
+readiness or, when ClientRouter is present, Astro's post-swap page-load signal.
+Once the tracker is ready, each observed ClientRouter completion is a distinct
+pageview, even when two consecutive completions have the same URL.
+Deduplication applies only when the same retained completion is retried through
+matching bootstrap reentry. Completions observed before tracker readiness
+coalesce to the latest confirmed route, which is sent when readiness is proven;
+the adapter does not replay superseded route history.
+The factory preserves Umami's default payload and replaces URL, title, and
+referrer with the completed route context. Tracker load alone never invents a
+completion. Missing or throwing navigation observer installation prevents the
+tracker from loading. After observer recovery, setup waits for the next observed
+completion and uses an empty referrer rather than inventing a route edge across
+the observation gap.
+`pageviews: "none"` sends no automatic pageview. When events are enabled it still
+observes the same document or ClientRouter completion lifecycle so events use the
+last completed route rather than the vendor's potentially stale private history
+state.
+
+Custom events use `umami.track(payloadFactory)` only while the exact load-proven
+tracker and method remain installed. The payload supplies the event name/data
+and the same completed URL/title/referrer context as pageviews. Per-provider
+limits enforce Umami's
+50-character name, 50-property data, 500-character string, and four-decimal
+number boundaries. Delivery remains vendor-controlled after synchronous
+acceptance. Script failure removes owned state and permits a clean retry. A
+synchronous pageview exception or a later in-flight URL retains that completed
+pageview for bounded matching-bootstrap retry. A subsequently completed route
+supersedes the retained record. Unrelated replacement state
+is preserved. Deferred and external consent load
+no Umami script or global and report `consent-pending`.

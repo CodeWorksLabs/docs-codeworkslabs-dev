@@ -8,11 +8,8 @@ The default export accepts one `AstroAnalyticsConfig` object. Configuration is
 strictly checked at runtime: unknown fields, symbol keys, malformed values, and
 non-record objects are rejected with `TypeError`.
 
-Fathom, Plausible, Google Analytics 4, and Matomo settings drive implemented
+Fathom, Plausible, Google Analytics 4, Matomo, and Umami settings drive implemented
 Milestone 2 adapters.
-
-> **Planned provider:** Umami remains part of the accepted first-stable provider
-> set, but alpha.8 does not accept its provider name or configuration.
 
 ## Root configuration
 
@@ -56,11 +53,12 @@ Every provider accepts an optional `pageviews` field:
 
 | Value | Intended ownership |
 | --- | --- |
-| `"provider"` | Pageviews triggered after Astro page-load events; the default |
-| `"astro"` | Explicitly selects the same Astro page-load lifecycle |
+| `"provider"` | Package-owned pageviews after the applicable completed-page lifecycle; the default |
+| `"astro"` | Explicitly selects the same package-owned lifecycle |
 | `"none"` | No automatic pageviews |
 
-All three modes are implemented for Fathom, Plausible, Google Analytics 4, and Matomo.
+All three modes are implemented for Fathom, Plausible, Google Analytics 4, Matomo,
+and Umami.
 For Matomo, `"none"` still maintains the last completed Astro route's URL,
 title, and virtual-referrer context so custom events are attributed correctly;
 it never calls `trackPageView`.
@@ -218,29 +216,89 @@ analytics({
 
 The adapter creates the standard `_paq` startup queue and, after validated
 script readiness, adopts Matomo's replacement command proxy. It configures the
-exact tracker URL and site ID and loads `matomo.js`. It deliberately omits
-Matomo's eager `trackPageView` call. Astro sends initial and client-navigation
-pageviews with current URL and title plus the preceding virtual URL as referrer.
-The adapter does not enable Matomo's automatic link tracking. Completed route
-history remains separate from a pending send, so delayed readiness, failed-load
-intervals, and retries do not replay stale pageviews. With `pageviews: "none"`,
-the same route context is applied for custom events without automatic pageviews.
+exact tracker URL and site ID and loads `matomo.js`. It deliberately omits Matomo's
+eager `trackPageView` call. After script readiness, Astro sends the initial and
+client-navigation pageviews with current URL and title plus the preceding
+virtual URL as referrer. The adapter does not enable Matomo's automatic link
+tracking. Completed navigation history is retained separately from a pending
+send and observed for the coordinator's full document lifetime, so delayed
+readiness, failed-loading intervals, or retry waits out an in-flight destination
+without losing a completed route or replaying a stale one. With
+`pageviews: "none"`, the same completed-route context is applied for custom events
+without emitting automatic pageviews.
 
-Matomo starts only after the singleton Astro navigation observer is registered.
-After an observation gap, it waits for the next actual Astro page-load event,
-uses that route, and explicitly clears Matomo's referrer rather than inventing
-an edge from a potentially stale external document referrer. Later observed
-navigations restore ordinary virtual-referrer edges.
+The coordinator must successfully register its singleton Astro navigation
+observer before it starts Matomo. If that browser operation is temporarily
+unavailable, Matomo remains not loaded and a matching later bootstrap retries
+registration without adding duplicate listeners. Because navigation may have
+completed while no observer was available, setup then waits for the next actual
+Astro page-load event. That event supplies the current route; the adapter omits
+an invented edge and explicitly clears Matomo's referrer for that first route,
+preventing its own fallback to the potentially stale external document
+referrer. Later observed navigation restores ordinary virtual-referrer edges.
 
 Immediate consent loads Matomo. Deferred and external modes fail closed without
 creating `_paq` or loading the tracker and report `consent-pending`; runtime
-consent activation is not yet part of alpha.8.
+consent activation is not yet part of alpha.10.
 
-## Planned: Umami
+## Umami
 
-The planned Umami adapter will support Umami Cloud and self-hosted Umami. Its
-eventual configuration is expected to require a public tracker script URL and
-website ID, disable automatic pageviews, and use Astro-owned pageviews plus
-bounded custom events. Consent behavior, custom-event mapping, URL validation,
-and exact field names remain subject to implementation and review. Do not add
-an `umami` provider to alpha.8.
+```js
+analytics({
+  providers: [
+    {
+      name: "umami",
+      websiteId: "e676c9b4-11e4-4ef1-a4d7-87001773e9f2",
+      scriptSrc: "https://analytics.example.com/script.js",
+      hostUrl: "https://analytics.example.com",
+      consent: { mode: "immediate" },
+      pageviews: "provider",
+    },
+  ],
+  events: true,
+});
+```
+
+| Field | Requirement |
+| --- | --- |
+| `name` | Exactly `"umami"` |
+| `websiteId` | Required UUID string from the Umami website record |
+| `scriptSrc` | Required absolute HTTPS tracker-script URL without embedded credentials |
+| `hostUrl` | Optional absolute HTTPS collection host URL without credentials, query, or fragment |
+| `consent.mode` | Optional: `"immediate"`, `"deferred"`, or `"external"`; omitted means immediate |
+| `pageviews` | Optional pageview mode; default `"provider"` |
+
+The adapter supports Umami Cloud and self-hosted Umami. It always emits
+`data-auto-pageview="false"` so Umami cannot duplicate Astro-owned pageviews,
+while leaving the tracker initialized for explicit events. The optional
+`hostUrl` maps to Umami's `data-host-url` setting when the script and collection
+host differ. On an ordinary multi-page Astro or Starlight site, the initial
+pageview is sent through `umami.track()` after DOM readiness. When Astro's
+ClientRouter is present, the adapter waits for its post-swap `astro:page-load`
+signal for the initial route and every client navigation. Both paths use the
+current URL and title and the known preceding URL as referrer; tracker readiness
+alone never manufactures a route completion. Once the tracker is ready, every
+observed completion is sent even when its URL matches the preceding completion.
+Before readiness, completed routes coalesce to the latest confirmed route and
+superseded history is not replayed.
+
+`data-auto-pageview` was introduced by Umami 3.2.0, so alpha.10 requires an
+Umami 3.2-or-later tracker. Earlier self-hosted trackers are not supported
+because they cannot provide the package's duplicate-pageview guarantee.
+
+Immediate consent loads Umami. Deferred and external modes fail closed without
+creating `window.umami` or loading the tracker and report `consent-pending`.
+The package accepts the vendor only when the configured script assigns the
+tracker during its own execution; unrelated or pre-existing globals cannot
+claim readiness.
+
+Custom events use Umami's payload-factory form with the event name and data plus
+the last completed Astro route's URL, title, and referrer. This prevents the
+vendor's private history state from misattributing events after browser-history
+traversal or delayed loading. Event-only mode still observes ordinary document
+readiness or ClientRouter page-loads to maintain this context without sending
+pageviews. Umami-specific validation
+limits names to 50 characters, data to 50 properties, strings to 500 characters,
+and numbers to four decimal places. The shared package's stricter primitive-only
+event shape remains in force, so nested Umami event objects and arrays are not
+accepted in alpha.10.

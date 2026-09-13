@@ -84,3 +84,73 @@ The full local contract passed: production audit reported zero vulnerabilities,
 Live verification confirmed the release notes contain `0.1.0-alpha.8`, the
 getting-started page identifies the package as source-tagged, and the section
 documents Matomo while retaining Umami as planned.
+
+## Analytics for Astro alpha.9 documentation — 2026-09-13
+
+The public documentation section is synchronized to immutable public product
+commit `43473be89dd9e29144c92f3ac0f6e6ab0776f104` and annotated tag
+`v0.1.0-alpha.9`. A new fail-closed synchronization script verifies that the
+tag resolves to the declared commit, reads the ten source pages directly from
+Git, preserves Starlight frontmatter, rewrites internal links, and applies the
+separately established live-qualification status. The previously omitted
+development and verification guide is now included in the public section and
+Astro menu.
+
+The content documents Umami Cloud/self-hosted configuration, UUID and HTTPS
+validation, automatic-pageview suppression, MPA and ClientRouter lifecycle,
+completed-route event context, readiness/failure behavior, provider limits,
+and the alpha.9 release record. It records that the exact tag passed independent
+review, clean Astro and Starlight consumer qualification, repository-driven
+deployment, and provider-side live qualification on the two dedicated sandbox
+hosts. npm publication and a GitHub Release remain absent.
+
+The preliminary local documentation gate passed: clean install, zero production
+dependency vulnerabilities, 33-page Starlight build including all ten Analytics
+for Astro pages, Pagefind/sitemap generation, Wrangler dry-run, and diff
+validation. The full dependency audit still reports three high-severity issues
+confined to development dependencies; the required production audit is clean.
+The final synchronized gate also passed the same clean install, zero-vulnerability
+production audit, 33-page build, Pagefind/sitemap generation, Wrangler dry-run,
+and diff validation. Repository commit/push, Cloudflare Workers Builds
+deployment, and live-page verification remain pending.
+
+## Analytics for Astro alpha.10 documentation — 2026-09-13
+
+The prepared alpha.9 publication was superseded before repository publication
+after a later full committed product review found a same-URL ClientRouter
+pageview defect. Preserve the alpha.9 section above as its dated preparation
+record; alpha.10 is the current documentation source.
+
+The public section is now deterministically synchronized from the immutable public
+product tag `v0.1.0-alpha.10` at commit
+`06d8e3f4185a2509f1cdf155ae2d6b91b2ed245d`. The synchronization script requires
+version `0.1.0-alpha.10`, clones the pinned public repository when no optional
+local source is supplied, proves the source ref is an annotated tag resolving to
+that exact commit, reads all ten source pages from Git, and applies the separately
+established live-qualification record. A clean clone of this repository can
+therefore reproduce the pages without any parent or sibling checkout. The source
+package remains unpublished to npm and has no GitHub Release.
+
+The exact tag archive was deployed by the two repository-driven stock sandbox
+repositories. GitHub verification runs `34783356819` and `34783361990` passed.
+Cloudflare serves Astro Worker version
+`0cfba6c1-dbe7-4b17-b96b-8d2cc7f9e23b` and Starlight Worker version
+`6683e6fa-357d-43fa-acf8-6f3c19c7fac2`, each at 100 percent. Both live browser
+harnesses reported Umami ready, accepted the explicit journey event, and
+advanced to the destination. Their distinct self-hosted Umami records displayed
+the new `/analytics/` pageview, named journey event, and `/analytics/next/`
+pageview sequence.
+
+The final documentation review first identified three P2 defects: writes could
+occur before all source pages were validated, the sync depended on a
+caller-supplied external checkout and did not prove that its ref was an annotated
+tag, and the event-client provider summary omitted Umami. All were corrected.
+Regression checks proved failure atomicity, rejected a deliberately substituted
+lightweight tag, and reproduced all ten pages from the pinned public repository.
+The final internal review reported no actionable defect.
+
+The local release gate passed: fresh `npm ci`, production audit with zero
+vulnerabilities, 33-page Starlight build, Pagefind and sitemap generation,
+Wrangler dry-run, and `git diff --check`. The full dependency audit's three high
+findings remain confined to development dependencies. Repository commit/push,
+repository-driven Cloudflare deployment, and live-page verification are next.

@@ -11,6 +11,47 @@ release claim.
 
 ## Unreleased
 
+## 0.1.0-alpha.10 - Candidate
+
+- Once Umami is ready, track each completed Astro ClientRouter lifecycle as a
+  distinct pageview, including consecutive completions whose URLs are
+  identical, while retaining completion-identity deduplication for matching
+  bootstrap reentry. Completions observed before readiness continue to
+  coalesce to the latest confirmed route.
+- Preserve the updated title and completed-route context for same-URL
+  navigations instead of treating URL equality as proof that the lifecycle was
+  already sent.
+- Attribute a same-URL completion to the immediately preceding completed URL,
+  retaining an exact virtual route edge rather than an older referrer.
+- Complete independent review, exact source-tag package-consumer qualification,
+  repository-driven stock Astro and Starlight deployment, browser-runtime
+  verification, and provider-side live qualification against distinct
+  self-hosted Umami website records for `astro.sandbox.codeworkslabs.dev` and
+  `stockstarlight.sandbox.codeworkslabs.dev`.
+
+## 0.1.0-alpha.9 - Candidate
+
+- Add strict Umami Cloud and self-hosted configuration using a website UUID,
+  tracker script URL, optional host URL, pageview mode, and consent mode.
+- Add a package-owned Umami runtime that disables vendor automatic pageviews,
+  sends ordinary-document pageviews after DOM readiness and ClientRouter
+  pageviews after Astro's post-swap signal,
+  and exposes independently reported readiness and event results.
+- Map package events through Umami's payload-factory form with completed Astro
+  route context while enforcing documented event-name, property-count,
+  string-length, and numeric-precision limits.
+- Fail closed on pending consent, occupied globals, script collisions,
+  unproven tracker assignment, missing navigation observation, and tracker
+  replacement; preserve unrelated replacement state during cleanup and allow
+  a clean retry after terminal failure.
+- Bind pageviews and events to the same completed Astro route context, including
+  browser-history traversal, delayed tracker readiness, and event-only mode.
+- Revalidate the exact script source, website, host, automatic-pageview setting,
+  executable mode, and connected or legitimately detached DOM identity at
+  execution, load, and every later use.
+- Retain confirmed pageviews through synchronous rejection and in-flight
+  navigation for bounded matching-bootstrap retry.
+
 ## 0.1.0-alpha.8 - Candidate
 
 - Add strict Matomo Cloud and self-hosted configuration using an exact public
@@ -20,12 +61,21 @@ release claim.
   same-document coordination.
 - Map the configured Matomo event category and package event name to Matomo's
   category/action pair, with optional `_name` and `_value` event fields.
-- Preserve completed Astro navigation context across delayed readiness,
-  failed-script retry, and observation gaps without replaying stale pageviews
-  or inventing referrer edges.
-- Complete independent review, stock Astro and Starlight consumer testing,
-  repository-driven sandbox deployment, and provider-side live qualification
-  on self-hosted Matomo site IDs `2` and `3`.
+- Preserve completed Astro navigation context across delayed Matomo readiness,
+  in-flight routes, inactive failure-to-retry intervals, and failed-script retry
+  without replaying stale pageviews.
+- Keep Matomo event URL, title, and virtual-referrer context current when
+  automatic pageviews are disabled.
+- Fail readiness closed before load validation and when the retained Matomo
+  command proxy becomes unusable, requalify the exact restored load-proven
+  owned proxy on matching reentry, and preserve
+  unrelated globals through script-assignment provenance while still cleaning
+  attributable partial Matomo initialization.
+- Require successful singleton Astro navigation-observer registration before
+  Matomo setup, retry registration safely after a transient host failure, and
+  wait for the next observed completion rather than infer routes or referrers
+  across an unobserved interval, explicitly clear Matomo's vendor referrer for
+  that first supported route, and restore known virtual edges afterward.
 
 ## 0.1.0-alpha.7 - Candidate
 

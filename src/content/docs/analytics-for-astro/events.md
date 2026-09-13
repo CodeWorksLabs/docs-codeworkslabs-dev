@@ -1,6 +1,6 @@
 ---
 title: Event client
-description: Send bounded custom events and inspect independent provider outcomes.
+description: Bounded multi-provider custom events and exact result handling.
 editUrl: false
 ---
 
@@ -32,10 +32,10 @@ clients, adapter results, or supported hostile-object cases. It validates and
 copies the event before invoking `window.astroAnalytics.track()`.
 
 Milestone 2 connects the client to Fathom's `trackEvent()`, Plausible's
-`plausible()`, Google Analytics 4's `gtag()`, and Matomo's `_paq` APIs. Calls made before an
-integration's script load is verified return `adapter-not-loaded`; they are not
-queued or retried. Unrelated preexisting vendor globals are not treated as
-package readiness.
+`plausible()`, Google Analytics 4's `gtag()`, Matomo's `_paq`, and Umami's
+`track()` APIs. Calls made before an integration's script load is verified return
+`adapter-not-loaded`; they are not queued or retried. Unrelated preexisting
+vendor globals are not treated as package readiness.
 
 `configuredProviders()` returns the ordered provider names owned by the current
 runtime. It is intended for diagnostics and operator-facing test surfaces; it
@@ -136,12 +136,20 @@ Matomo receives `trackEvent(eventCategory, action, name?, value?)`. The provider
 configured `eventCategory` supplies the category and the package event name
 supplies the action. Optional `_name` and finite numeric `_value` properties
 supply Matomo's third and fourth arguments. Other validated properties are not
-sent to Matomo. An empty or non-string `_name` produces Matomo's per-provider
-`invalid-event` result. With `pageviews: "none"`, the listener still applies the
-URL, title, and preceding virtual URL of each completed route before later
-events; it does not send `trackPageView`.
+sent to Matomo, allowing another configured provider to consume them without
+inventing Matomo semantics. An empty or non-string `_name` produces Matomo's
+per-provider `invalid-event` result. When Matomo uses `pageviews: "none"`, its
+Astro page-load listener still applies the URL, title, and preceding virtual URL
+of each completed route before later events; it does not send `trackPageView`.
 
-Umami event mapping is not implemented in alpha.8. No Umami result entry can
-appear until its provider type and adapter are added in a later reviewed candidate.
+Umami receives a payload-factory call containing the event name and data plus
+the last completed Astro route's URL, title, and referrer. This keeps events
+aligned with package pageviews after browser-history traversal and delayed
+tracker readiness. Provider-specific validation limits event names to 50
+characters, property bags to 50 entries, strings to 500 characters, and numbers
+to four decimal places. The shared client currently accepts primitive values
+only, even though Umami itself can accept arrays and nested objects. An accepted
+synchronous call produces Umami's independent `{ ok: true }` result; it does not
+prove server delivery.
 
 Do not depend on the brand or property descriptor as a security boundary.

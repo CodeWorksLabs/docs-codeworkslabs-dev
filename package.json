@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "sync:astro-analytics": "node scripts/sync-analytics-for-astro-docs.mjs",
     "sync:brand-navigation": "node scripts/sync-brand-navigation-docs.mjs",
     "dev": "astro dev",
     "prebuild": "npm run sync:brand-navigation",
