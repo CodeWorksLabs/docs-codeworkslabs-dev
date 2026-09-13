@@ -73,8 +73,14 @@ first commit deployed successfully through Cloudflare Workers Builds. The
 second Cloudflare build failed before Astro ran because GitHub's anonymous API
 returned `403 rate limit exceeded` while resolving Brand Navigation `main`.
 
-The current repository change retains ordinary live resolution of Brand
-Navigation `main`, but falls back on transient API failures to the exact commit
-already recorded in the synchronized source pages. Invalid refs still fail.
+Commit `2cb656461b632aac3188e09ef041cbfe33affcb4` retains ordinary live
+resolution of Brand Navigation `main`, but falls back on transient API failures
+to the exact commit already recorded in the synchronized source pages. Invalid
+refs still fail. GitHub Actions run `34769258552` passed, and Cloudflare build
+`5bc65995-ef0d-40a6-aac1-3c813f9ace85` deployed successfully from the repository.
+
 The full local contract passed: production audit reported zero vulnerabilities,
 32 pages built, Pagefind and sitemap completed, and Wrangler dry-run passed.
+Live verification confirmed the release notes contain `0.1.0-alpha.8`, the
+getting-started page identifies the package as source-tagged, and the section
+documents Matomo while retaining Umami as planned.
