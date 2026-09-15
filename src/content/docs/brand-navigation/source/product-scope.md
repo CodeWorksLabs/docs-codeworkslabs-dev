@@ -1,7 +1,7 @@
 ---
 title: "Product scope"
 description: "The accepted Brand Navigation product scope and explicit exclusions."
-editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/ed1640b049763c37694f8c3bb5f9f69cbd21f658/docs/SCOPE.md
+editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/SCOPE.md
 ---
 Brand Navigation is a focused theme component for site-global identity and
 navigation on normal Discourse application pages.
@@ -33,4 +33,4 @@ navigation on normal Discourse application pages.
 
 ---
 
-> **Canonical GitHub source** · Pulled from [`docs/SCOPE.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ed1640b049763c37694f8c3bb5f9f69cbd21f658/docs/SCOPE.md) at commit [`ed1640b04976`](https://github.com/CodeWorksLabs/brand-navigation/commit/ed1640b049763c37694f8c3bb5f9f69cbd21f658) from source channel [`ed1640b049763c37694f8c3bb5f9f69cbd21f658`](https://github.com/CodeWorksLabs/brand-navigation/tree/ed1640b049763c37694f8c3bb5f9f69cbd21f658) during this site build. Use **Edit this page** below to suggest a correction at the source.
+> **Canonical GitHub source** · Generated from [`docs/SCOPE.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ed1640b049763c37694f8c3bb5f9f69cbd21f658/docs/SCOPE.md) at commit [`ed1640b04976`](https://github.com/CodeWorksLabs/brand-navigation/commit/ed1640b049763c37694f8c3bb5f9f69cbd21f658) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.

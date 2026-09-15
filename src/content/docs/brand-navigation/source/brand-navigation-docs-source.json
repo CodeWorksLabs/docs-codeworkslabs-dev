@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "generator": "codeworkslabs-brand-navigation-mirror",
+  "transformVersion": 2,
+  "repository": "CodeWorksLabs/brand-navigation",
+  "sourceCommit": "ed1640b049763c37694f8c3bb5f9f69cbd21f658",
+  "sourceChannel": "main",
+  "memberCount": 9,
+  "members": [
+    {
+      "sourcePath": "docs/USER_GUIDE.md",
+      "generatedPath": "src/content/docs/brand-navigation/source/administrator-guide.md",
+      "sourceSha256": "e59f71c7227448ef63ad10471cbcdb64a22dd1c28327fd2c8db1cedcf2a7de51",
+      "generatedSha256": "fffa19306db7bfe4d17453fd230627b08dc88c67a6c4f44821417062e739b23e"
+    },
+    {
+      "sourcePath": "docs/SCOPE.md",
+      "generatedPath": "src/content/docs/brand-navigation/source/product-scope.md",
+      "sourceSha256": "d768f9ec072be51dcb5ba9998ae2cd93239dd4400886fdcf32cd2c08fc4342a7",
+      "generatedSha256": "27715a99f8513ec9541f7c84e6e44b819ef1839c21cf264c42c6f93d038e3ed0"
+    },
+    {
+      "sourcePath": "docs/ARCHITECTURE.md",
+      "generatedPath": "src/content/docs/brand-navigation/source/architecture.md",
+      "sourceSha256": "d64261d09491384a45cad6829bce27172a4483073d19c75292f0a05dc048f43c",
+      "generatedSha256": "e0299c83e2b8d742050d2950b6f71953ccf31462b464e956ebf0849789b1d713"
+    },
+    {
+      "sourcePath": "docs/TESTING.md",
+      "generatedPath": "src/content/docs/brand-navigation/source/testing-record.md",
+      "sourceSha256": "dcee1b9d8371b764e0a7668a2e2a40ab8796f64b23e77d1052ec496f37d87d63",
+      "generatedSha256": "a2b4f7f0aac54573423b1f95be7907662908ffae5fcd4344458b843bfe67447f"
+    },
+    {
+      "sourcePath": "docs/MIGRATION.md",
+      "generatedPath": "src/content/docs/brand-navigation/source/migration-record.md",
+      "sourceSha256": "986c1f4fbe883ed088242f3b867c6c3fdb71f4c5910a1a35d02c622130812f3c",
+      "generatedSha256": "f390bcf4f027231562c4895f8e7d063bccb2ed4aea1ae988c46d4ebfa0f79432"
+    },
+    {
+      "sourcePath": "CHANGELOG.md",
+      "generatedPath": "src/content/docs/brand-navigation/source/complete-changelog.md",
+      "sourceSha256": "82f192fcfce0521904c0d84948a5f1f97a9a81a3a6be857c0a6fbcd9ef3e56e0",
+      "generatedSha256": "4067f57ae493fafc0a03fb1444eeff9c78b7e1064e24919a0d43e16ed63f057d"
+    },
+    {
+      "sourcePath": "SECURITY.md",
+      "generatedPath": "src/content/docs/brand-navigation/source/security-policy.md",
+      "sourceSha256": "409d49819986139e7f2233eaa4a073edb1ceb46ade6c8063df1d3c33a8c93827",
+      "generatedSha256": "2b574a62aff8493e4807fff096f6ced5c63b6e74f1e64344a08f6e48f2c9edb0"
+    },
+    {
+      "sourcePath": "docs/ATTRIBUTION.md",
+      "generatedPath": "src/content/docs/brand-navigation/source/attribution.md",
+      "sourceSha256": "8deed81d509178a2203b231ec2b41c4a3327f936c05c2a4007efa259679607f4",
+      "generatedSha256": "65db85c73d26bb28eddf790c9431789b890ee21468679eb84bd2b6f85da22bd2"
+    },
+    {
+      "sourcePath": "docs/PROVENANCE.md",
+      "generatedPath": "src/content/docs/brand-navigation/source/provenance.md",
+      "sourceSha256": "7c308fe22f0c922b172d660ed8f45da6da66e8ddf8d6dcc194294f2053a2a0be",
+      "generatedSha256": "4b5d4be5c30ce1250f7d9065b9ca7d4ed3ab0e476db5f2a75e3fb0c1a54607a5"
+    }
+  ]
+}

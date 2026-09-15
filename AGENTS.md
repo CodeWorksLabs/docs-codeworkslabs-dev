@@ -10,7 +10,17 @@ This repository owns the source for `docs.codeworkslabs.dev` and nothing outside
 - Preserve the exact public ownership wording: `© 2026 CodeWorksLabs, a WebSynergetics property.`
 - Public repository access does not grant rights to artwork unless a file explicitly says otherwise.
 
-Brand Navigation source records are synchronized during build. Ordinary and
-deterministic builds default to exact commit
-`ed1640b049763c37694f8c3bb5f9f69cbd21f658`; an operator may explicitly set
-`BRAND_NAVIGATION_DOCS_REF` to another intended ref.
+Brand Navigation source records are committed build inputs. Ordinary local,
+CI, and Cloudflare builds run `npm run verify:brand-navigation`, which is
+read-only and offline. They must never fetch or rewrite Brand Navigation
+content.
+
+`npm run sync:brand-navigation -- <exact-40-character-commit>` is an explicit
+maintainer refresh operation. It accepts no branch, tag, short SHA, default, or
+fallback. Coordinate the source commit and provenance constraints with Brand
+Navigation ownership before refreshing, then review and commit the complete
+generated-page set together with the colocated
+`src/content/docs/brand-navigation/source/brand-navigation-docs-source.json`.
+The refresh command writes only a transaction-unique advisory candidate under
+the operating-system temporary directory. It never changes the tracked mirror
+or Git. Applying a candidate is a separate, explicitly authorized Git change.

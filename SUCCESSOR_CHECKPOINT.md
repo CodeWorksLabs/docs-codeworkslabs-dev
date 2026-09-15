@@ -1,5 +1,56 @@
 # Successor checkpoint
 
+## Brand Navigation offline build boundary — 2026-09-14
+
+- Focused review `CWL-DOCS-BN-OFFLINE-20260913-F1` blocked the first candidate
+  on exact commit-object proof and crash recovery, with raw-byte hashing and
+  bounded downloads as P2 findings. The current replacement batch addresses
+  all four findings. Replacement `F1-R1` closed exact identity and both P2s but
+  remained blocked on concurrent in-place refresh ownership and unsupported
+  power-loss durability. The authorized second replacement removes in-place
+  installation entirely and is awaiting review; it is not accepted, committed,
+  pushed, deployed, or published.
+
+- Ordinary local, CI, and Cloudflare builds run a read-only offline verifier
+  against committed Brand Navigation pages and
+  the colocated `source/brand-navigation-docs-source.json`; builds no longer fetch GitHub or rewrite
+  cross-product content.
+- The manifest binds the exact nine-member mapping to repository
+  `CodeWorksLabs/brand-navigation`, source commit
+  `ed1640b049763c37694f8c3bb5f9f69cbd21f658`, editable channel `main`, source
+  hashes, generated hashes, and transform identity.
+- Explicit maintainer refresh requires one exact lowercase 40-character commit,
+  proves the exact GitHub commit object and absence of a same-named branch/tag,
+  validates bounded streams for all nine upstream documents, and writes one
+  complete verified advisory candidate to a transaction-unique temporary
+  directory without changing the tracked estate or Git. Moving
+  refs, defaults, short SHAs, and fallbacks are rejected.
+- The wrapper now correctly separates immutable source/commit links from the
+  `main` edit channel and truthfully says an ordinary build verified the
+  committed mirror. Brand Navigation body content, routes, sidebar, titles,
+  descriptions, attribution, and licensing are unchanged.
+- Focused tests deny network access during a full ordinary build, prove the
+  committed mirror remains unchanged, and reject tampered, missing, extra,
+  manifest-mismatched, or provenance-mismatched pages.
+- Concurrent-run and interruption tests prove that candidate directories are
+  disjoint, failures can remove only their own candidate, and the tracked estate
+  remains byte-identical. There is no shared journal, backup, production swap,
+  recovery state machine, or durability claim.
+- Commit-object, SHA-shaped branch/tag, mismatched identity, redirect,
+  rate-limit/server-error, malformed-response, raw-byte/UTF-8, per-member size,
+  aggregate size, boundary-size, and no-mutation negative cases are covered.
+- Replacement verification on 2026-09-14 passed all 26 focused tests, both
+  production-only and complete dependency audits with zero vulnerabilities,
+  `astro check` with zero diagnostics, the 33-page production build, Pagefind,
+  sitemap generation, and the Wrangler deployment dry run. No deployment ran.
+- A real exact-commit refresh produced the verified advisory candidate at
+  `C:\Users\Owner\AppData\Local\Temp\codeworkslabs-brand-navigation-ed1640b04976-HzzmIT`
+  while leaving the tracked Brand Navigation estate byte-identical. Retain that
+  candidate for the pending Brand Navigation closure inspection; it is not an
+  installed or publishable site state.
+- Preserve the four pre-existing Analytics documentation commits beneath this
+  correction. No push, Cloudflare deployment, or publication is authorized.
+
 ## Analytics for Astro alpha.13 correction documentation — 2026-09-13
 
 - The generated section is synchronized from exact private product commit
@@ -58,7 +109,7 @@
   three high-severity Miniflare/sharp development-tool advisories. Both the
   complete and production-only audits must be clean at freeze.
 
-Updated: 2026-09-13
+Updated: 2026-09-14
 
 ## Current state
 
@@ -77,7 +128,9 @@ Run `npm ci`, `npm audit --omit=dev`, `npm run build`, and `npm run deploy:dry-r
 
 ## Boundaries
 
-Brand Navigation source records are synchronized during build. Deterministic verification pins `BRAND_NAVIGATION_DOCS_REF=ed1640b049763c37694f8c3bb5f9f69cbd21f658`; ordinary builds intentionally default to `main`.
+Brand Navigation source records are committed build inputs verified offline.
+Only the explicit exact-commit maintainer refresh command may fetch and rewrite
+them; `main` is contributor-routing metadata, not refresh authority.
 
 ## Analytics for Astro publication — 2026-09-12
 

@@ -6,9 +6,11 @@
   "scripts": {
     "sync:astro-analytics": "node scripts/sync-analytics-for-astro-docs.mjs",
     "sync:brand-navigation": "node scripts/sync-brand-navigation-docs.mjs",
+    "verify:brand-navigation": "node scripts/verify-brand-navigation-docs.mjs",
+    "test:brand-navigation": "node --test tests/brand-navigation-docs-pipeline.test.mjs",
     "dev": "astro dev",
     "check": "astro check",
-    "prebuild": "npm run sync:brand-navigation",
+    "prebuild": "npm run verify:brand-navigation",
     "build": "astro build",
     "preview": "astro preview",
     "deploy:dry-run": "wrangler deploy --dry-run --config wrangler.jsonc",

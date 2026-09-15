@@ -1,7 +1,7 @@
 ---
 title: "Administrator guide"
 description: "The complete administrator workflow from the Brand Navigation repository."
-editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/ed1640b049763c37694f8c3bb5f9f69cbd21f658/docs/USER_GUIDE.md
+editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/USER_GUIDE.md
 ---
 This guide explains how to install, configure, verify, and disable Brand
 Navigation. The component adds site-wide brand identity and one-level
@@ -438,4 +438,4 @@ and color scheme before adding parent-theme overrides.
 
 ---
 
-> **Canonical GitHub source** · Pulled from [`docs/USER_GUIDE.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ed1640b049763c37694f8c3bb5f9f69cbd21f658/docs/USER_GUIDE.md) at commit [`ed1640b04976`](https://github.com/CodeWorksLabs/brand-navigation/commit/ed1640b049763c37694f8c3bb5f9f69cbd21f658) from source channel [`ed1640b049763c37694f8c3bb5f9f69cbd21f658`](https://github.com/CodeWorksLabs/brand-navigation/tree/ed1640b049763c37694f8c3bb5f9f69cbd21f658) during this site build. Use **Edit this page** below to suggest a correction at the source.
+> **Canonical GitHub source** · Generated from [`docs/USER_GUIDE.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ed1640b049763c37694f8c3bb5f9f69cbd21f658/docs/USER_GUIDE.md) at commit [`ed1640b04976`](https://github.com/CodeWorksLabs/brand-navigation/commit/ed1640b049763c37694f8c3bb5f9f69cbd21f658) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
