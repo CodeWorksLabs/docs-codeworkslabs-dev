@@ -3,9 +3,9 @@ import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-const sourceRef = "b7f81f7da106229dfa9112b8851788b69f46b88e";
-const expectedCommit = "b7f81f7da106229dfa9112b8851788b69f46b88e";
-const expectedVersion = "0.1.0-alpha.19";
+const sourceRef = "ae6a9884e3cada297f11c641a90082f296380bcb";
+const expectedCommit = "ae6a9884e3cada297f11c641a90082f296380bcb";
+const expectedVersion = "0.1.0-alpha.20";
 const rootArgument = process.argv[2] === "--root" ? process.argv[3] : undefined;
 if (process.argv[2] === "--root" && !rootArgument) throw new Error("Verification root is required.");
 const siteRoot = rootArgument ?? process.cwd();
@@ -129,6 +129,7 @@ const pages = [
   {
     source: "docs/runtime-and-safety.md",
     target: "runtime-and-safety.md",
+    sourceTitle: "Runtime behavior and safety",
     title: "Runtime and safety model",
     description: "Browser ownership, lifecycle, failure isolation, and privacy boundaries.",
   },
