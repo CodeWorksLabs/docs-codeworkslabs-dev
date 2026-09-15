@@ -39,7 +39,7 @@ source-control operation under separate authority. If tracked files are ever
 changed manually, `npm run verify:brand-navigation` and Git status expose drift;
 recover them through the ordinary authorized Git workflow.
 
-Analytics for Astro pages are imported locally from the exact private product
+Analytics for Astro pages are imported locally from the exact public product
 commit recorded in `analytics-docs-source.json`. CI has no product-repository
 credential: it verifies the committed public documentation snapshot and its
 per-file hashes, then requires a clean generated-doc diff.

@@ -1,20 +1,20 @@
 {
   "repository": "CodeWorksLabs/astro-analytics",
-  "ref": "561f1a2f2e59a310a4516572a0457e9aa609eb89",
-  "commit": "561f1a2f2e59a310a4516572a0457e9aa609eb89",
-  "version": "0.1.0-alpha.13",
+  "ref": "b7f81f7da106229dfa9112b8851788b69f46b88e",
+  "commit": "b7f81f7da106229dfa9112b8851788b69f46b88e",
+  "version": "0.1.0-alpha.19",
   "files": [
     {
       "path": "src/content/docs/analytics-for-astro/index.md",
-      "sha256": "d516bfabf7d97a8632713cc1fd5dd7fe5393073bd65c994ba9b3194e1c943e71"
+      "sha256": "ef23dba3e23c941a35ecb83237762ae7f851cef889374726186f8bdf406becbe"
     },
     {
       "path": "src/content/docs/analytics-for-astro/getting-started.md",
-      "sha256": "8c67025c96d776da8f4d9026e1deec84739e56598f9ad77dfeaa1f8adf7b0056"
+      "sha256": "3eefdccdb47921be7b1576a66b7461e023e373d51728133977397abea6f7f56d"
     },
     {
       "path": "src/content/docs/analytics-for-astro/configuration.md",
-      "sha256": "000b746eee8dd98522faedd99baef0c3ce24b989e09c4dcf3877c86dc093bde6"
+      "sha256": "e2040b8b6f083b82384ba89982ebb69bf2f5c4f363bf89145970d3f60cbb030f"
     },
     {
       "path": "src/content/docs/analytics-for-astro/api-reference.md",
@@ -30,7 +30,7 @@
     },
     {
       "path": "src/content/docs/analytics-for-astro/runtime-and-safety.md",
-      "sha256": "1a90c0f64af9b79c9ed6a487abb396ecaacdd913e4debbab42ba3306d9793146"
+      "sha256": "ce3a5b8a80f526f68b83496127ab7fd7c7d76affd4b85b1d1a4d21bed4f3b3c8"
     },
     {
       "path": "src/content/docs/analytics-for-astro/development.md",
@@ -38,11 +38,11 @@
     },
     {
       "path": "src/content/docs/analytics-for-astro/versioning-and-releases.md",
-      "sha256": "0ea122668b7e8821439767e2134954c1715d718441224a819c9dad7e3392443f"
+      "sha256": "3f827ce14817ed79eb3750d02bb9808e6be3836ab3b59f84fefecca6d35b7238"
     },
     {
       "path": "src/content/docs/analytics-for-astro/release-notes.md",
-      "sha256": "d342a2c0050cc232996b93be0b63e691c5a3a54078b711a08ffd6e3d124af9a3"
+      "sha256": "d3712f7eb12628d29e2467b280d30a2b20ff624afe12302d10ffbdfe72e20d7a"
     }
   ]
 }

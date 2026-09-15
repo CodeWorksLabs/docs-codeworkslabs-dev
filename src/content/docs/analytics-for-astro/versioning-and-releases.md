@@ -18,20 +18,37 @@ consumer qualification on September 13, 2026: Astro 7.3.2 and Starlight 0.42.0
 with Astro 7.3.2, both on Node.js 22.22.2.
 Starlight 0.41.11 with Astro 7.3.2 was qualified for alpha.3 on September 11,
 2026; it remains peer-eligible, but that historical result is not current
-alpha.13 execution evidence. Other versions admitted by the bounded peer ranges
+alpha.19 execution evidence. Other versions admitted by the bounded peer ranges
 are not yet compatibility claims.
 
 ## Current line
 
-The current Milestone 2 candidate is `0.1.0-alpha.13`:
+The current Milestone 2 candidate is `0.1.0-alpha.19`:
 
 - `0.1.0` identifies the first pre-stable feature line.
 - `alpha` states that the package is incomplete and not production-ready.
+- `.19` closes F8 findings for blocked initial referrers, first-clean
+  ClientRouter readiness/context, Matomo recovery context, consumer CI source
+  identity, sandbox expiry feedback, and successor continuity.
+- `.18` extends blocked-query privacy across the complete runtime lifecycle,
+  rejects sparse parameter lists, and binds sandbox expiry to one attempt.
+- `.17` adds a pre-initialization privacy boundary for blocked query parameters,
+  corrects the F6 sandbox journey contract, and refreshes shipped version truth.
+- `.16` replaces the noncanonical alpha.15 package bytes with an archive built
+  from exact Git-tree content and corrects the operative F5 review record. Its
+  package runtime remains unchanged from alpha.14.
+- `.15` corrects the shipped current-state and review record after F4. Its
+  package runtime is unchanged from alpha.14; exact replacement artifact,
+  consumer, documentation, and simultaneous-review gates determine its disposition.
+- `.14` preserves normalized GA4 configuration as data—including reserved own
+  property names—through inline bootstrap serialization. It also corrects
+  repository-visibility documentation. Exact-package consumer qualification
+  and replacement review determine its disposition.
 - `.13` identifies the correction for exact Fathom vendor/method provenance,
   failure-gap invalidation, same-URL in-flight protection, empty-referrer
   handling, partial setup cleanup, and reproducible package/CI controls.
-  Exact-package consumer qualification and replacement review determine its
-  disposition.
+  Its product-runtime gates passed, but complete-family review found the GA4
+  serialization defect and blocking sandbox journey behavior; it is superseded.
 - `.12` identifies the doctrine-complete F1 correction: lifecycle fallback and
   `none`-mode reentry, virtual referrers, exact script/global provenance,
   non-destructive cleanup, and hardened sandbox receipt behavior. Its F2 review
@@ -39,8 +56,8 @@ The current Milestone 2 candidate is `0.1.0-alpha.13`:
 - `.11` identifies the cross-provider correction that gives Fathom, Plausible,
   GA4, and Matomo the completion-identity behavior already established for
   Umami, and closes readiness when Astro navigation observation is unavailable.
-  Its clean stock Astro and Starlight consumer gates passed; doctrine-complete
-  review remains open.
+  Its clean stock Astro and Starlight consumer gates passed; later
+  doctrine-complete review superseded it.
 - `.10` identifies the immutable source-tagged Umami same-URL correction. It
   completed its package, sandbox, browser-runtime, and provider-side live gates,
   but the later doctrine-complete readiness working review found the equivalent
@@ -114,7 +131,7 @@ repository-driven sandbox, browser-runtime, and provider-side live gates by
 September 13, 2026. The later doctrine-complete readiness working review found
 cross-provider completion-identity and observer-readiness defects, so those
 earlier results remain historical evidence rather than an RC disposition.
-Alpha.13 is the working correction. The line may advance to an RC only after its
+Alpha.18 is the working correction. The line may advance to an RC only after its
 exact package completes clean consumer qualification and simultaneous internal
 and external review closes without a blocking disposition.
 

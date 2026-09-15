@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "sync:astro-analytics": "node scripts/sync-analytics-for-astro-docs.mjs",
+    "test:astro-analytics-docs": "node --test tests/analytics-docs-pipeline.test.mjs",
     "sync:brand-navigation": "node scripts/sync-brand-navigation-docs.mjs",
     "verify:brand-navigation": "node scripts/verify-brand-navigation-docs.mjs",
     "test:brand-navigation": "node --test tests/brand-navigation-docs-pipeline.test.mjs",

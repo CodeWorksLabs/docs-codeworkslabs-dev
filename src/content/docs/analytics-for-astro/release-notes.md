@@ -11,6 +11,53 @@ release claim.
 
 ## Unreleased
 
+## 0.1.0-alpha.19 - Candidate
+
+- Screen blocked query identities from initial referrer context across all five
+  adapters and event/pageview modes.
+- Carry an initial blocked-to-clean ClientRouter completion into newly started
+  runtimes without emitting a synthetic baseline pageview.
+- Establish Matomo's first clean recovery context before accepting events.
+- Make sandbox expiry-cleanup failure feedback truthful and reconcile consumer
+  CI source identities with the admitted package content.
+
+## 0.1.0-alpha.18 - Candidate
+
+- Enforce blocked-query privacy throughout ClientRouter navigation, provider
+  readiness, prerender activation, event dispatch, and virtual-referrer state.
+- Reject sparse blocked-parameter arrays and add real five-provider lifecycle
+  coverage with clean recovery after a blocked route.
+- Bind sandbox journey-expiry callbacks to their originating pending receipt.
+
+## 0.1.0-alpha.17 - Candidate
+
+- Add a fail-closed `blockedQueryParameters` boundary that suppresses the
+  complete analytics runtime before provider or event-client initialization.
+- Correct the shipped current-version record identified by F6 review.
+
+## 0.1.0-alpha.16 - Candidate
+
+- Rebuild the immutable candidate archive from canonical Git-tree bytes so
+  every shipped member is exactly reproducible across checkout platforms.
+- Correct the operative F5 review record while preserving the alpha.14 runtime
+  unchanged.
+
+## 0.1.0-alpha.15 - Candidate
+
+- Reconcile shipped versioning and review-status documentation with the F4
+  alpha.14 package/runtime pass and complete-family sandbox block.
+- Preserve the alpha.14 runtime unchanged while assigning a new immutable
+  candidate version because the packaged documentation bytes changed.
+
+## 0.1.0-alpha.14 - Candidate
+
+- Preserve GA4 configuration as parsed data through generated inline bootstrap
+  code, including reserved own property names such as `__proto__`.
+- Escape inline-script terminators in serialized runtime options and add a
+  runtime regression proving both properties.
+- Correct repository-visibility and current-candidate documentation after the
+  alpha.13 complete-family review.
+
 ## 0.1.0-alpha.13 - Candidate
 
 - Bind Fathom readiness and event acceptance to the exact load-proven vendor

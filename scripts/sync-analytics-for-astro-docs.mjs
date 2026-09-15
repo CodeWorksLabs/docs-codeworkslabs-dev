@@ -1,13 +1,16 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-const sourceRef = "561f1a2f2e59a310a4516572a0457e9aa609eb89";
-const expectedCommit = "561f1a2f2e59a310a4516572a0457e9aa609eb89";
-const expectedVersion = "0.1.0-alpha.13";
-const suppliedSourceRoot = process.argv[2];
-const sourceManifestPath = join(process.cwd(), "analytics-docs-source.json");
+const sourceRef = "b7f81f7da106229dfa9112b8851788b69f46b88e";
+const expectedCommit = "b7f81f7da106229dfa9112b8851788b69f46b88e";
+const expectedVersion = "0.1.0-alpha.19";
+const rootArgument = process.argv[2] === "--root" ? process.argv[3] : undefined;
+if (process.argv[2] === "--root" && !rootArgument) throw new Error("Verification root is required.");
+const siteRoot = rootArgument ?? process.cwd();
+const suppliedSourceRoot = rootArgument ? undefined : process.argv[2];
+const sourceManifestPath = join(siteRoot, "analytics-docs-source.json");
 const expectedPagePaths = [
   "src/content/docs/analytics-for-astro/index.md",
   "src/content/docs/analytics-for-astro/getting-started.md",
@@ -20,6 +23,7 @@ const expectedPagePaths = [
   "src/content/docs/analytics-for-astro/versioning-and-releases.md",
   "src/content/docs/analytics-for-astro/release-notes.md",
 ];
+const targetRoot = join(siteRoot, "src", "content", "docs", "analytics-for-astro");
 
 if (!suppliedSourceRoot) {
   const manifest = JSON.parse(readFileSync(sourceManifestPath, "utf8"));
@@ -29,12 +33,20 @@ if (!suppliedSourceRoot) {
       manifest.files.length !== expectedPagePaths.length) {
     throw new Error("Analytics documentation source manifest identity is invalid.");
   }
+  const expectedNames = expectedPagePaths.map((path) => path.slice(path.lastIndexOf("/") + 1)).sort();
+  const actualEntries = readdirSync(targetRoot, { withFileTypes: true });
+  const actualNames = actualEntries.map((entry) => entry.name).sort();
+  if (actualEntries.some((entry) => !entry.isFile()) ||
+      actualNames.length !== expectedNames.length ||
+      actualNames.some((name, index) => name !== expectedNames[index])) {
+    throw new Error("Analytics documentation generated page set is invalid.");
+  }
   for (const [index, file] of manifest.files.entries()) {
     if (file?.path !== expectedPagePaths[index] ||
         typeof file?.sha256 !== "string" || !/^[a-f0-9]{64}$/u.test(file.sha256)) {
       throw new Error("Analytics documentation source manifest file entry is invalid.");
     }
-    const content = readFileSync(join(process.cwd(), file.path));
+    const content = readFileSync(join(siteRoot, file.path));
     const sha256 = createHash("sha256").update(content).digest("hex");
     if (sha256 !== file.sha256) throw new Error(`Analytics documentation drift: ${file.path}`);
   }
@@ -141,14 +153,6 @@ const pages = [
   },
 ];
 
-const targetRoot = join(
-  process.cwd(),
-  "src",
-  "content",
-  "docs",
-  "analytics-for-astro",
-);
-
 const rewriteLinks = (body) => body
   .replaceAll("(../CHANGELOG.md)", "(/analytics-for-astro/release-notes/)")
   .replace(/\((?:\.\/)?([a-z0-9-]+)\.md\)/giu, "(/analytics-for-astro/$1/)");
@@ -204,7 +208,7 @@ writeFileSync(sourceManifestPath, `${JSON.stringify({
   commit: expectedCommit,
   version: expectedVersion,
   files: renderedPages.map((page) => ({
-    path: page.target.slice(process.cwd().length + 1).replaceAll("\\", "/"),
+    path: page.target.slice(siteRoot.length + 1).replaceAll("\\", "/"),
     sha256: createHash("sha256").update(page.content).digest("hex"),
   })),
 }, null, 2)}\n`, "utf8");

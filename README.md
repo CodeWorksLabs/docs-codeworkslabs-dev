@@ -11,6 +11,7 @@ Cloudflare Worker configuration name: `docs-codeworkslabs-dev`
 npm ci
 npm audit --omit=dev
 npm run sync:astro-analytics
+npm run test:astro-analytics-docs
 npm run test:brand-navigation
 npm run check
 npm run build

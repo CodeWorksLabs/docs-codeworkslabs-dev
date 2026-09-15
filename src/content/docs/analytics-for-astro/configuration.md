@@ -20,6 +20,7 @@ Milestone 2 adapters.
 | `enabled` | `boolean` | `true` | Master integration switch |
 | `environments` | object | Production only | Selects Astro config-setup commands that may inject analytics |
 | `events` | `boolean` or deprecated options object | `false` | `true` installs the package event client; the legacy object form is accepted as enabled compatibility input |
+| `blockedQueryParameters` | unique parameter-name array | `[]` | Suppresses the complete runtime on matching routes and screens provider-bound referrer context |
 | `debug` | `boolean` | `false` | Reserved normalized setting; Milestone 2 emits no debug output |
 
 Only the listed keys are accepted.
@@ -29,6 +30,14 @@ runtime adapter owns each provider identity. An empty array is rejected; use
 `providers: false` to disable analytics. Simultaneous sources belong in one
 `providers` array so pageview, consent, readiness, and event outcomes remain
 independent and observable.
+
+`blockedQueryParameters` accepts at most 32 non-empty, unpadded names of at
+most 128 characters each. It is intended for one-time handoff tokens and other
+URL state that must never reach analytics providers. A matching current URL fails
+closed: no provider script, pageview adapter, or public event client is
+available on that route. Initial document-referrer context is screened by the
+same rule, including after a clean ClientRouter transition, so blocked identity
+cannot reach provider pageview or event payloads through a referrer fallback.
 
 ## Environments
 
