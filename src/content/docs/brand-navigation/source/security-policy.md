@@ -30,4 +30,4 @@ feature requests.
 
 ---
 
-> **Canonical GitHub source** · Generated from [`SECURITY.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ed1640b049763c37694f8c3bb5f9f69cbd21f658/SECURITY.md) at commit [`ed1640b04976`](https://github.com/CodeWorksLabs/brand-navigation/commit/ed1640b049763c37694f8c3bb5f9f69cbd21f658) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
+> **Canonical GitHub source** · Generated from [`SECURITY.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/8cd82e099fd181e0b3403ea2181190d12abcf037/SECURITY.md) at commit [`8cd82e099fd1`](https://github.com/CodeWorksLabs/brand-navigation/commit/8cd82e099fd181e0b3403ea2181190d12abcf037) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.

@@ -39,9 +39,10 @@ fixture. It was assembled from observed Brand Header, Dropdown Header, and
 Custom Header Links (icons) settings and is also useful for exercising larger
 menus, external destinations, icon-only links, and left/right sections.
 
-The `v0.9.x` preview line intentionally provides no credentialed command-line
-apply/export client. A local checkout can validate a saved bundle without
-contacting a forum by running
+`v1.0.0-rc.1` intentionally provides no credentialed command-line apply/export
+client; adding one would be future product scope rather than part of the current
+RC. A local checkout can validate a saved bundle without contacting a forum by
+running
 `pnpm bundle validate configurations/repeal-obbba.json`. Logo uploads remain a
 separate site-local step.
 
@@ -212,4 +213,4 @@ that resolved ref into **Branch**.
 
 ---
 
-> **Canonical GitHub source** · Generated from [`docs/MIGRATION.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ed1640b049763c37694f8c3bb5f9f69cbd21f658/docs/MIGRATION.md) at commit [`ed1640b04976`](https://github.com/CodeWorksLabs/brand-navigation/commit/ed1640b049763c37694f8c3bb5f9f69cbd21f658) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
+> **Canonical GitHub source** · Generated from [`docs/MIGRATION.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/8cd82e099fd181e0b3403ea2181190d12abcf037/docs/MIGRATION.md) at commit [`8cd82e099fd1`](https://github.com/CodeWorksLabs/brand-navigation/commit/8cd82e099fd181e0b3403ea2181190d12abcf037) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
