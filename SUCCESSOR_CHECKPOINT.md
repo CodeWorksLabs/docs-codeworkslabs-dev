@@ -18,12 +18,16 @@ Updated: 2026-09-14
 
 ## Live state
 
-- The live Cloudflare Worker remains
-  `609a49a8-0527-463e-a581-92188099ba0f`.
-- The live Analytics documentation remains the earlier generation until the
-  qualified Alpha.20 documentation commit is deployed.
-- `https://docs.codeworkslabs.dev/astro-analytics/` returned HTTP 200 during
-  the 2026-09-14 recovery inventory.
+- The live Cloudflare Worker version is
+  `1174f504-6510-459b-90e5-a68a436bedb2`.
+- It deploys the Alpha.20 documentation source commit
+  `fa3a5f38fc52348d4c30bf008f7c755d33acaa2f`.
+- All ten public `/analytics-for-astro/` routes returned HTTP 200 after
+  deployment. Their combined output contains Alpha.20 and its exact source
+  commit, with zero Alpha.19 or `doctrine-complete` matches.
+- The deployment also publishes the previously accepted, locally committed
+  Brand Navigation documentation. The Alpha.20 refresh changed no Brand
+  Navigation source or pipeline byte.
 
 ## Verification state
 
@@ -41,5 +45,6 @@ Updated: 2026-09-14
 - The complete pre-cleanup local history is preserved in
   `C:\CodeProjects\Archives\Astro Analytics Recovery\2026-09-14\docs-site-before-cleanup.bundle`.
 - Brand Navigation is closed and must not be reopened as Analytics repair work.
-- Phil authorized the Alpha.20 documentation refresh, push, and deployment.
-  Record the resulting source commit and Worker version after publication.
+- The Alpha.20 documentation refresh is pushed, deployed, and publicly
+  verified. Future product or documentation changes require a new bounded
+  update.
