@@ -1,7 +1,7 @@
 ---
 title: "Security policy"
 description: "The canonical Brand Navigation security and supported-version policy."
-editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/SECURITY.md
+editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/ed1640b049763c37694f8c3bb5f9f69cbd21f658/SECURITY.md
 ---
 ## Supported versions
 
@@ -30,4 +30,4 @@ feature requests.
 
 ---
 
-> **Canonical GitHub source** · Pulled from [`SECURITY.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ed1640b049763c37694f8c3bb5f9f69cbd21f658/SECURITY.md) at commit [`ed1640b04976`](https://github.com/CodeWorksLabs/brand-navigation/commit/ed1640b049763c37694f8c3bb5f9f69cbd21f658) from source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main) during this site build. Use **Edit this page** below to suggest a correction at the source.
+> **Canonical GitHub source** · Pulled from [`SECURITY.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ed1640b049763c37694f8c3bb5f9f69cbd21f658/SECURITY.md) at commit [`ed1640b04976`](https://github.com/CodeWorksLabs/brand-navigation/commit/ed1640b049763c37694f8c3bb5f9f69cbd21f658) from source channel [`ed1640b049763c37694f8c3bb5f9f69cbd21f658`](https://github.com/CodeWorksLabs/brand-navigation/tree/ed1640b049763c37694f8c3bb5f9f69cbd21f658) during this site build. Use **Edit this page** below to suggest a correction at the source.

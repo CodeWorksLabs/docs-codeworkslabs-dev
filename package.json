@@ -7,6 +7,7 @@
     "sync:astro-analytics": "node scripts/sync-analytics-for-astro-docs.mjs",
     "sync:brand-navigation": "node scripts/sync-brand-navigation-docs.mjs",
     "dev": "astro dev",
+    "check": "astro check",
     "prebuild": "npm run sync:brand-navigation",
     "build": "astro build",
     "preview": "astro preview",
@@ -18,6 +19,8 @@
     "astro": "^7.1.1"
   },
   "devDependencies": {
-    "wrangler": "4.123.0"
+    "@astrojs/check": "0.9.6",
+    "typescript": "5.9.3",
+    "wrangler": "4.131.1"
   }
 }

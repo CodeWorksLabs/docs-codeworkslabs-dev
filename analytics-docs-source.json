@@ -1,0 +1,48 @@
+{
+  "repository": "CodeWorksLabs/astro-analytics",
+  "ref": "561f1a2f2e59a310a4516572a0457e9aa609eb89",
+  "commit": "561f1a2f2e59a310a4516572a0457e9aa609eb89",
+  "version": "0.1.0-alpha.13",
+  "files": [
+    {
+      "path": "src/content/docs/analytics-for-astro/index.md",
+      "sha256": "d516bfabf7d97a8632713cc1fd5dd7fe5393073bd65c994ba9b3194e1c943e71"
+    },
+    {
+      "path": "src/content/docs/analytics-for-astro/getting-started.md",
+      "sha256": "8c67025c96d776da8f4d9026e1deec84739e56598f9ad77dfeaa1f8adf7b0056"
+    },
+    {
+      "path": "src/content/docs/analytics-for-astro/configuration.md",
+      "sha256": "000b746eee8dd98522faedd99baef0c3ce24b989e09c4dcf3877c86dc093bde6"
+    },
+    {
+      "path": "src/content/docs/analytics-for-astro/api-reference.md",
+      "sha256": "490d320cf24c55eead92eced8f4f772aa20f1ebc68a3a61ab45775dc13c1d136"
+    },
+    {
+      "path": "src/content/docs/analytics-for-astro/events.md",
+      "sha256": "5f037723aae073fcaedb8e50dcbeb96e084c06bee7a602ba26d0a5cfd90ad05b"
+    },
+    {
+      "path": "src/content/docs/analytics-for-astro/starlight.md",
+      "sha256": "b9bf61af7c3046a62822c54ae900d031e2bf27fdc0bd1d86e980c149ec9cfea0"
+    },
+    {
+      "path": "src/content/docs/analytics-for-astro/runtime-and-safety.md",
+      "sha256": "1a90c0f64af9b79c9ed6a487abb396ecaacdd913e4debbab42ba3306d9793146"
+    },
+    {
+      "path": "src/content/docs/analytics-for-astro/development.md",
+      "sha256": "ac3963b75dd497a36a43fea8578eee4fb3d16ef13c677c8da5fcb189ffc1665b"
+    },
+    {
+      "path": "src/content/docs/analytics-for-astro/versioning-and-releases.md",
+      "sha256": "0ea122668b7e8821439767e2134954c1715d718441224a819c9dad7e3392443f"
+    },
+    {
+      "path": "src/content/docs/analytics-for-astro/release-notes.md",
+      "sha256": "d342a2c0050cc232996b93be0b63e691c5a3a54078b711a08ffd6e3d124af9a3"
+    }
+  ]
+}

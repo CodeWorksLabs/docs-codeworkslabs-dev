@@ -1,5 +1,63 @@
 # Successor checkpoint
 
+## Analytics for Astro alpha.13 correction documentation — 2026-09-13
+
+- The generated section is synchronized from exact private product commit
+  `561f1a2f2e59a310a4516572a0457e9aa609eb89`, version `0.1.0-alpha.13`.
+- `analytics-docs-source.json` records the exact product identity and SHA-256
+  for each of the ten public pages. CI needs no cross-repository credential: it
+  verifies this self-contained public snapshot and requires a clean diff.
+- Stale alpha.12, public-repository, review-status, and omitted-Umami event
+  claims are corrected from the product source.
+- The workflow now verifies Analytics for Astro synchronization, runs
+  `astro check`, builds the site, requires the complete repository to remain
+  reproducible, and performs only a Wrangler dry-run.
+- Brand Navigation ordinary builds and recovery instructions now accurately
+  name the existing exact default commit instead of claiming a mutable `main`
+  default.
+- The documentation changes remain local. A push to this repository's own
+  `main` triggers Cloudflare deployment and is prohibited during this review
+  cycle. Do not publish or deploy.
+
+## Historical Analytics for Astro alpha.12 review documentation — 2026-09-13
+
+- Review freeze: `AFA-RC-READINESS-20260913-F2` (pending exact commit).
+- The generated Analytics for Astro section is bound to exact public product
+  commit `da6843ab0be4babc3886ddd5e48b0addd0325d4e`, version
+  `0.1.0-alpha.12`, before any release tag.
+- The landing page now identifies all five implemented providers without
+  claiming that this review candidate is published or fully live-qualified.
+- Ordinary and CI builds both default Brand Navigation synchronization to exact
+  commit `ed1640b049763c37694f8c3bb5f9f69cbd21f658`; an operator may still supply
+  an explicit source ref. The ordinary build no longer silently follows mutable
+  `main`.
+- `astro check` is now a required local and CI gate, with exact check and
+  TypeScript tool versions. Node.js is pinned to 22.22.2 in CI.
+- A push to this repository's own `main` triggers the production docs
+  deployment. Keep this review-freeze commit local until deployment is
+  separately authorized.
+
+## Historical Analytics for Astro alpha.11 review documentation — 2026-09-13
+
+- Working review: `AFA-RC-READINESS-20260913-W1`.
+- The generated section is bound to exact public product commit
+  `38de92eef9a819621359db856ddbbe7105e9dbce`, version
+  `0.1.0-alpha.11`, before any release tag.
+- Synchronization is a faithful candidate snapshot. It no longer applies
+  alpha.10-specific post-processing that converted source candidate claims into
+  live-qualification claims.
+- The two sandbox consumers passed their local alpha.11 gates, but their
+  review-freeze commits are not pushed because a push to each repository's own
+  `main` triggers a Cloudflare production deployment. The documentation must
+  not claim alpha.11 live qualification during this review cycle.
+- Third-party GitHub Actions are pinned to exact commit SHAs. A push to this
+  repository's own `main` also triggers the production docs deployment, so the
+  review-freeze commit must remain local until deployment is separately
+  authorized.
+- Wrangler is updated from 4.123.0 to 4.131.1 to remove the complete install's
+  three high-severity Miniflare/sharp development-tool advisories. Both the
+  complete and production-only audits must be clean at freeze.
+
 Updated: 2026-09-13
 
 ## Current state

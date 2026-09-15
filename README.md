@@ -10,7 +10,10 @@ Cloudflare Worker configuration name: `docs-codeworkslabs-dev`
 ```sh
 npm ci
 npm audit --omit=dev
+npm run sync:astro-analytics
+npm run check
 npm run build
+git diff --exit-code
 npm run deploy:dry-run
 ```
 

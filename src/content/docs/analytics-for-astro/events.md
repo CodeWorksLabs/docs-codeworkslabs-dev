@@ -33,9 +33,9 @@ copies the event before invoking `window.astroAnalytics.track()`.
 
 Milestone 2 connects the client to Fathom's `trackEvent()`, Plausible's
 `plausible()`, Google Analytics 4's `gtag()`, Matomo's `_paq`, and Umami's
-`track()` APIs. Calls made before an integration's script load is verified return
-`adapter-not-loaded`; they are not queued or retried. Unrelated preexisting
-vendor globals are not treated as package readiness.
+`umami.track()` APIs. Calls made before an integration's script load is verified return `adapter-not-loaded`; they are not
+queued or retried. Unrelated preexisting vendor globals are not treated as
+package readiness.
 
 `configuredProviders()` returns the ordered provider names owned by the current
 runtime. It is intended for diagnostics and operator-facing test surfaces; it
@@ -112,7 +112,7 @@ escaping the public result union or hiding another provider's success.
 When configuration, environment policy, and `events: true` all permit injection,
 the bootstrap defines a frozen `window.astroAnalytics` client with a frozen,
 ordered `providers` list. Its public brand is descriptive metadata, not proof of
-origin. The authenticated runtime coordinator preserves its client across
+origin. The coordinator-private runtime protocol preserves its client across
 matching page bootstraps and replaces safely replaceable unrelated values.
 Provider adapters register independently, so one adapter cannot overwrite or
 suppress another by integration order. Direct calls to this declared public

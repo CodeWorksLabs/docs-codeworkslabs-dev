@@ -1,7 +1,7 @@
 ---
 title: "Testing record"
 description: "Exact compatibility, automated, and manual evidence for Brand Navigation."
-editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/TESTING.md
+editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/ed1640b049763c37694f8c3bb5f9f69cbd21f658/docs/TESTING.md
 ---
 ## In use on
 
@@ -532,4 +532,4 @@ substitute for these human checks.
 
 ---
 
-> **Canonical GitHub source** · Pulled from [`docs/TESTING.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ed1640b049763c37694f8c3bb5f9f69cbd21f658/docs/TESTING.md) at commit [`ed1640b04976`](https://github.com/CodeWorksLabs/brand-navigation/commit/ed1640b049763c37694f8c3bb5f9f69cbd21f658) from source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main) during this site build. Use **Edit this page** below to suggest a correction at the source.
+> **Canonical GitHub source** · Pulled from [`docs/TESTING.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ed1640b049763c37694f8c3bb5f9f69cbd21f658/docs/TESTING.md) at commit [`ed1640b04976`](https://github.com/CodeWorksLabs/brand-navigation/commit/ed1640b049763c37694f8c3bb5f9f69cbd21f658) from source channel [`ed1640b049763c37694f8c3bb5f9f69cbd21f658`](https://github.com/CodeWorksLabs/brand-navigation/tree/ed1640b049763c37694f8c3bb5f9f69cbd21f658) during this site build. Use **Edit this page** below to suggest a correction at the source.

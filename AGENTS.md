@@ -10,4 +10,7 @@ This repository owns the source for `docs.codeworkslabs.dev` and nothing outside
 - Preserve the exact public ownership wording: `© 2026 CodeWorksLabs, a WebSynergetics property.`
 - Public repository access does not grant rights to artwork unless a file explicitly says otherwise.
 
-Brand Navigation source records are synchronized during build. Deterministic verification pins `BRAND_NAVIGATION_DOCS_REF=ed1640b049763c37694f8c3bb5f9f69cbd21f658`; ordinary builds intentionally default to `main`.
+Brand Navigation source records are synchronized during build. Ordinary and
+deterministic builds default to exact commit
+`ed1640b049763c37694f8c3bb5f9f69cbd21f658`; an operator may explicitly set
+`BRAND_NAVIGATION_DOCS_REF` to another intended ref.

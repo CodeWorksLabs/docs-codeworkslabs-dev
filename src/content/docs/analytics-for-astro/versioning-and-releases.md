@@ -13,31 +13,45 @@ SemVer.
 Discourse-specific compatibility branches such as `d-compat/<YYYY>.<M>` do not
 apply to this Astro package. Allowed Astro and Starlight versions are declared
 independently in `peerDependencies`; tested compatibility is a narrower evidence
-record and must be stated separately. The alpha.10 R3 artifact completed clean
-consumer qualification on September 13, 2026. Its current qualified matrix is
-Astro 7.3.2 and Starlight 0.42.0 with Astro 7.3.2, both on Node.js 22.22.2.
+record and must be stated separately. The exact alpha.11 package completed clean
+consumer qualification on September 13, 2026: Astro 7.3.2 and Starlight 0.42.0
+with Astro 7.3.2, both on Node.js 22.22.2.
 Starlight 0.41.11 with Astro 7.3.2 was qualified for alpha.3 on September 11,
 2026; it remains peer-eligible, but that historical result is not current
-alpha.10 execution evidence. Other versions admitted by the bounded peer ranges
+alpha.13 execution evidence. Other versions admitted by the bounded peer ranges
 are not yet compatibility claims.
 
 ## Current line
 
-The current Milestone 2 candidate is `0.1.0-alpha.10`:
+The current Milestone 2 candidate is `0.1.0-alpha.13`:
 
 - `0.1.0` identifies the first pre-stable feature line.
 - `alpha` states that the package is incomplete and not production-ready.
-- `.10` identifies the source-tagged correction for consecutive
-  post-readiness ClientRouter completions at the same URL. Its exact public tag
-  archive completed repository-driven stock Astro and Starlight deployment,
-  browser-runtime verification, and provider-side live qualification on
-  September 13, 2026.
+- `.13` identifies the correction for exact Fathom vendor/method provenance,
+  failure-gap invalidation, same-URL in-flight protection, empty-referrer
+  handling, partial setup cleanup, and reproducible package/CI controls.
+  Exact-package consumer qualification and replacement review determine its
+  disposition.
+- `.12` identifies the doctrine-complete F1 correction: lifecycle fallback and
+  `none`-mode reentry, virtual referrers, exact script/global provenance,
+  non-destructive cleanup, and hardened sandbox receipt behavior. Its F2 review
+  was blocking and it is superseded.
+- `.11` identifies the cross-provider correction that gives Fathom, Plausible,
+  GA4, and Matomo the completion-identity behavior already established for
+  Umami, and closes readiness when Astro navigation observation is unavailable.
+  Its clean stock Astro and Starlight consumer gates passed; doctrine-complete
+  review remains open.
+- `.10` identifies the immutable source-tagged Umami same-URL correction. It
+  completed its package, sandbox, browser-runtime, and provider-side live gates,
+  but the later doctrine-complete readiness working review found the equivalent
+  URL-only defect in the four older adapters. It is superseded and remains
+  unpublished to npm.
 - `.9` identifies the immutable source-tagged Umami adapter candidate. It
   passed those gates, but a later full committed review found that URL-only
   pageview deduplication suppressed genuine same-URL ClientRouter completions.
   It is superseded and remains unpublished to npm.
 - `.8` identifies the reviewed and live-qualified Matomo adapter candidate;
-  its public source tag is `v0.1.0-alpha.8`, while npm publication remains
+  its immutable source tag is `v0.1.0-alpha.8`, while npm publication remains
   unauthorized and absent.
 - `.7` identifies the published source tag for the corrected Google Analytics 4 adapter candidate whose
   `gtag()` queue follows Google's canonical `arguments`-object contract.
@@ -95,13 +109,14 @@ publication, site integration, or deployment. Before any release:
 The current `private: true` manifest is an additional fail-closed publication
 guard. Removing it requires separate release authorization and review.
 
-Matomo completed independent review, clean Astro and Starlight package-consumer
-qualification, repository-driven sandbox deployment, and provider-side live
-qualification on September 13, 2026. Umami alpha.10 completed the applicable
-independent review, exact source-tag package-consumer, repository-driven
-sandbox, browser-runtime, and provider-side live gates on September 13, 2026.
-All five accepted first-stable provider adapters have now closed those gates;
-RC readiness is the next product decision.
+All five adapters completed earlier focused review, clean package-consumer,
+repository-driven sandbox, browser-runtime, and provider-side live gates by
+September 13, 2026. The later doctrine-complete readiness working review found
+cross-provider completion-identity and observer-readiness defects, so those
+earlier results remain historical evidence rather than an RC disposition.
+Alpha.13 is the working correction. The line may advance to an RC only after its
+exact package completes clean consumer qualification and simultaneous internal
+and external review closes without a blocking disposition.
 
 The package does not currently advertise the `astro-integration` discovery
 keyword because `astro add` invokes a zero-argument default factory and this

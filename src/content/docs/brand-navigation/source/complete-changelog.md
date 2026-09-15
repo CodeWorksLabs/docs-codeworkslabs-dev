@@ -1,7 +1,7 @@
 ---
 title: "Complete changelog"
 description: "The complete Brand Navigation version history from the repository."
-editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/CHANGELOG.md
+editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/ed1640b049763c37694f8c3bb5f9f69cbd21f658/CHANGELOG.md
 ---
 Brand Navigation follows [Semantic Versioning](https://semver.org/). Git tags
 and matching GitHub Releases identify published versions; Discourse continues
@@ -88,4 +88,4 @@ for the documented, multi-site-tested release with no known release blockers.
 
 ---
 
-> **Canonical GitHub source** · Pulled from [`CHANGELOG.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ed1640b049763c37694f8c3bb5f9f69cbd21f658/CHANGELOG.md) at commit [`ed1640b04976`](https://github.com/CodeWorksLabs/brand-navigation/commit/ed1640b049763c37694f8c3bb5f9f69cbd21f658) from source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main) during this site build. Use **Edit this page** below to suggest a correction at the source.
+> **Canonical GitHub source** · Pulled from [`CHANGELOG.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ed1640b049763c37694f8c3bb5f9f69cbd21f658/CHANGELOG.md) at commit [`ed1640b04976`](https://github.com/CodeWorksLabs/brand-navigation/commit/ed1640b049763c37694f8c3bb5f9f69cbd21f658) from source channel [`ed1640b049763c37694f8c3bb5f9f69cbd21f658`](https://github.com/CodeWorksLabs/brand-navigation/tree/ed1640b049763c37694f8c3bb5f9f69cbd21f658) during this site build. Use **Edit this page** below to suggest a correction at the source.

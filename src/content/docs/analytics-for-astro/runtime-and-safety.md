@@ -39,6 +39,10 @@ vendor request. The eventual current send uses Fathom's normal live canonical an
 query lookup.
 Browser prerenders retain pageviews until `prerenderingchange`; abandoned
 prerenders send nothing, while activation flushes the current generation once.
+Ordinary multi-page documents establish their initial completed route at
+document readiness. Documents containing Astro's ClientRouter marker wait for
+the first `astro:page-load`; provider-script readiness alone never invents an
+initial completion. `pageviews: "none"` remains event-only on reentry.
 
 The generated bootstrap catches hostile global access and definition failures so
 analytics cannot break page execution.
@@ -51,8 +55,8 @@ script. Build with the intended policy before previewing or serving an artifact.
 
 ## Provider coordinator and single-global design
 
-The public bootstrap uses only `globalThis.astroAnalytics`. An authenticated,
-symbol-keyed coordinator retains the configured provider order and private
+The public bootstrap uses only `globalThis.astroAnalytics`. A symbol-keyed,
+coordinator-private protocol retains the configured provider order and private
 adapter registry. Each provider registers independently; the public client's
 `track()` method fans out to every configured provider and returns every result.
 One missing, blocked, or consent-pending adapter cannot hide another adapter's
@@ -60,7 +64,7 @@ success.
 
 When events are enabled, the coordinator creates a frozen client with a frozen
 ordered provider list and attempts one property definition when the current
-descriptor permits replacement. Matching page bootstraps retain the authentic
+descriptor permits replacement. Matching page bootstraps retain the
 coordinator-owned client.
 
 The `__astroAnalyticsBrand` string is descriptive metadata. It is public and
@@ -83,38 +87,49 @@ Package ownership is detected separately from configuration compatibility. If a
 connected package script has different provider settings, the later bootstrap is
 rejected instead of appending a second Fathom runtime.
 
-Authoritative coordination lives in a non-configurable, non-writable coordinator
+Coordinator-private coordination lives in a non-configurable, non-writable coordinator
 whose closure retains the current package-created generation. The document and
 script state records remain inspection surfaces; even an exact copied token,
 attribute set, descriptor shape, and self-reference on another script cannot add
 that script to the retained generation. Identical integration instances call the
 coordinator, which validates its closure-held script against the current DOM and
 configuration before reuse. The inspection state
-carries the last successfully sent browser-navigation URL as non-executable
+carries the last successfully sent completion identity as non-executable
 deduplication state, separately from the canonical payload sent to Fathom;
 the replaceable document copy and immutable script copy are never authoritative
-for callbacks, readiness, or activity. Matching reentry restores the authentic
+for callbacks, readiness, or activity. Matching reentry restores the
 closure-held state and retains its
 existing listener and callback generation. This preserves both its original
-browser URL guard and its latest completed pending post-swap navigation across
+completion guard and its latest completed pending post-swap navigation across
 reentry while the vendor is loading or the document is prerendering. Verified
 readiness remains closure-backed in that retained generation; an unrelated
 ambient Fathom API and substituted public readiness fields cannot establish or
 suppress it. Load/error callbacks also consult the coordinator-held generation,
 so temporary replacement of the inspection record cannot consume and strand a
 terminal script outcome.
-If outside code disconnects the verified script first, its saved cleanup objects
-are no longer trusted or invoked. Publishing a replacement state makes that old
-listener generation inert even if the browser retains the callback registration.
-Load and error callbacks also confirm that their generation is still the current
-document state; a late callback from a removed, superseded script is ignored.
+If Astro removes a load-proven script from the head, matching reentry retains its
+closure-held readiness and completion guard without replaying its pageview. A
+detached script that never established readiness is deactivated through its
+coordinator-private callback before a replacement generation is installed. Late
+callbacks from superseded generations are inert.
 Runtime state is published and read back before a new event client is exposed, so
 a failed publication cannot leave an untracked client outside later revocation.
 If the vendor script fails, or reports `load` without exposing Fathom's
-`trackPageview()` API, its generation is deactivated, pending page URLs are
-cleared, its Astro page-load listener is removed, and the script is disconnected
-before retry is permitted. Deactivation uses private closure state, so freezing
-the inspection-only lifecycle object cannot prevent cleanup.
+`trackPageview()` API, its generation is deactivated, pending pageviews are
+cleared, both Astro navigation listeners are removed, and the script is disconnected
+before retry is permitted. A retry cannot replay a completion captured before
+that observation gap; its first newly observed completion re-establishes route
+history without sending a pageview. Partial listener or DOM-append setup follows
+the same cleanup path. Deactivation uses private closure state, so freezing
+the inspection-only lifecycle object cannot prevent cleanup. A pageview that
+throws synchronously remains pending for bounded matching-bootstrap retry.
+
+The runtime token and symbol names are deterministic protocol identifiers so
+separately bundled copies can cooperate. They are public and forgeable, not
+authentication or authorization credentials. The boundary protects against
+accidental collisions and stale or substituted state; arbitrary same-realm code
+can still modify page globals and must be governed by the site's own script and
+Content Security Policy controls.
 
 Consent mode is a build-time choice and is immutable after an immediate runtime
 has begun loading Fathom in a document. A later conflicting pending-consent
@@ -144,34 +159,52 @@ The public `track()` helper trims and bounds event names, validates plain proper
 records, copies accepted primitive values into a new object, preserves the client
 method receiver, and normalizes the returned result to the exact public union.
 
-The Fathom adapter invokes the vendor's synchronous `trackEvent()` boundary and
+The Fathom adapter guards the initially absent `fathom` global and accepts only
+the value assigned while its exact configured script is `document.currentScript`.
+It preserves unrelated script-ID occupants and later unrelated global values,
+and every send revalidates the retained script, exact load-proven vendor object,
+and exact pageview or event method. An explicit empty referrer is never passed
+to Fathom, avoiding the vendor's truthy fallback behavior. The adapter
+invokes the vendor's synchronous `trackEvent()` boundary and
 returns success once that invocation is accepted. Delivery is controlled by
 Fathom and is not synchronously confirmed. No event is queued or persisted by
 this package. Only a non-negative safe-integer `_value` is forwarded as Fathom
 event metadata.
 
-The Plausible adapter installs the vendor's documented pre-load queue and calls
+The Plausible adapter installs the vendor's documented pre-load queue behind a
+guarded global binding and calls
 `plausible.init()` with `autoCapturePageviews: false` before appending the
 site-specific script. It rejects an occupied `plausible` global rather than
-adopting unrelated state. Script load marks the adapter ready; script failure or
-partial setup revokes its listener and owned queue. Pageviews are sent through
+adopting unrelated state. Readiness requires the exact configured script and a
+vendor function assigned while that script is `document.currentScript`; script
+failure or partial setup revokes its listener and owned queue without deleting a
+later unrelated replacement. Pageviews are sent through
 `plausible("pageview", { url })` only after Astro's lifecycle identifies the
-current destination. Custom events are sent synchronously through
+current destination. Every ready observed completion is sent even when its URL
+matches the preceding completion; pre-ready completions coalesce to the latest.
+The vendor's `transformRequest` hook replaces its document-derived referrer with
+the immediately preceding completed Astro URL.
+A missing or throwing page-load observer keeps readiness closed. Custom events are sent synchronously through
 `plausible(name, { props })`; success means the vendor call accepted the event,
 not that Plausible's server confirmed delivery. Property bags over Plausible's
 30-property limit fail before the vendor call, and numeric or boolean values are
-serialized to strings for Plausible's custom-property contract.
+serialized to strings for Plausible's custom-property contract. A pageview that
+throws synchronously remains pending for bounded matching-bootstrap retry.
 
 The Google Analytics 4 adapter refuses pre-existing `gtag` or `dataLayer`
 globals instead of adopting unrelated state. It emits configured Consent Mode
 defaults before the one `config` command, forces `send_page_view: false`, and
-marks the adapter ready only after its owned gtag.js script loads while both
-owned globals remain intact. Astro lifecycle pageviews include current location
-and title plus the preceding virtual URL as referrer. Custom events preserve up
+marks the adapter ready only after the exact configured gtag.js script loads
+while both owned globals remain intact. Every send revalidates that script's DOM
+identity, source, and package attributes. Astro lifecycle pageviews include current location
+and title plus the preceding virtual URL as referrer. Consecutive same-URL
+completions remain distinct and use that URL as the exact virtual edge. A
+missing or throwing page-load observer keeps readiness closed. Custom events preserve up
 to 25 validated primitive parameters and add the configured Measurement ID as
 `send_to`; callers cannot override that routing field. A synchronous success
 means the command entered the owned Google queue, not that Google's server has
-confirmed delivery. Sites must disable Enhanced Measurement's history-based
+confirmed delivery. A synchronously rejected pageview remains pending for
+bounded matching-bootstrap retry. Sites must disable Enhanced Measurement's history-based
 page changes to prevent duplicate SPA pageviews.
 
 The Matomo adapter refuses a pre-existing `_paq` global or occupied package
@@ -179,8 +212,11 @@ script ID instead of adopting unrelated state. It creates the standard startup
 queue, adopts Matomo's validated replacement command proxy, configures the exact
 tracker endpoint and site ID, and loads the configured
 Matomo script without an eager pageview. Script readiness activates Astro-owned
+tracking only while the exact configured script identity and load-proven global
+assignments remain intact.
 pageviews containing current URL and title plus the preceding virtual URL as
-referrer. Completed-route history survives script failure and remains separate
+referrer. Each observed completion has its own identity, so same-URL completions
+refresh title and referrer context instead of being suppressed. Completed-route history survives script failure and remains separate
 from any pending pageview. A single coordinator-owned Astro page-load observer
 continues recording completed routes while a vendor generation is inactive,
 allowing retry and in-flight navigation to recover without losing the current
@@ -200,7 +236,8 @@ requires prior successful script-load validation and the retained command proxy'
 API to remain callable. A matching bootstrap may requalify the exact retained,
 load-proven Matomo identities after a transient command exception once that same
 proxy is callable again. A never-validated startup array cannot qualify or
-accept events. Script failure removes the package script and only
+accept events; a rejected pageview completion remains pending through that
+requalification attempt. Script failure removes the package script and only
 global values assigned while that script was `document.currentScript`; unrelated
 replacement globals are preserved regardless of whether they resemble Matomo.
 The coordinator's navigation observer remains so a later retry has current route

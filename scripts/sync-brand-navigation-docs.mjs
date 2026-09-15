@@ -2,7 +2,8 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const repository = "CodeWorksLabs/brand-navigation";
-const ref = process.env.BRAND_NAVIGATION_DOCS_REF || "main";
+const recordedRef = "ed1640b049763c37694f8c3bb5f9f69cbd21f658";
+const ref = process.env.BRAND_NAVIGATION_DOCS_REF || recordedRef;
 const outputDirectory = path.resolve("src/content/docs/brand-navigation/source");
 let resolvedCommit;
 let usedRecordedFallback = false;

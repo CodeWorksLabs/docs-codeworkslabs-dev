@@ -11,6 +11,50 @@ release claim.
 
 ## Unreleased
 
+## 0.1.0-alpha.13 - Candidate
+
+- Bind Fathom readiness and event acceptance to the exact load-proven vendor
+  object and exact retained methods across matching runtime reentry.
+- Prevent Fathom, Plausible, and GA4 from replaying pageviews captured before a
+  script-failure observation gap; Fathom also waits through same-URL in-flight
+  navigation before reading live canonical and query state.
+- Avoid passing an explicit empty Fathom referrer, and fully clean partial
+  Fathom listener or append setup before a retry generation.
+- Add focused regressions for provider substitution, observation-gap replay,
+  same-URL navigation, empty-referrer behavior, and partial setup recovery.
+- Add pinned product CI and an LF repository policy so an exact committed
+  candidate can produce platform-independent package bytes.
+
+## 0.1.0-alpha.12 - Candidate
+
+- Remove synthetic initial pageview fallback: ordinary documents establish the
+  initial route at document readiness, while Astro ClientRouter documents wait
+  for their first completed `astro:page-load` lifecycle.
+- Keep `pageviews: "none"` event-only across matching bootstrap reentry and
+  recover from observer gaps only on a newly observed completion.
+- Preserve Fathom and Plausible virtual referrers and GA4's completed-route
+  title/referrer when pre-readiness navigations coalesce.
+- Revalidate exact configured provider-script identity at readiness and send
+  boundaries, and preserve unrelated DOM elements and global replacements
+  during failure cleanup.
+- Replace the process-random runtime token with a deterministic cooperative
+  coordinator protocol identifier and expand lifecycle/provenance regression
+  coverage from 146 to 151 tests.
+
+## 0.1.0-alpha.11 - Candidate
+
+- Track each completed Astro lifecycle as a distinct pageview across Fathom,
+  Plausible, Google Analytics 4, Matomo, and Umami, including consecutive
+  completions at the same URL while retaining pre-readiness coalescing.
+- Preserve the immediately preceding completed URL as GA4 and Matomo's virtual
+  referrer for same-URL completions and refresh Matomo's event-only title and
+  route context for every completion.
+- Keep Fathom, Plausible, and GA4 readiness closed when their Astro page-load
+  observer cannot be installed, and recover without inventing a completion
+  across the observation gap.
+- Retain a pageview rejected synchronously by a vendor boundary for bounded
+  matching-bootstrap retry instead of silently losing that completion.
+
 ## 0.1.0-alpha.10 - Candidate
 
 - Once Umami is ready, track each completed Astro ClientRouter lifecycle as a
@@ -23,11 +67,6 @@ release claim.
   already sent.
 - Attribute a same-URL completion to the immediately preceding completed URL,
   retaining an exact virtual route edge rather than an older referrer.
-- Complete independent review, exact source-tag package-consumer qualification,
-  repository-driven stock Astro and Starlight deployment, browser-runtime
-  verification, and provider-side live qualification against distinct
-  self-hosted Umami website records for `astro.sandbox.codeworkslabs.dev` and
-  `stockstarlight.sandbox.codeworkslabs.dev`.
 
 ## 0.1.0-alpha.9 - Candidate
 
