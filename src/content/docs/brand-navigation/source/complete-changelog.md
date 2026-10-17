@@ -9,6 +9,42 @@ to discover component updates from commits on the installed remote branch.
 
 ## Unreleased
 
+## 1.0.0-rc.2 - 2026-10-17
+
+- Add separate core-header icon and hover/focus color controls, inheriting the
+  active theme by default, with Appearance pickers and configuration portability.
+- Add per-link core-header alignment beside the logo or with the header controls;
+  existing links retain their right-side placement.
+- Keep core-header links and icons before Sign Up and Log In in both alignments,
+  including the default right-side position.
+- Replace internal schema names in the native editor with friendly Menu item and
+  Submenu item display labels, without changing saved schema identities.
+- Clarify that Section controls the brand bar and that saved navigation changes
+  require a refreshed forum page for verification.
+- Keep mixed left/right header links and native controls usable on compact
+  screens and minimized-topic headers, including bounded RTL checks, measured
+  header offsets, and menu/keyboard restoration.
+- Escape terminal control characters in local bundle-validation diagnostics,
+  including malformed JSON and filesystem errors, while preserving trusted
+  usage and validation line breaks.
+- Add direct text links and icons with labels to the Discourse core header.
+  The new `header_presentation` control defaults to `icon_only`, preserving
+  existing site-header entries. Text remains available when an optional icon
+  has not loaded or is unavailable.
+- Validate and round-trip the new presentation setting in configuration
+  bundles, retaining safe URLs, audience/device rules, and embed exclusion.
+- Document migration from the separate text-based Custom Header Links
+  component and identify its current contribution to The Bridge screenshot.
+- Save native administrator-editor tracked rows through a validated plain-data
+  snapshot, without weakening configuration-bundle validation.
+- Keep the mobile menu and logo usable alongside core-header text links at
+  320px and 390px, with bounded text truncation and the full accessible label.
+
+This release candidate retains the documented narrow-header and manual
+acceptance limits in [`docs/TESTING.md`](/brand-navigation/source/testing-record/#current-rc2-feature-verification).
+The RC2 source is prepared for review; this entry does not assert that its Git
+tag or GitHub prerelease has been published, or that the live demo is migrated.
+
 ## 1.0.0-rc.1 - 2026-09-08
 
 - Remove the duplicate Brand Navigation `enabled` setting and use Discourse's
@@ -88,4 +124,4 @@ for the documented, multi-site-tested release with no known release blockers.
 
 ---
 
-> **Canonical GitHub source** · Generated from [`CHANGELOG.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/8cd82e099fd181e0b3403ea2181190d12abcf037/CHANGELOG.md) at commit [`8cd82e099fd1`](https://github.com/CodeWorksLabs/brand-navigation/commit/8cd82e099fd181e0b3403ea2181190d12abcf037) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
+> **Canonical GitHub source** · Generated from [`CHANGELOG.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ce6aa6854d86ee7d1fc1ebe97074790b4c9b4cd1/CHANGELOG.md) at commit [`ce6aa6854d86`](https://github.com/CodeWorksLabs/brand-navigation/commit/ce6aa6854d86ee7d1fc1ebe97074790b4c9b4cd1) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.

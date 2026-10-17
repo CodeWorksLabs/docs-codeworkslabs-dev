@@ -12,6 +12,7 @@ navigation on normal Discourse application pages.
 - Brand logo, dark-scheme logo, name, destination, and presentation.
 - Ordered top-level links and one child submenu level.
 - Internal and external destinations.
+- Direct text, icon, and icon-with-label links in the core Discourse header.
 - Desktop, tablet, and mobile behavior.
 - Mobile bar, compact menu, and hidden modes.
 - Keyboard and assistive-technology semantics.
@@ -33,4 +34,4 @@ navigation on normal Discourse application pages.
 
 ---
 
-> **Canonical GitHub source** · Generated from [`docs/SCOPE.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/8cd82e099fd181e0b3403ea2181190d12abcf037/docs/SCOPE.md) at commit [`8cd82e099fd1`](https://github.com/CodeWorksLabs/brand-navigation/commit/8cd82e099fd181e0b3403ea2181190d12abcf037) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
+> **Canonical GitHub source** · Generated from [`docs/SCOPE.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ce6aa6854d86ee7d1fc1ebe97074790b4c9b4cd1/docs/SCOPE.md) at commit [`ce6aa6854d86`](https://github.com/CodeWorksLabs/brand-navigation/commit/ce6aa6854d86ee7d1fc1ebe97074790b4c9b4cd1) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.

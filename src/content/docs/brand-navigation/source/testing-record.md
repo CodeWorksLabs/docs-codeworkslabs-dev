@@ -3,6 +3,252 @@ title: "Testing record"
 description: "Exact compatibility, automated, and manual evidence for Brand Navigation."
 editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/TESTING.md
 ---
+## Current RC2 feature verification
+
+Updated 2026-10-17. Phil selected the alignment, icon-color and friendly-editor
+features for `v1.0.0-rc.2`, before its first publication. The runtime-tested
+candidate is the frozen `admin-label-test-r2` delta over main commit
+`1ddfef2872855289763b10fc39800ec1ba7f455a`: 58 members, with no candidate
+commit/tree claimed. Its canonical ZIP is 269,937 bytes, SHA-256
+`58123c4c03f1ce8e8cf98cceaa1f9c92225c8b8cb1040f3abb17b82cb7da8f34`.
+The subsequent four-record preparation changes only the changelog, this record,
+the successor checkpoint and administrator-guide release wording. The final
+package must be associated separately with these tested bytes: a changed ZIP
+hash is not a new native-install result, and unchanged Core-consumed fields must
+be verified before carrying the installed evidence forward.
+
+Isolated actual checks used Discourse Core
+`3086c087a2bceb3d607c6389f77204fec054b018`:
+
+- Normal Foundation/Horizon coverage passed 12 cases/24 layout variants, and
+  the earlier shipped component suite passed 22 examples. Explicit
+  unchanged-effective-source analysis supports their applicability through the
+  focused corrections; these were not replayed as a fresh full replacement suite.
+- Fresh Foundation/Horizon 320px RTL minimized-topic checks and two new shipped
+  English/Arabic regressions passed: four examples, zero failures. Owned/native
+  hit targets, measured header offsets, menu/Escape/focus return and actual
+  native topic-link restoration were reached and verified.
+- Three prior positive feature cases (Foundation dark colors and both stock
+  minimized-header keyboard cases) carry across the unchanged relevant source.
+  A fresh, exactly selected five-case run passed Foundation light, Horizon
+  light/dark, native friendly-editor persistence and Appearance persistence.
+  This qualifies the eight adopted scenarios through bounded evidence, not a
+  fresh single eight-case run. Browser feature captures used Chrome 151.0.
+- The four palette cases exercise blank, normal-only, hover-only and combined
+  icon-color settings across both alignments and icon-only/icon-label links.
+  Actual hover and pointer-away keyboard focus were checked independently.
+  Inheritance follows the declared theme variables; native icons, link text and
+  brand-bar colors remain unaffected. Native light/dark selection was exercised
+  on both stock themes. This closes the earlier overlapping-hover and untested
+  palette limitations for these exact cases, not every third-party theme.
+- The actual native editor adds Menu item/Submenu item rows, saves, stays open,
+  reloads and edits persisted values without changing stored schema identities.
+  Appearance saves/reloads both colors, clears them with Inherit all, then
+  imports/reloads them. Native color-input events were used; the OS picker
+  dialog was not exercised.
+- Native ZIP import returned component ID 35. All 20 fields matched exact
+  Core-consumed names, targets, types and canonical digests, without field
+  errors or unexpected attachments. The prior replacement's 20 fields and the
+  original 19-field component were preserved, with census/default/joins guards;
+  the separate historical installation was also retained.
+- Installed component 35 passed all 40 unique named frontend tests: 21 unit,
+  six icon/readiness and 13 administrator/bundle cases; zero failures, skips or
+  todos. This includes real native-editor API regressions, strict tracked-data
+  saves and older five-color component-copy behavior. The profile used Puma
+  8.0.2 with one request thread and Chrome 155.0; the runner reported plugins
+  disabled. It does not qualify default server startup or all-plugin behavior.
+
+Historical failures remain recorded, not relabeled as passes. The first
+eight-case feature attempt passed three and failed five: it exposed the
+friendly-label product defect alongside a compilation timeout, color-oracle
+mismatch and detached test control. The bounded product/test corrections and
+fresh selected outcomes supplied the missing observations. A subsequent retry
+selected zero cases because its filter used the wrong RSpec option; the strict
+count guard failed that run. The first installed frontend run passed 37/40;
+three native-helper cases failed before assertions because the initializer lacked
+its application owner. A one-line test-only context correction, with runtime
+bytes unchanged, preceded the final 40/40 result. No assertion, count or timeout
+was relaxed to obtain these outcomes.
+
+Independent source, artifact and actual-results review closed the friendly-label,
+mixed/minimized-header and test-harness findings within their stated boundaries.
+The CodeWorksLabs Discourse package informed the review; this is not official
+Discourse approval, stable-version certification or a claim of unexecuted manual
+acceptance. Historical native Git upgrade/rollback/return evidence carries only
+across the explicitly unchanged storage/update boundary, not as a fresh full
+lifecycle replay on this archive or a future tag.
+
+Fresh remote CI for the final feature commit is pending. Older main/PR25 green
+runs below belong to their identified historical source, not this new delta.
+Local configuration checks passed 37 cases; types, CSS and template checks
+passed. A generic Windows ESLint invocation remained an unqualified environment
+diagnostic, not lint green. A separate same-effective-source baseline comparison
+reported 12 inherited messages, zero introduced and 24 resolved; it does not
+replace exact-head CI lint evidence.
+
+### Current limits and release boundary
+
+Prefer short labels and fewer narrow-screen destinations. Long text can be
+heavily truncated and logos compact; full accessible labels and usable tested
+targets do not imply unlimited capacity or universal readability. The completed
+stock RTL/compact/minimized cases are bounded positive evidence, not the full
+RTL acceptance matrix. Genuine browser zoom, the full RTL matrix, an allowed-host
+classic external embed and complete human screen-reader acceptance remain the
+established stable-v1 boundaries below. Physical-device/Safari, OS picker,
+all-plugin compatibility and general accessibility certification are not claimed.
+
+Phil authorized the remaining checks and independent review, then commit/push
+and a new draft release-preparation PR. No new PR or final-feature CI result is
+asserted yet. Merge, tag, GitHub prerelease and live changes remain separate;
+the Bridge's Versions & Status migration is not included. Owned test PostgreSQL
+and Redis were cleanly stopped at 08:42:57 UTC on 2026-10-17 before container
+stop; databases, backups and failed/positive evidence were preserved.
+
+## Historical RC2 engineering verification — 2026-10-16
+
+The earlier executable candidate for `v1.0.0-rc.2` was commit
+`e7a16be653be8ccc045b73833d44ab38330689f1`, tree
+`7eee3e5416a9ed2c15bc36b15b54d1bb65c84960`. Its canonical 57-file ZIP is
+263,117 bytes, SHA-256
+`f2ad43cb6a98106a4efeac8eeeeed2082bf48616a2f9885b54841dece794532a`.
+The subsequent RC2 integration update changes only the changelog, this testing
+record, and the successor checkpoint. It does not change runtime code, tests,
+settings, dependencies, workflows, or installation/update behavior. The evidence
+below belongs to the identified executable candidate, not an untested new
+runtime or a future tag.
+
+[Configuration CI 38973081900](https://github.com/CodeWorksLabs/brand-navigation/actions/runs/38973081900)
+passed all 33 configuration/CLI tests.
+[Discourse CI 38973082167](https://github.com/CodeWorksLabs/brand-navigation/actions/runs/38973082167)
+tested merge commit `659f2d7ba77fc44b9b1d68fc38afe816785de8ad`, whose tree
+matches the candidate exactly:
+
+| Lane          | Exact Discourse Core commit                | Frontend  | System    |
+| ------------- | ------------------------------------------ | --------- | --------- |
+| Development   | `821e9e2f9f94483a3be8d1e077cde0fd94970479` | 30 passed | 36 passed |
+| Repeal 2026.7 | `988c31e00fb73713c81b93cd47f68af0fb4c6273` | 30 passed | 36 passed |
+| R744 2026.7   | `2e46cff73b07ecddbcc5603eb3fbf41d563577f6` | 30 passed | 36 passed |
+| 2026.8.0      | `badad7b0456a628e578bc48b9f8c1259422b5d58` | 30 passed | 36 passed |
+
+Each system lane includes 16 component examples and 20 shared Core examples.
+The lint gate passed; the jobs named backend tests performed English-locale
+validation, not backend RSpec. These are exact tested targets, not claims for
+every newer patch, production 2026.9, or every browser.
+
+Additional isolated local checks used Core
+`3086c087a2bceb3d607c6389f77204fec054b018`:
+
+- The two shipped 320px/390px mobile regressions, three mode/keyboard interaction
+  examples, and 16 mobile presentation/audience examples passed: 21 total.
+  Captured geometry and pointer/keyboard operations verified visible usable
+  targets, menu/logo containment, native controls, and no document overflow.
+- Native import of the exact ZIP returned component ID 34. All 19 candidate
+  fields matched canonical source, and all 19 fields of the pre-existing
+  component were preserved. Installation had no field errors or unexpected
+  attachments.
+- The installed component passed all 30 named frontend tests, including both
+  tracked-row save modes and invalid nested-data rejection. The profile used
+  Puma 8.0.2 with one request thread, Chrome 155.0 and the existing frontend
+  build; the runner reported plugins disabled. It does not establish default
+  Pitchfork startup performance or all-plugin frontend coverage.
+- Earlier native lifecycle evidence covered configured RC1-to-candidate source
+  updates, rollback, return, settings retention, disable/re-enable, attachment
+  and removal. Its unchanged storage/update protocol carries forward with
+  explicit impact analysis; it is not represented as a fresh complete Git
+  lifecycle replay at `e7a16be` or at a future RC2 tag.
+
+Independent reviewers closed the CLI diagnostic, native-editor save and mobile
+layout findings. The CodeWorksLabs Discourse review package was applied to the
+source, execution and artifact evidence. The final bounded engineering review
+identified no open required findings; it is not official Discourse approval,
+stable-version certification or a claim that unexecuted manual checks passed.
+Local test databases, backups and all failed/successful evidence were retained;
+owned test services were stopped after verification.
+
+### Historical RC2 limits and release boundaries
+
+These statements describe the earlier candidate's evidence at that gate. The
+current feature verification and acceptance limits above supersede them.
+
+At 320px, long header text can be heavily truncated, especially beside an icon,
+and the logo is compact. Full title/accessible labels and operable targets are
+retained; full visible text, unlimited header capacity and universal readability
+are not claimed. Prefer short labels and fewer narrow-screen destinations.
+
+Genuine browser zoom and native light/dark palette/focused-color transitions
+remain unverified. Complete RTL, a real allowed-host classic external embed and
+complete human screen-reader acceptance remain the stable `v1.0.0` gates below.
+Physical-device/Safari and general accessibility certification are not claimed.
+
+Phil requested completing PR 25 and putting RC2 on `main` after receiving the
+engineering result and these outstanding acceptance boundaries. This records
+merge authority, not completion of those unexecuted manual cases. RC2 tag and
+GitHub prerelease publication remain separate. The Bridge's Versions & Status
+link still belongs to Custom Header Links until a separately authorized live
+migration is verified.
+
+## RC2 CLI diagnostic correction — 2026-10-15
+
+Phil authorized correcting review finding `BN-RC2-CLI-01` before RC2. The CLI
+now escapes C0, DEL and C1 controls at its final diagnostic sink. Trusted usage
+and validator line separators are inserted only after each line is escaped.
+The browser validator and header implementation are unchanged.
+
+Local Node `22.22.2` configuration/CLI tests passed 33/33. Seven new tests
+capture real CLI subprocess output for malformed JSON containing ESC/BEL,
+other controls and newlines, filesystem errors, inert unknown fields, ordinary
+parse failures, valid input, and multiline usage. Fixtures use newly created
+temporary directories and are cleaned up by the harness. The initial regression
+expected a full long payload in V8's truncated error excerpt; shortening the
+payload made the assertion exercise both ESC and BEL without relying on omitted
+bytes. This was a test-fixture correction, not a candidate bypass.
+
+The pnpm launcher could not verify its requested version because registry
+fetches failed. No signature policy was weakened and no dependency changed;
+formatting used the already-installed Prettier directly through Node. This
+local result does not establish replacement-candidate CI or installed lifecycle
+acceptance. Correction closure and the resource-held Discourse matrix remain
+separate pending gates.
+
+## RC2 core-header text-link candidate — 2026-10-15
+
+The next candidate adds `header_presentation` for direct core-header links.
+Existing items default to `icon_only`; explicit `label_only` and
+`icon_and_label` preserve the label without requiring an available icon.
+The Bridge's current Versions & Status link remains supplied by its separate
+Custom Header Links component until an accepted candidate is installed and
+that link is migrated.
+
+Implementation commit `6c7383dd5597d65c7f1e0f9ffdf123d075fab898`, tree
+`4682d861dec9029622459a5a3e633730d63aba94`, passed
+[Discourse CI run 38812437699](https://github.com/CodeWorksLabs/brand-navigation/actions/runs/38812437699)
+in [draft PR 25](https://github.com/CodeWorksLabs/brand-navigation/pull/25).
+The CI merge commit `0fa60378a91d11bd2dc5f6a645cf0e348cbf3975` has the same tree.
+
+| Lane           | Discourse core                             | Frontend  | System    |
+| -------------- | ------------------------------------------ | --------- | --------- |
+| Current        | `60cbc8e4e4e52253d3fa2175b7f2431a38cb9487` | 27 passed | 34 passed |
+| Repeal 2026.7  | `988c31e00fb73713c81b93cd47f68af0fb4c6273` | 27 passed | 34 passed |
+| R744 2026.7    | `2e46cff73b07ecddbcc5603eb3fbf41d563577f6` | 27 passed | 34 passed |
+| 2026.8 release | `badad7b0456a628e578bc48b9f8c1259422b5d58` | 27 passed | 34 passed |
+
+The full Linux lint gate and backend lanes passed.
+[Configuration run 38812437412](https://github.com/CodeWorksLabs/brand-navigation/actions/runs/38812437412)
+passed 26 tests, including text-link round trips, legacy icon defaults, unsafe
+URLs, invalid presentation, groups, and children. Local configuration tests,
+template/style/type checks, Ruby syntax, and formatting also passed. Windows
+ESLint reproduces local Babel path/theme-global failures on unchanged HEAD;
+the clean CI lint gate passes.
+
+QUnit verifies rendering before sprite readiness, escaped label text, safe
+new-window attributes, optional-icon recovery, and visibility boundaries.
+System tests verify desktop/mobile sizing, retained core controls, keyboard
+focus, and embed exclusion. Desktop/mobile CI screenshots were inspected.
+The initial run at `93f7c24` failed an RSpec context-name check and a
+Selenium-only keyboard-test call; the corrected run above passes both.
+This is implementation/test evidence; release review, manual acceptance, and
+the live demo cutover remain pending.
+
 ## In use on
 
 ### Verified installations
@@ -532,4 +778,4 @@ substitute for these human checks.
 
 ---
 
-> **Canonical GitHub source** · Generated from [`docs/TESTING.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/8cd82e099fd181e0b3403ea2181190d12abcf037/docs/TESTING.md) at commit [`8cd82e099fd1`](https://github.com/CodeWorksLabs/brand-navigation/commit/8cd82e099fd181e0b3403ea2181190d12abcf037) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
+> **Canonical GitHub source** · Generated from [`docs/TESTING.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ce6aa6854d86ee7d1fc1ebe97074790b4c9b4cd1/docs/TESTING.md) at commit [`ce6aa6854d86`](https://github.com/CodeWorksLabs/brand-navigation/commit/ce6aa6854d86ee7d1fc1ebe97074790b4c9b4cd1) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.

@@ -99,8 +99,9 @@ its icon list becomes `custom_font_awesome_icons`.
 2. Map each link to a top-level Brand Navigation item. Choose the `right`
    section on the `bar` surface, or choose `site_header` to retain its compact
    location among Discourse's core header icons.
-3. Use `icon_only` presentation while retaining the full title as the required
-   accessible label.
+3. Use `icon_only` presentation on the bar, or `icon_only` site-header
+   presentation (`header_presentation`) on the core header, while retaining
+   the full title as the required accessible label.
 4. Map `blank` to `_blank` and `self` to `_self`.
 5. Add every used icon to `custom_font_awesome_icons`.
 6. Map each device view to `both`, `desktop`, or `mobile`, then review the
@@ -110,6 +111,25 @@ its icon list becomes `custom_font_awesome_icons`.
    component to the intended visitor-facing theme, disable Custom Header Links
    (icons), confirm Brand Navigation's native **Enabled?** control remains on,
    and immediately verify the header at desktop and narrow mobile widths.
+
+## From Custom Header Links (text links)
+
+The text-based Custom Header Links component is separate from Custom Header
+Links (icons). Its replacement capability is planned for `v1.0.0-rc.2` and is
+not available in RC1.
+
+1. Record each label, URL, tooltip, target, and desktop/mobile visibility.
+2. Add a top-level item with `surface: site_header` and
+   `header_presentation: label_only`. Use `icon_and_label` if an icon is also
+   wanted. Copy the original destination and target and map device visibility.
+3. Prepare and test the replacement on a staging theme. Keep long labels short
+   enough for the available header space; use desktop-only visibility when
+   appropriate. Header links remain direct links; they do not support submenus.
+4. During cutover, detach or disable the text-based Custom Header Links
+   component on the affected themes, refresh, and confirm each link appears
+   exactly once. Verify desktop/mobile layout, keyboard focus, anonymous and
+   signed-in controls, and topic-header scrolling before accepting the change.
+5. Keep the original component and its configuration available for rollback.
 
 ## Roll back to an earlier component
 
@@ -213,4 +233,4 @@ that resolved ref into **Branch**.
 
 ---
 
-> **Canonical GitHub source** · Generated from [`docs/MIGRATION.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/8cd82e099fd181e0b3403ea2181190d12abcf037/docs/MIGRATION.md) at commit [`8cd82e099fd1`](https://github.com/CodeWorksLabs/brand-navigation/commit/8cd82e099fd181e0b3403ea2181190d12abcf037) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
+> **Canonical GitHub source** · Generated from [`docs/MIGRATION.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ce6aa6854d86ee7d1fc1ebe97074790b4c9b4cd1/docs/MIGRATION.md) at commit [`ce6aa6854d86`](https://github.com/CodeWorksLabs/brand-navigation/commit/ce6aa6854d86ee7d1fc1ebe97074790b4c9b4cd1) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.

@@ -3,63 +3,63 @@
   "generator": "codeworkslabs-brand-navigation-mirror",
   "transformVersion": 2,
   "repository": "CodeWorksLabs/brand-navigation",
-  "sourceCommit": "8cd82e099fd181e0b3403ea2181190d12abcf037",
+  "sourceCommit": "ce6aa6854d86ee7d1fc1ebe97074790b4c9b4cd1",
   "sourceChannel": "main",
   "memberCount": 9,
   "members": [
     {
       "sourcePath": "docs/USER_GUIDE.md",
       "generatedPath": "src/content/docs/brand-navigation/source/administrator-guide.md",
-      "sourceSha256": "6ba90c028bc2cd1cedd8f0858e4b6135358be4a232eb39a498654cc313fef36e",
-      "generatedSha256": "a9211ff0fbaa0bc5beaca7415fe51ddbef11749aa97f38d02d9995841d2aeda4"
+      "sourceSha256": "672c4fb1b01bee02dd22186199b795b187cafc6f34c8a168e351d530780b6559",
+      "generatedSha256": "3b64f44bb12d678cd565cfc4cf59bfdf237f467ad00dc79ad6612710d7480e5e"
     },
     {
       "sourcePath": "docs/SCOPE.md",
       "generatedPath": "src/content/docs/brand-navigation/source/product-scope.md",
-      "sourceSha256": "d768f9ec072be51dcb5ba9998ae2cd93239dd4400886fdcf32cd2c08fc4342a7",
-      "generatedSha256": "e5cc33e24111c2131bd54f6225791b3a35bafa6f33c9fcb20af845ffccc4a870"
+      "sourceSha256": "bcc93843886f4db8ee97cfadfa99c8c88f7a92c70ef1740886bfff1e025b33c5",
+      "generatedSha256": "3140224f24f03912bfc60b00327ed190aa40cfd02f8860891d8a5cc19e9f1704"
     },
     {
       "sourcePath": "docs/ARCHITECTURE.md",
       "generatedPath": "src/content/docs/brand-navigation/source/architecture.md",
-      "sourceSha256": "d64261d09491384a45cad6829bce27172a4483073d19c75292f0a05dc048f43c",
-      "generatedSha256": "05c408d856c4b78f761f584ae96d4cfedc62109d2ce009acc6c59c73b6299b58"
+      "sourceSha256": "b713cb4f12fcc179f6593b34c2c822c9f33925db229e2fa468fec8610a2bd3a5",
+      "generatedSha256": "b5382912ed5241880d85e18e3ea62896aae147d0c343fea5632d90ae9e2991ed"
     },
     {
       "sourcePath": "docs/TESTING.md",
       "generatedPath": "src/content/docs/brand-navigation/source/testing-record.md",
-      "sourceSha256": "dcee1b9d8371b764e0a7668a2e2a40ab8796f64b23e77d1052ec496f37d87d63",
-      "generatedSha256": "a22849abe4478f56ba12d4719628d7031fe6a68ee01a835277bfc37a7254cc0b"
+      "sourceSha256": "6009af4661a41b10721af82fdb96bf4c4071904e67ce67aa55d9ff1788aef830",
+      "generatedSha256": "88d513212fc5b40f09c134353ba5e92abcba4217c4d8501e60617321e2562994"
     },
     {
       "sourcePath": "docs/MIGRATION.md",
       "generatedPath": "src/content/docs/brand-navigation/source/migration-record.md",
-      "sourceSha256": "da832d18ecf69f705729576aeca703f7754e0127a8a8c327382e55f93c1f2aa1",
-      "generatedSha256": "47b1ba60aae3b0043f3c3a706482a5631448922f326d78eb17c9778bc22e7fbd"
+      "sourceSha256": "9a9631aad53da7ef0c0023e8b4cc44de5087a30af65a89ec902b148c2b5f57f3",
+      "generatedSha256": "50a2e64300739f918dbc967821a8e7abd7f3d46f30a29ce3d638e0769aab1ca5"
     },
     {
       "sourcePath": "CHANGELOG.md",
       "generatedPath": "src/content/docs/brand-navigation/source/complete-changelog.md",
-      "sourceSha256": "82f192fcfce0521904c0d84948a5f1f97a9a81a3a6be857c0a6fbcd9ef3e56e0",
-      "generatedSha256": "d7021fae1e47e501ec380ca4016991569d054a4e8aaa1c11970ff9792af0a76e"
+      "sourceSha256": "89587bbeb875516056e2690e4c8fbdc04b3b49c2a50100f1af4d5028ff9f4e9d",
+      "generatedSha256": "a37314929c9840de26ad6ddf4f66ff946a0ab4ebd187209096296008b7fe4eb9"
     },
     {
       "sourcePath": "SECURITY.md",
       "generatedPath": "src/content/docs/brand-navigation/source/security-policy.md",
       "sourceSha256": "409d49819986139e7f2233eaa4a073edb1ceb46ade6c8063df1d3c33a8c93827",
-      "generatedSha256": "6884891af2cd967e2cca941fa3b5ff74ac349188223f4365d326bcd29064109c"
+      "generatedSha256": "59b47bdfc0fea55c427167f2115b332c1ea191518aa6b79b734407ec46f850a1"
     },
     {
       "sourcePath": "docs/ATTRIBUTION.md",
       "generatedPath": "src/content/docs/brand-navigation/source/attribution.md",
-      "sourceSha256": "8deed81d509178a2203b231ec2b41c4a3327f936c05c2a4007efa259679607f4",
-      "generatedSha256": "069f8b9ac4084e6469625dde96492650a29091c0311cb7c648a78798802c8e09"
+      "sourceSha256": "da5bb91402eaf6c8f9857e6b8636d2ac61585392688e4968bb00d1fa6c02959b",
+      "generatedSha256": "9eaeae549ec32f6522435ff68583e087f6833afa5198cf29921a973724b729bd"
     },
     {
       "sourcePath": "docs/PROVENANCE.md",
       "generatedPath": "src/content/docs/brand-navigation/source/provenance.md",
       "sourceSha256": "7c308fe22f0c922b172d660ed8f45da6da66e8ddf8d6dcc194294f2053a2a0be",
-      "generatedSha256": "1f21ad2d9a225dbcbc17087b34e90d780cae55a271f4acf9ef7eb2d0291b0211"
+      "generatedSha256": "ad8bbc096903e8da6c135d7e15fabcd1d7ffebdbe544aab56e2be1de70fbf948"
     }
   ]
 }
