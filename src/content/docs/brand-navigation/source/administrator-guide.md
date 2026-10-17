@@ -179,14 +179,23 @@ empty even when `show_brand` is on.
 
 The **Appearance** panel on the Brand Navigation administration page provides
 color pickers for the bar background, bar text and icons, hover/highlight
-background, submenu background, and submenu text and icons. Each color can be
-overridden independently.
+background, submenu background, submenu text and icons, **Core-header icon**,
+and **Core-header icon hover**. Each color can be overridden independently.
 
 Leave **Custom** off to inherit the active Discourse color scheme. This is the
 recommended starting point because inherited colors automatically follow the
 site's light and dark palettes. Turn **Custom** on for a color, choose a value,
-and select **Save colors** to override it. **Inherit all** clears all five
+and select **Save colors** to override it. **Inherit all** clears all seven
 overrides and returns the component to Discourse's palette variables.
+
+The two core-header controls (`header_icon_color` and
+`header_icon_hover_color`) affect only Brand Navigation icons on the
+`site_header` surface, in either alignment and with either icon-only or
+icon-and-label presentation. The hover color also applies to keyboard focus.
+They do not change link text, brand-bar icons, or Discourse's own header icons.
+Blank values inherit the active theme's `--d-header-icon-color` and
+`--d-header-icon-color--hover`, including light/dark palette changes. Custom
+colors are fixed across palettes; choose readable colors for both modes.
 
 Appearance values are included in Brand Navigation configuration bundle
 exports. Colors may be entered as `#1A2B3C` or `1A2B3C`; the component renders
@@ -202,20 +211,22 @@ to the component's main settings page.
 
 Each top-level entry supports:
 
-| Field               | Purpose                                                                                    |
-| ------------------- | ------------------------------------------------------------------------------------------ |
-| `label`             | Required visible text.                                                                     |
-| `url`               | Destination for the top-level label. It may also be used when the entry has submenu items. |
-| `link_mode`         | Use the parent label as a live link or as a submenu-only grouping control.                 |
-| `title`             | Optional hover tooltip.                                                                    |
-| `icon`              | Optional Font Awesome 6 icon name.                                                         |
-| `presentation`      | Show the icon and label, label only, or icon only.                                         |
-| `section`           | Keep the item beside the brand (`left`) or align it to the far edge (`right`).             |
-| `surface`           | Show the item in the Brand Navigation `bar` or as a `site_header` icon.                    |
-| `device_visibility` | Show on both device classes, desktop/tablet only, or mobile phones only.                   |
-| `target`            | Open in the same window (`_self`) or a new window (`_blank`).                              |
-| `visibility`        | Show to everyone, anonymous visitors, or authenticated users.                              |
-| `children`          | Ordered submenu links below this entry.                                                    |
+| Field                 | Purpose                                                                                             |
+| --------------------- | --------------------------------------------------------------------------------------------------- |
+| `label`               | Required visible text.                                                                              |
+| `url`                 | Destination for the top-level label. It may also be used when the entry has submenu items.          |
+| `link_mode`           | Use the parent label as a live link or as a submenu-only grouping control.                          |
+| `title`               | Optional hover tooltip.                                                                             |
+| `icon`                | Optional Font Awesome 6 icon name.                                                                  |
+| `presentation`        | For bar items, show the icon and label, label only, or icon only.                                   |
+| `header_presentation` | For site-header items, choose `icon_only` (default), `label_only`, or `icon_and_label`.             |
+| `header_alignment`    | For site-header items, choose `left` beside the logo or `right` with the header controls (default). |
+| `section`             | Keep the item beside the brand (`left`) or align it to the far edge (`right`).                      |
+| `surface`             | Show the item in the Brand Navigation `bar` or as a direct `site_header` link.                      |
+| `device_visibility`   | Show on both device classes, desktop/tablet only, or mobile phones only.                            |
+| `target`              | Open in the same window (`_self`) or a new window (`_blank`).                                       |
+| `visibility`          | Show to everyone, anonymous visitors, or authenticated users.                                       |
+| `children`            | Ordered submenu links below this entry.                                                             |
 
 A top-level entry behaves as:
 
@@ -244,13 +255,40 @@ Top-level items in the `left` section appear beside the brand. Items in the
 account links and calls to action. On mobile, both sections become one compact
 ordered list so every item remains easy to reach.
 
-Set a direct icon link's `surface` to `site_header` to place it among
-Discourse's core header icons instead of in the Brand Navigation bar. This is
-useful for social destinations when bar space is limited. Site-header items
-must have a URL and icon and cannot contain children. Their label remains the
-accessible name and their title remains the optional tooltip. A direct
-site-header item whose icon is unavailable is omitted instead of rendering an
-empty header control. Other items keep the default `bar` surface.
+Set a direct link's `surface` to `site_header` to place it before Discourse's
+core header controls instead of in the Brand Navigation bar. Choose its
+**Site-header presentation** (`header_presentation`):
+
+- `icon_only` retains the existing compact icon behavior and requires an icon.
+  An unavailable icon omits the link until the icon becomes available.
+- `label_only` displays text such as “Versions & Status” and needs no icon.
+- `icon_and_label` displays both, retaining the text when its optional icon is
+  unavailable or still loading.
+
+Site-header items require a safe URL and cannot contain children or use group
+mode. Their label remains the accessible name and their title remains the
+optional tooltip. Existing entries default to `icon_only`; their separate bar
+`presentation` value does not change their header appearance. Header links
+follow the navigation list order within each side; `section` applies only to bar
+items. Use **Site-header alignment** to place core-header links beside the logo
+(`left`) or immediately before the header controls (`right`). Both positions
+keep Brand Navigation links and icons before Sign Up and Log In, including
+the default right-side placement. Missing or blank alignment defaults to right.
+Left/right positions follow the reading
+direction on RTL sites.
+
+The editor's plus buttons use the friendly names **Menu item** and **Submenu
+item**. These display labels do not rename stored schemas or change saved links.
+After saving Target or other navigation changes, refresh the forum page before
+testing them; already-open pages can retain their previous navigation settings.
+
+Text is constrained to the smaller of 14rem and 30% of the viewport and uses
+an ellipsis when needed. Its full label stays available to assistive technology
+and as the default tooltip. Keep labels short and use device visibility to
+reserve mobile space for Discourse's controls. Other items keep the default
+`bar` surface. These capabilities are included in the prepared
+`v1.0.0-rc.2` source; the published RC1 supports only icon links in this surface.
+Use the repository's tags and releases to identify published versions.
 
 Use `device_visibility` to control constrained mobile layouts independently for
 each item:
@@ -455,4 +493,4 @@ public issue. Report suspected vulnerabilities privately to
 
 ---
 
-> **Canonical GitHub source** · Generated from [`docs/USER_GUIDE.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/8cd82e099fd181e0b3403ea2181190d12abcf037/docs/USER_GUIDE.md) at commit [`8cd82e099fd1`](https://github.com/CodeWorksLabs/brand-navigation/commit/8cd82e099fd181e0b3403ea2181190d12abcf037) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
+> **Canonical GitHub source** · Generated from [`docs/USER_GUIDE.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ce6aa6854d86ee7d1fc1ebe97074790b4c9b4cd1/docs/USER_GUIDE.md) at commit [`ce6aa6854d86`](https://github.com/CodeWorksLabs/brand-navigation/commit/ce6aa6854d86ee7d1fc1ebe97074790b4c9b4cd1) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
