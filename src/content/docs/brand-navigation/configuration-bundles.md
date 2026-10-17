@@ -8,7 +8,7 @@ Save a settings file before a large change, or use one to recreate your navigati
 
 ## Find the backup controls
 
-Open Brand Navigation's administration page and find **Configuration bundles**, above the Preview/Export/Disable controls. If the panel is missing, make sure the component is enabled and attached to the theme you are viewing. For a new installation, follow [Install and preview](../install/) first: keep the component on a non-default preview theme while preparing it.
+Open Brand Navigation's administration page and find **Configuration bundles**, above the Preview/Export/Disable controls. If the panel is missing, make sure the component is enabled and attached to the theme you are viewing. For a new installation, follow [Install](../install/) first: keep the component on a non-default preview theme while preparing it.
 
 ## Save a backup
 

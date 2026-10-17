@@ -45,7 +45,7 @@ export default defineConfig({
               collapsed: true,
               items: [
                 { label: "Overview", slug: "brand-navigation" },
-                { label: "Install and preview", slug: "brand-navigation/install" },
+                { label: "Install", slug: "brand-navigation/install" },
                 { label: "Add links, menus and colors", slug: "brand-navigation/configure" },
                 { label: "Back up or move settings", slug: "brand-navigation/configuration-bundles" },
                 { label: "Update Brand Navigation", slug: "brand-navigation/updates-and-compatibility" },

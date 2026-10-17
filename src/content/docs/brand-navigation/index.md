@@ -8,7 +8,7 @@ Give your Discourse forum its own identity and a clear way to get around. Brand 
 
 Brand Navigation is independently maintained by CodeWorksLabs, not an official Discourse product. It adds navigation; it does not replace Discourse's login, topic controls or composer.
 
-[Install and preview](./install/) · [Add links and menus](./configure/) · [See live examples](https://github.com/CodeWorksLabs/brand-navigation#preview)
+[Install](./install/) · [Add links and menus](./configure/) · [See live examples](https://github.com/CodeWorksLabs/brand-navigation#preview)
 
 ## Two places for your links
 
