@@ -6,6 +6,8 @@ editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/c
 
 Give your Discourse forum its own identity and a clear way to get around. Brand Navigation adds your logo or name, useful links and dropdown menus in a bar above or below the forum header.
 
+Brand Navigation is independently maintained by CodeWorksLabs, not an official Discourse product. It adds navigation; it does not replace Discourse's login, topic controls or composer.
+
 [Install and preview](./install/) · [Add links and menus](./configure/) · [See live examples](https://github.com/CodeWorksLabs/brand-navigation#preview)
 
 ## Two places for your links
@@ -31,9 +33,3 @@ An existing configuration, not a guarantee of the site's current component versi
 Use Discourse's component updater to check for updates. Back up your settings first and try changes on a separate test copy before updating the navigation your visitors use.
 
 See [What's new](./release-notes/) for changes and versioned downloads, or [Update Brand Navigation](./updates-and-compatibility/) for the update steps.
-
-## Need help?
-
-Start with [Fix a problem](./troubleshooting/). The [complete administrator reference](./source/administrator-guide/) covers the full settings and procedures, while [technical records](./source/testing-record/) contain the detailed test evidence and limits.
-
-Brand Navigation is independently maintained by CodeWorksLabs, not an official Discourse product. It adds navigation; it does not replace Discourse's login, topic controls or composer, and it stays out of supported embedded discussions.

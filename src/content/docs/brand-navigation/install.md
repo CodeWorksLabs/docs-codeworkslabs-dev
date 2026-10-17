@@ -1,5 +1,5 @@
 ---
-title: Install and preview
+title: Installation
 description: Install Brand Navigation, try it on a preview theme, then make it available to visitors.
 editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/install.md
 ---

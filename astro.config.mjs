@@ -51,6 +51,7 @@ export default defineConfig({
                 { label: "Update Brand Navigation", slug: "brand-navigation/updates-and-compatibility" },
                 { label: "Replace another component", slug: "brand-navigation/migration-and-rollback" },
                 { label: "Fix a problem", slug: "brand-navigation/troubleshooting" },
+                { label: "Support", slug: "brand-navigation/support" },
                 { label: "What's new", slug: "brand-navigation/release-notes" },
                 { label: "Security", slug: "brand-navigation/security" },
                 { label: "Attribution & license", slug: "brand-navigation/attribution-and-license" },
