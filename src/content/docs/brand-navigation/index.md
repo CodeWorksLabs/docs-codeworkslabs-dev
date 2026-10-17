@@ -4,16 +4,16 @@ description: Add your brand, menus and useful header links to a Discourse commun
 editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/index.md
 ---
 
-Give visitors an easy way to find your community's website, resources and social links. Brand Navigation adds an optional branded navigation bar to Discourse and can also put text or icon links beside the forum logo or before the header controls.
+Give your Discourse forum its own identity and a clear way to get around. Brand Navigation adds your logo or name, useful links and dropdown menus in a bar above or below the forum header.
 
 [Install and preview](./install/) · [Add links and menus](./configure/) · [See live examples](https://github.com/CodeWorksLabs/brand-navigation#preview)
 
 ## Two places for your links
 
-- **The brand bar:** show your logo or name, direct links and one level of dropdown menus.
-- **The Discourse header:** add a text link, an icon, or both. Place it beside the logo or before the header controls, ahead of Sign Up and Log In.
+- **The brand bar is your main navigation area.** Link to your website, community resources and other destinations. Group related links into one-level dropdown menus, with optional icons and descriptions. Use separate light/dark logos and inherit your forum's palette or choose custom colors.
+- **The Discourse header can hold optional extra links.** Add a short text link, an icon, or both beside the forum logo or before the header controls.
 
-For example, keep Community and Resources in the brand bar and add a short Versions & Status link to the Discourse header. You choose who sees each link and whether it appears on desktop, mobile or both.
+Choose which items signed-in and signed-out visitors see, and whether they appear on desktop, mobile or both. On phones, use a compact menu, a wrapping bar, or hide the component. Edit the settings in Discourse and export a backup when the navigation is ready.
 
 ![Example Brand Navigation bar on RVing Community, with Community, Resources and RVing Network menus](/images/brand-navigation/rving-community-header.png)
 
@@ -23,14 +23,14 @@ An existing configuration, not a guarantee of the site's current component versi
 
 1. [Install on a preview theme](./install/) before changing your visitors' navigation.
 2. [Add your first link](./configure/#add-your-first-link), then build a submenu if you need one.
-3. [Choose header links and colors](./configure/#add-a-text-link-to-the-discourse-header), and check the result on a phone.
+3. [Choose your colors](./configure/#palette-and-custom-colors), and check your navigation on a phone.
 4. [Export a backup](./configuration-bundles/) once you are happy with the configuration.
 
 ## Versions and updates
 
-Installing from the repository follows its latest compatible Git code, which can be newer than a tagged release. The current `main` branch includes the RC2 text-link, alignment and icon-color improvements. Check [GitHub Releases](https://github.com/CodeWorksLabs/brand-navigation/releases) for published downloads and whether each is marked as a prerelease.
+Use Discourse's component updater to check for updates. Back up your settings first and try changes on a separate test copy before updating the navigation your visitors use.
 
-See [What's new](./release-notes/) for the difference between the current branch and tagged releases, or [Update Brand Navigation](./updates-and-compatibility/) for the normal Discourse update process.
+See [What's new](./release-notes/) for changes and versioned downloads, or [Update Brand Navigation](./updates-and-compatibility/) for the update steps.
 
 ## Need help?
 

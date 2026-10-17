@@ -14,8 +14,8 @@ If you already use Brand Header, Header Submenus or Custom Header Links, prepare
 
 If the replacement is not satisfactory, detach Brand Navigation from the affected theme and restore that theme's previous components. **Enabled?** off is a global stop for every theme using the component, not a theme-local undo. Keep the old components until the new navigation has passed your checks.
 
-:::caution[Provisional release-tag rollback]
-Returning Brand Navigation itself to a tagged revision is a different procedure from re-enabling another component. Follow the full staging and settings-recovery steps; the release-tag pin-and-return procedure remains provisional.
-:::
+## Restore an earlier Brand Navigation version
 
-Use the [canonical migration and rollback procedure](/brand-navigation/source/migration-record/) for current steps and warnings.
+Back up the settings before changing versions. Test the earlier version on a separate component copy or staging site; older code may not accept your current settings.
+
+The complete downgrade-and-return workflow has not yet been fully verified. Use the [detailed recovery procedure](/brand-navigation/source/migration-record/#roll-back-brand-navigation-to-a-release-tag), and keep the working component and settings backup until recovery is confirmed.

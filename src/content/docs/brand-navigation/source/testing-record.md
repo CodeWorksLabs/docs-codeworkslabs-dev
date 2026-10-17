@@ -556,8 +556,8 @@ R744 Community was running Discourse ESR `2026.7.2+14` at core commit
 `2e46cff73b07ecddbcc5603eb3fbf41d563577f6`. Read-only inventory found two
 Brand Navigation records. Component `1` was the live installation, enabled on
 Foundation and Horizon and following the repository default branch. Component
-`2` was an unattached historical compatibility-test copy pinned to
-`codex/r744-compatibility`; its Brand Navigation `enabled` setting was false,
+`2` was an unattached copy pinned to the historical R744 compatibility-test
+branch; its Brand Navigation `enabled` setting was false,
 although the unattached Discourse theme record's enabled flag remained true.
 
 Discourse's native update check for live component `1` selected
@@ -595,8 +595,7 @@ acceptance.
 
 ## Initial verification record
 
-The initial implementation candidate was verified on
-`codex/v0.9.0-verification` in pull request
+The initial implementation candidate was verified on the candidate branch in pull request
 `https://github.com/CodeWorksLabs/brand-navigation/pull/1`, which has since
 merged. At implementation commit `13005b7`, official Discourse Theme workflow
 run `34010799758` passed linting, English-locale validation, frontend QUnit,
@@ -625,7 +624,7 @@ remained. No production or consumer site was changed during this check.
 
 ## Top-level behavior candidate
 
-Merged pull request 3 (`codex/top-level-link-behavior`, implementation commit
+Merged pull request 3 (top-level link behavior, implementation commit
 `e53a7d0`, merge commit `317c4be`) adds an
 explicit `link_mode` to each top-level navigation item. GitHub Actions run
 `34019282463` passed the official Discourse lint, frontend QUnit, backend, and
@@ -670,8 +669,8 @@ submenu button is present and no Resources parent link is rendered. Its saved
   pinned to `release/2026.7`, rebuilt successfully as `2026.7.2+14`
   (`2e46cff73b`), and verified with Brand Navigation. Live component id `1` is
   enabled on Foundation and Horizon and now follows `d-compat/2026.7`. The
-  duplicate component id `2` remains preserved and unattached on historical
-  branch `codex/r744-compatibility`; its legacy Brand Navigation `enabled`
+  duplicate component id `2` remains preserved and unattached on the historical
+  R744 compatibility-test branch; its legacy Brand Navigation `enabled`
   setting is false while its unattached Discourse theme-record flag is true.
   Draft pull
   request 2 is no longer needed to support this site and was closed without
@@ -778,4 +777,4 @@ substitute for these human checks.
 
 ---
 
-> **Canonical GitHub source** · Generated from [`docs/TESTING.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/ce6aa6854d86ee7d1fc1ebe97074790b4c9b4cd1/docs/TESTING.md) at commit [`ce6aa6854d86`](https://github.com/CodeWorksLabs/brand-navigation/commit/ce6aa6854d86ee7d1fc1ebe97074790b4c9b4cd1) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
+> **Canonical GitHub source** · Generated from [`docs/TESTING.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/8ac0fa34b5917a414477d56f7086aec88d9c1ae4/docs/TESTING.md) at commit [`8ac0fa34b591`](https://github.com/CodeWorksLabs/brand-navigation/commit/8ac0fa34b5917a414477d56f7086aec88d9c1ae4) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.

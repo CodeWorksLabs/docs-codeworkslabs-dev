@@ -1,6 +1,6 @@
 ---
 title: Update Brand Navigation
-description: Check for updates, keep a backup and understand Git updates versus tagged releases.
+description: Update Brand Navigation in Discourse, keep a backup and check compatibility.
 editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/updates-and-compatibility.md
 ---
 
@@ -16,11 +16,11 @@ If you installed Brand Navigation from GitHub, use Discourse's normal component 
 
 Discourse normally keeps your settings when updating the component's code. Keep the backup anyway, especially before a settings-schema change. Automatic updates depend on your Discourse installation's update options.
 
-## Git updates and published downloads are different
+## Which version should I use?
 
-Git installations track commits, not GitHub release numbers. The default branch can include improvements that are not yet in a tagged download. Currently, `main` includes the RC2 header text, alignment and icon-color work; [GitHub Releases](https://github.com/CodeWorksLabs/brand-navigation/releases) identifies published snapshots.
+For the normal GitHub installation, leave **Git Branch** at its default and use Discourse's updater. Discourse selects a compatible branch when one is available for your version. You do not normally need to choose a branch yourself.
 
-Leave the Git Branch field at its default unless you deliberately need a specific revision. `main` targets current Discourse. For a maintained older Discourse release, the native updater selects the matching `d-compat/<YYYY>.<M>` branch when one is available. You do not normally need to choose that compatibility branch yourself.
+If you need a specific version for testing or recovery, use the version notes in [GitHub Releases](https://github.com/CodeWorksLabs/brand-navigation/releases). A downloaded ZIP is a fixed copy; reinstall or replace it to change versions.
 
 ## Compatibility
 

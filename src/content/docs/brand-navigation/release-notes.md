@@ -1,12 +1,14 @@
 ---
 title: What's new
-description: Improvements on the current branch and links to published Brand Navigation releases.
+description: What's new in Brand Navigation RC2 and links to published releases.
 editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/release-notes.md
 ---
 
-## Current code on main
+## v1.0.0-rc.2
 
-The RC2 work is merged into `main`. Git installations following the current compatible branch can receive newer code than the last tagged download.
+RC2 was published on 2026-10-17 as a GitHub prerelease. It includes the current Brand Navigation changes on `main` at commit `8ac0fa3`.
+
+[Read the RC2 release notes and download](https://github.com/CodeWorksLabs/brand-navigation/releases/tag/v1.0.0-rc.2).
 
 The header and administration improvements include:
 
@@ -15,12 +17,13 @@ The header and administration improvements include:
 - **Separate icon colors:** set normal and hover/keyboard-focus colors, or inherit the theme's defaults.
 - **Friendlier editing:** Menu item and Submenu item labels, with the editor staying open after saving.
 - **Small-screen fixes:** improved mixed-link layouts and minimized-topic behavior, with finite space and text truncation still worth checking on your own theme.
+- **Clearer color controls:** consistently aligned Appearance rows, without changing their save/reset behavior.
 
 See [Add links, menus and colors](../configure/) to use these options and the [complete changelog](../source/complete-changelog/) for the full history.
 
 ## Published downloads
 
-[GitHub Releases](https://github.com/CodeWorksLabs/brand-navigation/releases) is the record of published snapshots. Check the version, prerelease label and notes there before choosing a download. Do not assume a release download contains every option described for `main`.
+[GitHub Releases](https://github.com/CodeWorksLabs/brand-navigation/releases) lists published versions. RC2 is the newest published release candidate. Check its notes and back up your settings before updating. The source records linked from these docs preserve the exact RC2 source, including dated preparation and testing history.
 
 ### v1.0.0-rc.1
 

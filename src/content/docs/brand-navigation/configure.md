@@ -6,6 +6,12 @@ editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/c
 
 Open Brand Navigation under **Admin → Appearance → Themes & components**. Work on your [preview theme](../install/) first. These instructions describe the current code on `main`; [tagged releases](../release-notes/) can have fewer options.
 
+## Brand identity
+
+Set your brand name, destination and optional logo in the component settings. You can provide separate light- and dark-scheme logos. Check both color schemes and give the brand a meaningful name, including when you display only a logo.
+
+Turn `show_brand` off if you want navigation without a separate brand area.
+
 ## Navigation items
 
 Open **navigation_items**. The editor's **+ Menu item** button adds a top-level entry; **+ Submenu item** adds a link beneath one. The supplied configuration already contains examples, so edit an existing entry instead of adding a duplicate.
@@ -30,6 +36,26 @@ Community still opens `/latest`; its separate arrow opens the submenu containing
 
 Only one submenu level is supported. Every child needs its own label and URL.
 
+## Palette and custom colors
+
+Return to the component's main settings page and find **Appearance**. Start with the theme's colors: leave **Custom** off so Brand Navigation follows its light and dark palettes.
+
+To override a color, turn on that row's **Custom** checkbox, choose a color, then select **Save colors**. To remove an individual override, turn its checkbox off and save again. **Inherit all** immediately clears and saves all seven overrides, not just the header-icon colors.
+
+The controls cover the bar background, bar text/icons, bar hover background, submenu background, submenu text/icons, **Core-header icon**, and **Core-header icon hover**.
+
+Colors accept six-digit hex values with or without `#`. Appearance overrides are included when you [export a settings backup](../configuration-bundles/).
+
+## Discourse core-header icons
+
+For a `site_header` item, choose its **Site-header presentation**:
+
+- `label_only`: text, with no icon required.
+- `icon_and_label`: an icon and text. The text remains available if the optional icon is unavailable.
+- `icon_only`: a compact icon link. This requires an icon; if that icon is unavailable, the link is omitted until it becomes available.
+
+Keep a clear Label even for icon-only links: it is the link's accessible name. Enter a Font Awesome 6 icon name and include it in `custom_font_awesome_icons` so Discourse loads it. Header entries need a URL and cannot contain children or use `group` behavior.
+
 ### Add a text link to the Discourse header
 
 Create a separate top-level **Menu item**, with no submenu children:
@@ -52,37 +78,11 @@ The option menus display identifiers such as `site_header` and `label_only`; use
 
 Choose **Target** `_blank`, select **Save Changes**, then refresh the forum page before testing. Use `_self` to keep navigation in the same tab. A forum tab that was already open can retain its previous settings until refreshed.
 
-## Brand identity
-
-Set your brand name, destination and optional logo in the component settings. You can provide separate light- and dark-scheme logos. Check both color schemes and give the brand a meaningful name, including when you display only a logo.
-
-Turn `show_brand` off if you want navigation without a separate brand area.
-
-## Palette and custom colors
-
-Return to the component's main settings page and find **Appearance**. Start with the theme's colors: leave **Custom** off so Brand Navigation follows its light and dark palettes.
-
-To override a color, turn on that row's **Custom** checkbox, choose a color, then select **Save colors**. To remove an individual override, turn its checkbox off and save again. **Inherit all** immediately clears and saves all seven overrides, not just the header-icon colors.
-
-The controls cover the bar background, bar text/icons, bar hover background, submenu background, submenu text/icons, **Core-header icon**, and **Core-header icon hover**.
-
-### Change header-icon colors
+## Change header-icon colors
 
 Use **Core-header icon** for the normal icon color and **Core-header icon hover** for hover and keyboard focus. Each is independent. With Custom off, they inherit the theme's header-icon colors.
 
-These controls affect only Brand Navigation's header icons. They do not recolor text-only links such as Versions & Status, Discourse's own icons, or icons in the brand bar. Custom colors stay fixed across light/dark palettes, so check readability in both.
-
-Colors accept six-digit hex values with or without `#`. Appearance overrides are included when you [export a settings backup](../configuration-bundles/).
-
-## Discourse core-header icons
-
-For a `site_header` item, choose its **Site-header presentation**:
-
-- `label_only`: text, with no icon required.
-- `icon_and_label`: an icon and text. The text remains available if the optional icon is unavailable.
-- `icon_only`: a compact icon link. This requires an icon; if that icon is unavailable, the link is omitted until it becomes available.
-
-Keep a clear Label even for icon-only links: it is the link's accessible name. Enter a Font Awesome 6 icon name and include it in `custom_font_awesome_icons` so Discourse loads it. Header entries need a URL and cannot contain children or use `group` behavior.
+These controls affect only Brand Navigation's header icons. They do not recolor text-only links, Discourse's own icons, or icons in the brand bar. Custom colors stay fixed across light/dark palettes, so check readability in both.
 
 ## Choose who sees a link
 
