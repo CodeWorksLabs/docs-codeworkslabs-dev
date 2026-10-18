@@ -118,4 +118,4 @@ setting; `_blank` links automatically receive `noopener noreferrer`.
 
 ---
 
-> **Canonical GitHub source** · Generated from [`docs/ARCHITECTURE.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/8ac0fa34b5917a414477d56f7086aec88d9c1ae4/docs/ARCHITECTURE.md) at commit [`8ac0fa34b591`](https://github.com/CodeWorksLabs/brand-navigation/commit/8ac0fa34b5917a414477d56f7086aec88d9c1ae4) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
+> **Canonical GitHub source** · Generated from [`docs/ARCHITECTURE.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/e42f98fdd0e24cedab08a7960e3b64f947b7ff16/docs/ARCHITECTURE.md) at commit [`e42f98fdd0e2`](https://github.com/CodeWorksLabs/brand-navigation/commit/e42f98fdd0e24cedab08a7960e3b64f947b7ff16) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.

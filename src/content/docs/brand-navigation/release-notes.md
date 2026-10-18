@@ -1,12 +1,25 @@
 ---
 title: What's new
-description: What's new in Brand Navigation RC2 and links to published releases.
+description: What's new in Brand Navigation RC3 and links to published releases.
 editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/release-notes.md
 ---
 
+## v1.0.0-rc.3
+
+RC3 was published on 2026-10-17 as a GitHub prerelease.
+
+[Read the RC3 release notes and download](https://github.com/CodeWorksLabs/brand-navigation/releases/tag/v1.0.0-rc.3).
+
+- **Header sizes:** choose separate desktop and mobile sizes for Brand Navigation's header icons and link text, or keep the theme defaults.
+- **Header colors:** set link-text colors and a shared link/icon hover background separately from icon colors.
+- **Dropdown contrast:** choose a separate submenu text/icon color for hover and keyboard focus.
+- **Configuration backups:** the new size and color settings are included in exported bundles.
+
+Git-installed components also receive the subsequent settings-description and ordering-help updates through Discourse's updater. The published RC3 download remains a fixed release.
+
 ## v1.0.0-rc.2
 
-RC2 was published on 2026-10-17 as a GitHub prerelease. It includes the current Brand Navigation changes on `main` at commit `8ac0fa3`.
+RC2 was published on 2026-10-17 as a GitHub prerelease.
 
 [Read the RC2 release notes and download](https://github.com/CodeWorksLabs/brand-navigation/releases/tag/v1.0.0-rc.2).
 
@@ -23,7 +36,7 @@ See [Add links, menus and colors](../configure/) to use these options and the [c
 
 ## Published downloads
 
-[GitHub Releases](https://github.com/CodeWorksLabs/brand-navigation/releases) lists published versions. RC2 is the newest published release candidate. Check its notes and back up your settings before updating. The source records linked from these docs preserve the exact RC2 source, including dated preparation and testing history.
+[GitHub Releases](https://github.com/CodeWorksLabs/brand-navigation/releases) lists published versions. RC3 is the newest published release candidate. Check its notes and back up your settings before updating. The source records linked from these docs mirror the identified source revision and retain dated preparation and testing history.
 
 ### v1.0.0-rc.1
 

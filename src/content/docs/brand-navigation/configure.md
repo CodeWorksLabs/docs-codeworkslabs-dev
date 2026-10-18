@@ -16,6 +16,8 @@ Turn `show_brand` off if you want navigation without a separate brand area.
 
 Open **navigation_items**. The editor's **+ Menu item** button adds a top-level entry; **+ Submenu item** adds a link beneath one. The supplied configuration already contains examples, so edit an existing entry instead of adding a duplicate.
 
+Select an item and use **↑ Move up** or **↓ Move down** to change its order. Items in the same area (**Surface**) appear in the order listed; submenu items have their own order. Save, then refresh the forum.
+
 ### Add your first link
 
 1. Select the existing **Community** entry, or choose **+ Menu item** if starting empty.
@@ -40,11 +42,11 @@ Only one submenu level is supported. Every child needs its own label and URL.
 
 Return to the component's main settings page and find **Appearance**. Start with the theme's colors: leave **Custom** off so Brand Navigation follows its light and dark palettes.
 
-To override a color, turn on that row's **Custom** checkbox, choose a color, then select **Save colors**. To remove an individual override, turn its checkbox off and save again. **Inherit all** immediately clears and saves all seven overrides, not just the header-icon colors.
+Enter a six-digit hex color directly in its setting field (for example, `#002147`) and save it, or use the optional picker in **Appearance**: turn on **Custom**, choose a color, then select **Save colors**.
 
-The controls cover the bar background, bar text/icons, bar hover background, submenu background, submenu text/icons, **Core-header icon**, and **Core-header icon hover**.
+All eleven color settings have pickers: navigation-bar background and text/icons; menu highlight background; dropdown background, text/icons and hover/focus text/icons; header icons, link text and their hover/focus colors; and header hover/focus background.
 
-Colors accept six-digit hex values with or without `#`. Appearance overrides are included when you [export a settings backup](../configuration-bundles/).
+Both methods change the same saved colors. A blank field or an unchecked **Custom** row uses the default. **Inherit all** immediately clears and saves all eleven color overrides; it does not reset sizes. Colors accept a leading `#` or no `#` and are included when you [export a settings backup](../configuration-bundles/).
 
 ## Discourse core-header icons
 
@@ -55,6 +57,16 @@ For a `site_header` item, choose its **Site-header presentation**:
 - `icon_only`: a compact icon link. This requires an icon; if that icon is unavailable, the link is omitted until it becomes available.
 
 Keep a clear Label even for icon-only links: it is the link's accessible name. Enter a Font Awesome 6 icon name and include it in `custom_font_awesome_icons` so Discourse loads it. Header entries need a URL and cannot contain children or use `group` behavior.
+
+### Header colors
+
+In **Appearance**, use **Discourse header — icons** and **icons on hover/focus** for icon colors. Use the separate **link text** and **link text on hover/focus** pickers for text. **Link and icon background on hover/focus** controls the highlight behind both. You can also enter colors directly in the corresponding settings above.
+
+Leave each value inherited to follow your theme. Custom colors stay fixed across light/dark palettes, so check readability in both.
+
+### Header sizes
+
+**Header icon size desktop/mobile** and **Header text size desktop/mobile** set independent pixel sizes. Enter `1`–`48`, or use **Reset** / `0` for the theme default. A value of `1` really means 1px and can make an icon look missing. Mobile means Discourse's mobile view, not just a narrow desktop window.
 
 ### Add a text link to the Discourse header
 
@@ -78,12 +90,6 @@ The option menus display identifiers such as `site_header` and `label_only`; use
 
 Choose **Target** `_blank`, select **Save Changes**, then refresh the forum page before testing. Use `_self` to keep navigation in the same tab. A forum tab that was already open can retain its previous settings until refreshed.
 
-## Change header-icon colors
-
-Use **Core-header icon** for the normal icon color and **Core-header icon hover** for hover and keyboard focus. Each is independent. With Custom off, they inherit the theme's header-icon colors.
-
-These controls affect only Brand Navigation's header icons. They do not recolor text-only links, Discourse's own icons, or icons in the brand bar. Custom colors stay fixed across light/dark palettes, so check readability in both.
-
 ## Choose who sees a link
 
 **Audience** can be `everyone`, `anonymous` (signed out), or `authenticated` (signed in). **Device visibility** can be `both`, `desktop`, or `mobile`. Check parent and child items separately.
@@ -96,4 +102,4 @@ Use `mobile_mode` `menu` for a compact menu button, `bar` for the full wrapping 
 
 For a small screen, start with `menu`, short labels and a few essential header links. Mark less important destinations desktop-only and put the full set in a submenu that mobile visitors can reach. Long header labels may be truncated and logos compact; adding more links does not create more header space.
 
-Before sharing the configuration, test every link while signed in and signed out, on desktop and a phone, and in light and dark modes. Tab through the menus and use Escape to close them. [Fix a problem](../troubleshooting/) if the result is not what you expect, or open the [complete administrator reference](../source/administrator-guide/) for every setting.
+Before sharing the configuration, test every link while signed in and signed out, on desktop and a phone, and in light and dark modes. Tab through the menus and use Escape to close them. [Fix a problem](../troubleshooting/) if the result is not what you expect, or open the [complete administrator reference](../source/administrator-guide/#settings-reference) for every setting and its [Theme translations section](../source/administrator-guide/#theme-translations) for changing interface wording.

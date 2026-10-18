@@ -28,9 +28,17 @@ A `site_header` item must be a direct link: no children and no `group` behavior.
 
 ## Changing icon colors does not change the text
 
-**Core-header icon** and **Core-header icon hover** change only Brand Navigation's header icons, not link text, Discourse's own controls or brand-bar icons. Hover also applies to keyboard focus. To apply an override, turn on its **Custom** checkbox and select **Save colors**.
+Use **Discourse header — link text** and **link text on hover/focus** in Appearance for text colors. The **icons** rows control icons separately. Enter a hex value directly in the corresponding setting, or turn on **Custom**, choose a color and select **Save colors**.
 
-To follow the theme again, turn Custom off for that row and save. **Inherit all** clears and saves all seven appearance overrides. Check light and dark palettes; a custom color remains fixed in both.
+To follow the theme again, clear the setting or turn Custom off for that row and save. **Inherit all** clears and saves all eleven color overrides. Check light and dark palettes; a custom color remains fixed in both.
+
+## Submenu text disappears on the highlight
+
+Choose a contrasting **Submenu hover text color**. For example, normal navy text (`#002147`) needs a different color such as white (`#FFFFFF`) over a navy highlight. Leaving this setting blank keeps the normal submenu text color on hover and keyboard focus.
+
+## Header icons look missing or too small
+
+Check **Header icon size desktop** and **Header icon size mobile**. Values are pixels: `1` means 1px. Use **Reset** or `0` to restore the theme default.
 
 ## Mobile controls feel crowded
 
