@@ -4,6 +4,28 @@ description: Find help with Brand Navigation and report a problem.
 editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/support.md
 ---
 
-Start with [Fix a problem](../troubleshooting/). The [complete administrator reference](../source/administrator-guide/) covers the full settings and procedures, while [technical records](../source/testing-record/) contain the detailed test evidence and limits.
+## Need help?
 
-If you still need help, [open an issue](https://github.com/CodeWorksLabs/brand-navigation/issues) with your Discourse version, active theme, Brand Navigation version and the steps needed to reproduce the problem. Do not include passwords or other private information. For a suspected vulnerability, follow the [security reporting instructions](../security/) instead.
+Ask questions, get setup help and share your configuration in the [CodeWorksLabs community forum](https://forum.codeworkslabs.dev/).
+
+These guides may also help:
+
+- [Fix a problem](../troubleshooting/) — missing links, saved changes, colors and layout.
+- [Add links, menus and colors](../configure/) — setup instructions and settings screenshots.
+- [Settings reference](../source/administrator-guide/#settings-reference) — every setting and option.
+
+Use [GitHub Issues](https://github.com/CodeWorksLabs/brand-navigation/issues) for bug reports, feature requests and documentation corrections.
+
+## Report a problem
+
+[Open a Brand Navigation issue](https://github.com/CodeWorksLabs/brand-navigation/issues/new/choose) and describe:
+
+- What you expected and what happened instead.
+- The steps that reproduce it, with a screenshot if useful.
+- Your Brand Navigation and Discourse versions, active theme, and browser or device.
+
+If the problem only occurs on mobile or when signed out, mention that too. Remove passwords, tokens and private information from anything you share.
+
+## Report a security concern
+
+Do not post a suspected vulnerability in a public issue. Follow the [private security-reporting instructions](../security/).
