@@ -6,7 +6,7 @@ editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/c
 
 ## Need help?
 
-Ask questions, get setup help and share your configuration in the [CodeWorksLabs community forum](https://forum.codeworkslabs.dev/).
+Ask questions, get setup help and share your configuration in [CodeWorksLabs community Support](https://forum.codeworkslabs.dev/c/support/5).
 
 These guides may also help:
 
