@@ -135,4 +135,4 @@ for the documented, multi-site-tested release with no known release blockers.
 
 ---
 
-> **Canonical GitHub source** · Generated from [`CHANGELOG.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/e42f98fdd0e24cedab08a7960e3b64f947b7ff16/CHANGELOG.md) at commit [`e42f98fdd0e2`](https://github.com/CodeWorksLabs/brand-navigation/commit/e42f98fdd0e24cedab08a7960e3b64f947b7ff16) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
+> **Canonical GitHub source** · Generated from [`CHANGELOG.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/424cf833ab8f7612eb8f838291a25a8e4b997745/CHANGELOG.md) at commit [`424cf833ab8f`](https://github.com/CodeWorksLabs/brand-navigation/commit/424cf833ab8f7612eb8f838291a25a8e4b997745) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
