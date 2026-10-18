@@ -6,6 +6,25 @@ editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/c
 
 Open Brand Navigation under **Admin → Appearance → Themes & components**. Work on your [preview theme](../install/) first. These instructions describe the current code on `main`; [tagged releases](../release-notes/) can have fewer options.
 
+## Settings screenshots
+
+Select either preview to open the full-size screenshot.
+
+<div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+  <figure style="margin: 0; flex: 1 1 14rem; max-width: 20rem;">
+    <a href="/images/brand-navigation/brand-navigation-settings.png">
+      <img src="/images/brand-navigation/brand-navigation-settings.png" alt="Open the full Brand Navigation settings screenshot" width="736" height="9731" loading="lazy" style="display: block; width: 100%; height: 12rem; object-fit: cover; object-position: top; border: 1px solid var(--sl-color-gray-5); border-radius: 0.5rem;" />
+    </a>
+    <figcaption>Component settings, Appearance and configuration bundles</figcaption>
+  </figure>
+  <figure style="margin: 0; flex: 1 1 14rem; max-width: 20rem;">
+    <a href="/images/brand-navigation/brand-navigation-menu-editor.png">
+      <img src="/images/brand-navigation/brand-navigation-menu-editor.png" alt="Open the full navigation-items editor screenshot" width="736" height="1981" loading="lazy" style="display: block; width: 100%; height: 12rem; object-fit: cover; object-position: top; border: 1px solid var(--sl-color-gray-5); border-radius: 0.5rem;" />
+    </a>
+    <figcaption>Navigation-items editor: menus, links and display options</figcaption>
+  </figure>
+</div>
+
 ## Brand identity
 
 Set your brand name, destination and optional logo in the component settings. You can provide separate light- and dark-scheme logos. Check both color schemes and give the brand a meaningful name, including when you display only a logo.
