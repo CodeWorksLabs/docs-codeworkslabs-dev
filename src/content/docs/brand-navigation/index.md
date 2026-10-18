@@ -8,7 +8,7 @@ Give your Discourse forum its own identity and a clear way to get around. Brand 
 
 Brand Navigation is independently maintained by CodeWorksLabs, not an official Discourse product. It adds navigation; it does not replace Discourse's login, topic controls or composer.
 
-[Install](./install/) · [Add links and menus](./configure/) · [See live examples](https://github.com/CodeWorksLabs/brand-navigation#preview)
+[Install](./install/) · [Add links and menus](./configure/) · [See live examples](https://github.com/CodeWorksLabs/brand-navigation#header-and-navigation-examples)
 
 ## Two places for your links
 
@@ -17,9 +17,9 @@ Brand Navigation is independently maintained by CodeWorksLabs, not an official D
 
 Choose which items signed-in and signed-out visitors see, and whether they appear on desktop, mobile or both. On phones, use a compact menu, a wrapping bar, or hide the component. Edit the settings in Discourse and export a backup when the navigation is ready.
 
-![Example Brand Navigation bar on RVing Community, with Community, Resources and RVing Network menus](/images/brand-navigation/rving-community-header.png)
+![The Bridge: Brand Navigation menus above the Discourse header, with a Versions & Status text link and icons beside the header controls](/images/brand-navigation/the-bridge-header.jpg)
 
-An existing configuration, not a guarantee of the site's current component version. [More examples](https://github.com/CodeWorksLabs/brand-navigation#preview).
+An existing configuration, not a guarantee of the site's current component version. [More examples](https://github.com/CodeWorksLabs/brand-navigation#header-and-navigation-examples).
 
 ## Start with one useful link
 
