@@ -6,7 +6,7 @@ export const repository = "CodeWorksLabs/brand-navigation";
 export const sourceChannel = "main";
 export const manifestFilename = "src/content/docs/brand-navigation/source/brand-navigation-docs-source.json";
 export const generator = "codeworkslabs-brand-navigation-mirror";
-export const transformVersion = 2;
+export const transformVersion = 3;
 
 export const members = [
   { sourcePath: "docs/USER_GUIDE.md", generatedPath: "src/content/docs/brand-navigation/source/administrator-guide.md", title: "Administrator guide", description: "The complete administrator workflow from the Brand Navigation repository." },
@@ -70,8 +70,7 @@ function rewriteRelativeLinks(markdown, sourcePath, sourceCommit) {
 }
 
 export function sourceNotice(sourcePath, sourceCommit) {
-  const shortCommit = sourceCommit.slice(0, 12);
-  return `> **Canonical GitHub source** · Generated from [\`${sourcePath}\`](${repositoryUrl(sourcePath, "blob", sourceCommit)}) at commit [\`${shortCommit}\`](https://github.com/${repository}/commit/${sourceCommit}) from editable source channel [\`${sourceChannel}\`](https://github.com/${repository}/tree/${sourceChannel}); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.`;
+  return `[Source on GitHub](${repositoryUrl(sourcePath, "blob", sourceCommit)})`;
 }
 
 export function renderPage(rawSource, member, sourceCommit) {

@@ -4,9 +4,9 @@ description: Install Brand Navigation, try it on a preview theme, then make it a
 editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/install.md
 ---
 
-You need administrator access to your Discourse site. Start on a non-default theme so you can try the navigation without changing what visitors see.
+You need administrator access to your Discourse site. New to themes and components? See [Discourse's guide to using themes](https://meta.discourse.org/t/beginners-guide-to-using-discourse-themes/91966) for installation, attaching components and using Preview.
 
-Themes attached to the same component share its code and settings. If Brand Navigation is already used by a live theme, use a separate test copy or staging site; previewing another theme does not isolate changes to that shared component.
+Test Brand Navigation on a non-default theme. If it is already used by a live theme, use a separate component copy or staging site: the same component's code and settings are shared across all themes using it.
 
 ## Install from GitHub
 

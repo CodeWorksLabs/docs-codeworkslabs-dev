@@ -3,6 +3,10 @@ title: "Architecture"
 description: "The canonical Brand Navigation rendering and integration architecture."
 editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/ARCHITECTURE.md
 ---
+This developer reference explains how Brand Navigation integrates with Discourse,
+renders navigation and validates settings. For installation and configuration,
+see the [Administrator guide](/brand-navigation/source/administrator-guide/).
+
 ## Render boundary
 
 The initializer registers the configured full-application outlet only when
@@ -84,8 +88,7 @@ Availability is determined from the symbols actually
 loaded in Discourse's production SVG sprite; development-only icon-list
 metadata is not used. One shared `MutationObserver` watches Discourse's primary
 Font Awesome sprite until it contains symbols, then notifies all live Brand
-Navigation consumers once and disconnects. This works with both the 2026.7 ESR
-loader and current Discourse without issuing per-icon network requests. Until
+Navigation consumers once and disconnects. This avoids per-icon network requests. Until
 the primary sprite is ready, icon-only bar/submenu entries expose their labels
 and icon-only header entries stay omitted. Destroyed components unsubscribe, and
 the tracked readiness update is scheduled after the active render transaction.
@@ -118,4 +121,4 @@ setting; `_blank` links automatically receive `noopener noreferrer`.
 
 ---
 
-> **Canonical GitHub source** · Generated from [`docs/ARCHITECTURE.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/424cf833ab8f7612eb8f838291a25a8e4b997745/docs/ARCHITECTURE.md) at commit [`424cf833ab8f`](https://github.com/CodeWorksLabs/brand-navigation/commit/424cf833ab8f7612eb8f838291a25a8e4b997745) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
+[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/cb2e76f332887b3af298404d800fa7d188c30a52/docs/ARCHITECTURE.md)

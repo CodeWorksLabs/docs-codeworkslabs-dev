@@ -9,8 +9,10 @@ navigation to normal Discourse application pages.
 
 ## Before you begin
 
-- Test the component on a staging site or copied theme before enabling it for
-  visitors.
+- Test the component on a staging site or a separate component copy attached
+  only to a non-default theme before enabling it for visitors. A copied theme
+  alone does not isolate changes: every theme using the same component shares
+  its code and settings.
 - You need access to Discourse theme administration.
 - Decide whether the bar should appear above or below the normal Discourse
   header.
@@ -49,7 +51,7 @@ The exact administration labels can vary slightly between Discourse releases.
 
 ## Updates and upgrades
 
-Yes. When Brand Navigation is installed from its Git repository, it uses the
+When Brand Navigation is installed from its Git repository, it uses the
 normal Discourse remote-theme update system. The component does not implement
 its own updater and does not contact a separate Brand Navigation service.
 
@@ -77,7 +79,9 @@ remote-theme check.
 1. Read the Brand Navigation release notes for configuration, compatibility,
    and migration information.
 2. Record or export the current component settings.
-3. Apply the update to a staging site or staging theme first.
+3. Apply the update to a staging site or a separate component copy attached only
+   to a non-default preview theme. Updating a shared component changes its code
+   for every theme using it; previewing another theme does not isolate it.
 4. Verify desktop and mobile navigation, signed-in and signed-out visibility,
    links, color schemes, and an embedded discussion.
 5. Update the production component through Discourse's **Update to latest**
@@ -133,22 +137,22 @@ An optional local command validates a saved bundle without contacting a forum:
 pnpm bundle validate configurations/repeal-obbba.json
 ```
 
-Import and export are intentionally administrator-browser operations in
-`v1.0.0-rc.1`. Brand Navigation does not ship a credentialed command-line
-client; adding one would be future product scope rather than part of the
-current RC. Upload light and dark logos separately because Discourse upload
+Import and export use the administration panel in your browser. The optional
+local command only validates a saved file; it does not import or export settings
+on a forum. Upload light and dark logos separately because Discourse upload
 identifiers are site-specific.
 
 ### If an upgrade causes a problem
 
 1. Turn off Discourse's component-level **Enabled?** control to stop Brand
-   Navigation from rendering.
+   Navigation on every theme using it.
 2. If Brand Navigation replaced another component, follow the documented
    rollback procedure and temporarily re-enable that component.
 3. To return Brand Navigation itself to a known release, follow
    [Roll back Brand Navigation to a release tag](/brand-navigation/source/migration-record/#roll-back-brand-navigation-to-a-release-tag).
-   That procedure remains provisional until its complete staging evidence is
-   recorded in [`TESTING.md`](/brand-navigation/source/testing-record/). It handles an already-disabled
+   Switching to an earlier release and then updating again has not yet been
+   fully verified. Keep the working component and settings backup until
+   recovery is confirmed. The procedure handles an already-disabled
    component by first isolating it on a non-default staging theme, then turning
    native **Enabled?** on before requiring the preview or configuration export.
 4. Restore the previously recorded settings when required.
@@ -443,9 +447,7 @@ Text is constrained to the smaller of 14rem and 30% of the viewport and uses
 an ellipsis when needed. Its full label stays available to assistive technology
 and as the default tooltip. Keep labels short and use device visibility to
 reserve mobile space for Discourse's controls. Other items keep the default
-`bar` surface. These capabilities are included in `v1.0.0-rc.2` and later;
-RC1 supports only icon links in this surface.
-Use the repository's tags and releases to identify published versions.
+`bar` surface.
 
 Use `device_visibility` to control constrained mobile layouts independently for
 each item:
@@ -557,21 +559,11 @@ The available keys are grouped as follows; all start with `brand_navigation.`:
 | `appearance.header_text`, `appearance.header_text_hover`                                    | Discourse-header link-text normal and hover/focus color labels.                          |
 | `appearance.header_hover_background`                                                        | Shared header-link/icon hover-background picker label.                                   |
 
-New guidance keys appear after the component update containing them; an older
-installed revision may show fewer rows. Translation overrides are local to this
-site and language and are not included in Brand Navigation configuration bundles.
-
-Brand Navigation uses Discourse's theme-translation system for fixed visitor
-and administrator interface text. Brand Navigation bundles only English in
-`locales/en.yml`. Other languages can be customized through Discourse's theme
-translations. The English catalog includes
-navigation accessibility labels, appearance and configuration-bundle controls,
-setting descriptions, and status messages.
-
-An administrator can open **Theme translations** for Brand Navigation, select
-the locale to customize, and override individual strings without editing the
-component repository. These overrides belong to that Discourse site and locale;
-repeat the customization for every supported locale that needs different text.
+Translation overrides belong to that Discourse site and language; repeat the
+customization for each language that needs different text. They are not included
+in Brand Navigation configuration bundles. English is bundled in `locales/en.yml`;
+other languages can be customized through **Theme translations** without editing
+the component repository.
 Repository updates normally retain local overrides, but removed or renamed
 translation keys should be checked during an upgrade.
 
@@ -619,12 +611,9 @@ Before enabling the component broadly, check:
 8. A supported embedded discussion, confirming that Brand Navigation is absent
    while the embedded discussion and its core controls remain available.
 
-Automated checks cover accessible names, responsive visibility, mobile layout,
-and embed exclusion. Keyboard and focus-return behavior has source and partial
-manual evidence, but not a dedicated current-candidate automated focus-return
-regression. These checks do not replace human screen-reader or RTL-locale
-acceptance. The exact completed and outstanding manual evidence is maintained
-in [`TESTING.md`](/brand-navigation/source/testing-record/).
+These checks do not replace human screen-reader or right-to-left language
+testing. See [Testing coverage and known limitations](/brand-navigation/source/testing-record/) for completed
+and outstanding checks.
 
 ## Disable or roll back
 
@@ -637,11 +626,12 @@ keep the earlier component and an export of its settings until Brand Navigation
 has passed staging. See
 [Migration and rollback](/brand-navigation/source/migration-record/) for the detailed procedure.
 
-For a regression caused by a Brand Navigation update, keep the existing
-component record and review the provisional
-[release-tag rollback](/brand-navigation/source/migration-record/#roll-back-brand-navigation-to-a-release-tag).
-It is not release-supported until its complete pin-and-return workflow is
-recorded on staging in [`TESTING.md`](/brand-navigation/source/testing-record/).
+If you need to return Brand Navigation to an earlier release, follow the
+[detailed recovery instructions](/brand-navigation/source/migration-record/#roll-back-brand-navigation-to-a-release-tag).
+Switching to an earlier release and then updating again has not yet been fully
+verified. Back up your settings and test on a separate component copy or staging
+site; older code may not accept your current settings. Keep the working component
+and settings backup until recovery is confirmed.
 
 ## Troubleshooting
 
@@ -678,18 +668,24 @@ and color scheme before adding parent-theme overrides.
 
 ### Report a problem
 
-Use [GitHub Issues](https://github.com/CodeWorksLabs/brand-navigation/issues)
-for non-sensitive bugs, installation or configuration questions, compatibility
-reports, and feature requests. Include the Brand Navigation release, branch, or
-commit; Discourse version and active theme; browser, device, viewport, and
-signed-in state; reproduction steps; and sanitized settings or console evidence
-when relevant.
+Start with [Brand Navigation Support](https://forum.codeworkslabs.dev/c/brand-navigation/support/7)
+for installation questions and configuration help. Share ideas in
+[Feature Requests](https://forum.codeworkslabs.dev/c/brand-navigation/feature-requests/8)
+and check the [Roadmap](https://forum.codeworkslabs.dev/t/brand-navigation-roadmap/14)
+for proposed work and its status. Use
+[GitHub Issues](https://github.com/CodeWorksLabs/brand-navigation/issues) for
+non-sensitive bugs, compatibility reports and documentation corrections.
+
+When reporting a problem, include the Brand Navigation release, branch or
+commit; Discourse version and active theme; browser, device, viewport and
+signed-in state; and reproduction steps. Remove sensitive information from any
+settings or console output you share.
 
 Never post credentials, personal data, or non-public vulnerability details in a
-public issue. Report suspected vulnerabilities privately to
+public forum topic or GitHub issue. Report suspected vulnerabilities privately to
 [security@codeworkslabs.dev](mailto:security@codeworkslabs.dev) under the
 [security policy](/brand-navigation/source/security-policy/).
 
 ---
 
-> **Canonical GitHub source** · Generated from [`docs/USER_GUIDE.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/424cf833ab8f7612eb8f838291a25a8e4b997745/docs/USER_GUIDE.md) at commit [`424cf833ab8f`](https://github.com/CodeWorksLabs/brand-navigation/commit/424cf833ab8f7612eb8f838291a25a8e4b997745) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
+[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/cb2e76f332887b3af298404d800fa7d188c30a52/docs/USER_GUIDE.md)

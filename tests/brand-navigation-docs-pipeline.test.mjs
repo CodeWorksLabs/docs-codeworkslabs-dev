@@ -111,8 +111,8 @@ test("offline verifier rejects tampered, missing, extra, and mismatched members"
     await expectRejected(async (root) => {
       const generated = path.join(root, members[0].generatedPath);
       const content = (await readFile(generated, "utf8")).replace(
-        "from editable source channel",
-        "from source channel",
+        "[Source on GitHub]",
+        "[Source elsewhere]",
       );
       await writeFile(generated, content, "utf8");
       const manifestPath = path.join(root, manifestFilename);

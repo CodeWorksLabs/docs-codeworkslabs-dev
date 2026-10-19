@@ -14,9 +14,13 @@ These guides may also help:
 - [Add links, menus and colors](../configure/) — setup instructions and settings screenshots.
 - [Settings reference](../source/administrator-guide/#settings-reference) — every setting and option.
 
-Use [GitHub Issues](https://github.com/CodeWorksLabs/brand-navigation/issues) for bug reports, feature requests and documentation corrections.
+Use [GitHub Issues](https://github.com/CodeWorksLabs/brand-navigation/issues) for bug reports and documentation corrections.
 
-## Report a problem
+## Suggest a feature
+
+Share ideas in [Brand Navigation Feature Requests](https://forum.codeworkslabs.dev/c/brand-navigation/feature-requests/8). Check the [Brand Navigation Roadmap](https://forum.codeworkslabs.dev/t/brand-navigation-roadmap/14) for proposed work and its status.
+
+## Report a bug
 
 [Open a Brand Navigation issue](https://github.com/CodeWorksLabs/brand-navigation/issues/new/choose) and describe:
 
@@ -28,4 +32,4 @@ If the problem only occurs on mobile or when signed out, mention that too. Remov
 
 ## Report a security concern
 
-Do not post a suspected vulnerability in a public issue. Follow the [private security-reporting instructions](../security/).
+Do not post a suspected vulnerability in a public forum topic or GitHub issue. Follow the [private security-reporting instructions](../security/).

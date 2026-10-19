@@ -30,7 +30,7 @@ The importer checks the complete bundle before sending the settings in one Disco
 
 ## What moves
 
-Bundles include portable navigation and appearance settings. They do **not** transfer uploaded logos, theme attachments, credentials or the component's enabled state. The source theme's ID/name and the export date are reference information, not settings applied to the destination.
+Bundles include your navigation and appearance settings, including menus, links, visibility rules, colors and sizes. They do **not** transfer uploaded logos, theme attachments, credentials or the component's enabled state. The source theme's ID/name and the export date are reference information, not settings applied to the destination.
 
 ## File limits
 

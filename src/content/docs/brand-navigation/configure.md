@@ -4,7 +4,7 @@ description: Add your first link, create a submenu, and choose header placement 
 editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/configure.md
 ---
 
-Open Brand Navigation under **Admin → Appearance → Themes & components**. Work on your [preview theme](../install/) first. These instructions describe the current code on `main`; [tagged releases](../release-notes/) can have fewer options.
+Open Brand Navigation under **Admin → Appearance → Themes & components**. Work on your [preview theme](../install/) first.
 
 ## Settings screenshots
 
@@ -67,7 +67,7 @@ All eleven color settings have pickers: navigation-bar background and text/icons
 
 Both methods change the same saved colors. A blank field or an unchecked **Custom** row uses the default. **Inherit all** immediately clears and saves all eleven color overrides; it does not reset sizes. Colors accept a leading `#` or no `#` and are included when you [export a settings backup](../configuration-bundles/).
 
-## Discourse core-header icons
+## Discourse header links and icons
 
 For a `site_header` item, choose its **Site-header presentation**:
 

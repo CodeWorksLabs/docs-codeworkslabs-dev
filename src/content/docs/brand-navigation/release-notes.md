@@ -1,8 +1,23 @@
 ---
 title: What's new
-description: What's new in Brand Navigation RC3 and links to published releases.
+description: What's new in Brand Navigation RC4 and earlier releases.
 editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/release-notes.md
 ---
+
+## v1.0.0-rc.4
+
+RC4 is the latest published release candidate. It was published on 2026-10-18 as a GitHub prerelease.
+
+[Read the RC4 release notes and download](https://github.com/CodeWorksLabs/brand-navigation/releases/tag/v1.0.0-rc.4).
+
+- **Clearer setting descriptions:** find out what each control changes, including direct color entry and when a setting uses the active theme's colors.
+- **Appearance color pickers:** updated guidance explains how to use the color pickers or enter color values directly, and how to return to theme colors.
+- **Menu ordering:** help text explains how the up/down arrows change the order of items within the same Surface. The controls now have **Move up** and **Move down** tooltips.
+- **Administrator guide:** a detailed settings reference covers the component's options, including Theme translations, colors, sizes and configuration bundles.
+- **Examples and screenshots:** updated header examples and compact, click-to-enlarge settings screenshots show the navigation and administration interface.
+- **Support and community:** support links lead to the CodeWorksLabs community Support category. The README also lists public installations and explains how to request a listing.
+
+RC4 also includes the header size and color controls introduced in RC3, described below.
 
 ## v1.0.0-rc.3
 
@@ -14,8 +29,6 @@ RC3 was published on 2026-10-17 as a GitHub prerelease.
 - **Header colors:** set link-text colors and a shared link/icon hover background separately from icon colors.
 - **Dropdown contrast:** choose a separate submenu text/icon color for hover and keyboard focus.
 - **Configuration backups:** the new size and color settings are included in exported bundles.
-
-Git-installed components also receive the subsequent settings-description and ordering-help updates through Discourse's updater. The published RC3 download remains a fixed release.
 
 ## v1.0.0-rc.2
 
@@ -34,13 +47,9 @@ The header and administration improvements include:
 
 See [Add links, menus and colors](../configure/) to use these options and the [complete changelog](../source/complete-changelog/) for the full history.
 
-## Published downloads
+## v1.0.0-rc.1
 
-[GitHub Releases](https://github.com/CodeWorksLabs/brand-navigation/releases) lists published versions. RC3 is the newest published release candidate. Check its notes and back up your settings before updating. The source records linked from these docs mirror the identified source revision and retain dated preparation and testing history.
-
-### v1.0.0-rc.1
-
-The first stable-track release candidate was published on 2026-09-08 as a GitHub prerelease.
+RC1 was published on 2026-09-08 as a GitHub prerelease.
 
 Highlights include:
 
@@ -48,12 +57,14 @@ Highlights include:
 - protection against an older asynchronous bundle-file read replacing a newer file selection or pasted configuration;
 - corrected mobile flow for linked-parent submenu children;
 - adoption of Discourse’s `d-compat/<YYYY>.<M>` compatibility-branch convention; and
-- refreshed release, migration, testing, and provenance records.
+- updated installation, migration and testing documentation.
 
 - [GitHub Release](https://github.com/CodeWorksLabs/brand-navigation/releases/tag/v1.0.0-rc.1)
 - [Complete changelog](/brand-navigation/source/complete-changelog/)
 - [All releases](https://github.com/CodeWorksLabs/brand-navigation/releases)
 
 ## Release status and limits
+
+Brand Navigation remains a prerelease. Before updating, read the notes for your chosen version, back up your settings and check [Updates and compatibility](../updates-and-compatibility/).
 
 Known-working Discourse builds are tested examples, not a minimum-version promise. Full human screen-reader and RTL acceptance remain open, and release-tag rollback retains the precautions in [Migration and rollback](../migration-and-rollback/).

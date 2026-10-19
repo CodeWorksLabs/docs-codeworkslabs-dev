@@ -8,7 +8,7 @@ editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/c
 
 Check that **Enabled?** is on and Brand Navigation is attached to the theme you are actually viewing. On a preview theme, reopen its Preview. Add a usable navigation item or visible brand name/logo, then refresh the page.
 
-On mobile, `mobile_mode` `hidden` hides all Brand Navigation surfaces. Brand Navigation is also intentionally absent from supported embedded discussions.
+On mobile, `mobile_mode` `hidden` hides the navigation bar and its Discourse-header links. Brand Navigation is also intentionally absent from supported embedded discussions.
 
 ## I saved a change but the forum looks the same
 
@@ -52,6 +52,8 @@ If the import response was interrupted, reload the component settings and inspec
 
 ## Ask for help
 
-The [administrator reference](/brand-navigation/source/administrator-guide/#troubleshooting) has more detail. When [reporting a problem](https://github.com/CodeWorksLabs/brand-navigation/issues), include your component version or commit, Discourse version, active theme, browser/device, sign-in state, expected result and steps to reproduce. Share only sanitized settings or console output.
+Start with [Brand Navigation community Support](https://forum.codeworkslabs.dev/c/brand-navigation/support/7) for setup help or troubleshooting. The [administrator reference](/brand-navigation/source/administrator-guide/#troubleshooting) has more detail.
 
-For ordinary defects, compatibility problems, and documentation corrections, use [Brand Navigation GitHub Issues](https://github.com/CodeWorksLabs/brand-navigation/issues). Do not report an undisclosed vulnerability in a public issue; use the [private security-reporting route](/brand-navigation/security/) instead.
+When reporting a problem, include your component version or commit, Discourse version, active theme, browser/device, sign-in state, expected result and steps to reproduce. Share only settings or console output with sensitive information removed.
+
+Use [Brand Navigation GitHub Issues](https://github.com/CodeWorksLabs/brand-navigation/issues) for bug reports, compatibility problems and documentation corrections. Do not report an undisclosed vulnerability in a public topic or issue; use the [private security-reporting route](/brand-navigation/security/) instead.

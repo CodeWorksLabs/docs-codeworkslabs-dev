@@ -7,9 +7,13 @@ Brand Navigation follows [Semantic Versioning](https://semver.org/). Git tags
 and matching GitHub Releases identify published versions; Discourse continues
 to discover component updates from commits on the installed remote branch.
 
-## Unreleased
+## 1.0.0-rc.4 - 2026-10-18
 
-### Planned v1.0.0-rc.3
+- Clarify administration labels, direct color entry and theme inheritance.
+- Explain menu ordering within each Surface and label the Move up / Move down controls.
+- Update documentation, support links and header/settings previews.
+
+## 1.0.0-rc.3 - 2026-10-17
 
 - Add independent desktop/mobile sizes for Brand Navigation core-header icons
   and link text, defaulting to Discourse's theme sizing.
@@ -19,6 +23,7 @@ to discover component updates from commits on the installed remote branch.
   text readable against a different hover background.
 - Include the optional colors and sizes in configuration bundles, preserving
   default inheritance and older bundles.
+- Correct JavaScript lint coverage and resolve the uncovered findings.
 
 ## 1.0.0-rc.2 - 2026-10-17
 
@@ -44,17 +49,14 @@ to discover component updates from commits on the installed remote branch.
   has not loaded or is unavailable.
 - Validate and round-trip the new presentation setting in configuration
   bundles, retaining safe URLs, audience/device rules, and embed exclusion.
-- Document migration from the separate text-based Custom Header Links
-  component and identify its current contribution to The Bridge screenshot.
+- Document migration from the separate text-based Custom Header Links component.
 - Save native administrator-editor tracked rows through a validated plain-data
   snapshot, without weakening configuration-bundle validation.
 - Keep the mobile menu and logo usable alongside core-header text links at
   320px and 390px, with bounded text truncation and the full accessible label.
 
 This release candidate retains the documented narrow-header and manual
-acceptance limits in [`docs/TESTING.md`](/brand-navigation/source/testing-record/#current-rc2-feature-verification).
-The RC2 source is prepared for review; this entry does not assert that its Git
-tag or GitHub prerelease has been published, or that the live demo is migrated.
+acceptance limits in [`docs/TESTING.md`](/brand-navigation/source/testing-record/#rc2-feature-verification-historical).
 
 ## 1.0.0-rc.1 - 2026-09-08
 
@@ -85,9 +87,6 @@ tag or GitHub prerelease has been published, or that the live demo is migrated.
 - Join that shared readiness observer when a retained site-header item becomes
   eligible after its initial render, so responsive visibility changes cannot
   strand a valid icon while the primary sprite is still loading.
-- Reconcile the successor checkpoint into one unambiguous current release
-  state while retaining dated historical evidence.
-
 - Make administrator imports and color saves use immutable request snapshots,
   disable conflicting controls while writes are pending, and reconcile imported
   colors with their visible controls after success.
@@ -108,9 +107,7 @@ tag or GitHub prerelease has been published, or that the live demo is migrated.
   local copies, mirrors, repository transfers, and maintained forks.
 - Add translated fallback messages and accurately document the English-only
   detailed bundle-validation boundary.
-- Add a durable AI-assisted authorship and source-provenance record with pinned
-  upstream revisions, license evidence, implementation history, and release
-  controls.
+- Document source credits, licensing and project history.
 - Accept six-digit administrator color values with or without a leading `#`
   and normalize picker and configuration-bundle values to `#RRGGBB`.
 - Add administrator color pickers for bar background, bar text, hover/highlight,
@@ -135,4 +132,4 @@ for the documented, multi-site-tested release with no known release blockers.
 
 ---
 
-> **Canonical GitHub source** · Generated from [`CHANGELOG.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/424cf833ab8f7612eb8f838291a25a8e4b997745/CHANGELOG.md) at commit [`424cf833ab8f`](https://github.com/CodeWorksLabs/brand-navigation/commit/424cf833ab8f7612eb8f838291a25a8e4b997745) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
+[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/cb2e76f332887b3af298404d800fa7d188c30a52/CHANGELOG.md)

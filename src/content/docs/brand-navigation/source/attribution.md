@@ -53,4 +53,4 @@ required copyright or license notice must be updated in the same change.
 
 ---
 
-> **Canonical GitHub source** · Generated from [`docs/ATTRIBUTION.md`](https://github.com/CodeWorksLabs/brand-navigation/blob/424cf833ab8f7612eb8f838291a25a8e4b997745/docs/ATTRIBUTION.md) at commit [`424cf833ab8f`](https://github.com/CodeWorksLabs/brand-navigation/commit/424cf833ab8f7612eb8f838291a25a8e4b997745) from editable source channel [`main`](https://github.com/CodeWorksLabs/brand-navigation/tree/main); verified from the committed mirror during this site build. Use **Edit this page** below to suggest a correction at the source.
+[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/cb2e76f332887b3af298404d800fa7d188c30a52/docs/ATTRIBUTION.md)
