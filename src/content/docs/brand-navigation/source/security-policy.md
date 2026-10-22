@@ -31,4 +31,4 @@ for non-sensitive bugs, compatibility reports and documentation corrections.
 
 ---
 
-[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/81499e6356394386c2bc5396fcfb0496f1a81690/SECURITY.md)
+[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/3a7eb19d7c4d520f52b71fc5518b9a5e574cf146/SECURITY.md)

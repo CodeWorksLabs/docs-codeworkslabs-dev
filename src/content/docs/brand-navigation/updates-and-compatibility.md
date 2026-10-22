@@ -20,6 +20,8 @@ Discourse normally keeps your settings when updating the component's code. Keep 
 
 For the normal GitHub installation, leave **Git Branch** at its default and use Discourse's updater. Discourse selects a compatible branch when one is available for your version. You do not normally need to choose a branch yourself.
 
+An explicit `main` selection forces that branch instead of automatic compatibility selection. A sandbox may deliberately follow the head of `main`, independently of release tags. A release tag identifies a fixed revision; it does not redefine `main` or the updater's latest revision.
+
 If you need a specific version for testing or recovery, use the version notes in [GitHub Releases](https://github.com/CodeWorksLabs/brand-navigation/releases). A downloaded ZIP is a fixed copy; reinstall or replace it to change versions.
 
 ## Compatibility

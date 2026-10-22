@@ -149,4 +149,4 @@ for the documented, multi-site-tested release with no known release blockers.
 
 ---
 
-[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/81499e6356394386c2bc5396fcfb0496f1a81690/CHANGELOG.md)
+[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/3a7eb19d7c4d520f52b71fc5518b9a5e574cf146/CHANGELOG.md)

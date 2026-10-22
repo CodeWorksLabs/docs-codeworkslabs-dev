@@ -1,3 +1,36 @@
+# Seven-forum RC5 installation follow-up ready to deploy — October 22, 2026
+
+The user reported the final DiscussionBridge Forum update completed and authorized
+read-only revision/version/updater verification followed by concise docs publication.
+All seven installations reported local/remote component revision
+412448fc5e5abc396c4f668f1fe76eb31e239b1b, zero commits behind, matching main at
+their recorded observation times. DB Forum: Discourse 2026.10.0-latest+142; R744:
+2026.7.2+14. Five earlier current Discourse versions were not collected and are
+explicitly marked Not recorded. Default-branch vs explicit-main updater wording
+is explained without changing forum settings.
+
+Product docs/TESTING.md adds a concise dated table and brief limits before the
+preserved October 17 history; public copy contains no personal/internal directions.
+Published product source: 3a7eb19d7c4d520f52b71fc5518b9a5e574cf146 [skip ci].
+The user additionally directed consistency with Discourse norms. Canonical and
+concise CWL guidance now clarify blank Git Branch for native compatibility,
+explicit main for deliberate branch-head tracking (including sandbox), and
+release tags as fixed identities. No forum source settings were changed.
+The complete nine-page mirror and manifest were applied from its advisory candidate.
+No product tests, new CI, forum updates, or product/source configuration changes.
+Known CI failures, E01 and testing-execution failure remain unresolved. RC5 tag
+and release notes are unchanged. Same-day dependency installation/audit results
+below remain applicable; dependency files are unchanged.
+
+Offline mirror verification passed for the exact source above. The final 34-page
+docs build and 140-asset deployment dry run passed. Existing i18n/404 warnings
+remain unchanged. No product tests or CI ran.
+
+Next: commit/push this documentation-only change, then authorized deployment and
+one focused live read-back of the new rollout section and update guidance.
+
+Earlier checkpoints below are historical.
+
 # Public testing record and RC1 formatting deployed — October 22, 2026
 
 Canonical TESTING.md was cleaned and pushed as product commit
