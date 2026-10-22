@@ -3,6 +3,217 @@ title: "Testing record"
 description: "Exact compatibility, automated, and manual evidence for Brand Navigation."
 editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/TESTING.md
 ---
+## Current testing disposition and RC5 sequence — October 22, 2026
+
+The lengthy testing process failed to produce a clear overall answer. The
+testing execution is a failure that will have a resolution. Finding reproducible
+issues and verifying corrections did not make that overall execution successful.
+This is a testing-process failure, not evidence of additional product bugs.
+See [Brand Navigation Known Issues](https://github.com/CodeWorksLabs/brand-navigation/blob/c6997595bd55c7b814840352841c6979b3299fec/docs/KNOWN_ISSUES.md) for the unresolved process
+issue, implemented changes, scoped verification, and remaining limitations.
+
+The two layout corrections and E03 checkbox-focus correction were verified in
+Chrome. Tested English/Arabic, light/dark, Foundation/Horizon compact keyboard
+sequences showed no issue in the observed desktop-Chrome mobile-view contexts.
+E01 immediate native-field/picker display staleness remains **unresolved**;
+saved values persisted in the corrected save/reload sequence, but its display
+cause remains unknown. Other incomplete checks remain missing coverage, not
+demonstrated product defects.
+
+The prior testing effort remains closed. On October 22 Phil explicitly directed
+one existing GitHub CI cycle and RC5 publication: **"Run existing GitHub CI only."**
+This authorizes the existing workflows, not another campaign, new procedures,
+local product suites, or investigation of E01. Record that cycle's actual
+candidate, Core revisions and results here and in the CWL testing record.
+The existing workflows ran, including a mechanical lint correction. Their
+actual outcomes are recorded below. No local product suite or new testing
+campaign was started. Further testing remains on hold pending Phil's protocol
+and testing-task management work and a new explicit instruction.
+
+### October 22 RC5 GitHub CI
+
+Tested component commit:
+[`676cc4a`](https://github.com/CodeWorksLabs/brand-navigation/commit/676cc4ae2982093551c2b46f66abecd5b93e74cb).
+The release documentation is a documentation-only descendant of that candidate;
+it does not receive a new product-suite claim.
+
+- [Configuration bundles](https://github.com/CodeWorksLabs/brand-navigation/actions/runs/39743682475):
+  45 tests passed, zero failed or skipped, including the lint-coverage guard.
+- [Discourse Theme](https://github.com/CodeWorksLabs/brand-navigation/actions/runs/39743682761):
+  shared lint and all four backend jobs passed. Each frontend lane ran 49 tests:
+  42 passed and 7 failed. All four system lanes passed 53 examples each with
+  zero failures. The theme workflow failed overall because of the frontend jobs.
+  Three duplicate lint jobs and the compatibility-branch-only job were
+  conditionally skipped; they are not executed passes.
+
+| Target             | Exact Core revision                        |
+| ------------------ | ------------------------------------------ |
+| 2026.7.3 ESR       | `8a4ea10470790eba93f5dec65f3cacb0ffae1191` |
+| 2026.8.1 monthly   | `1dce604a018931ff85572ce9815f7637e843f08c` |
+| 2026.9.0 monthly   | `343b20f97ef5f6bd70826ee0e993ba348b210fd5` |
+| Development latest | `224e31bc757037f482682ee130fd948947947871` |
+
+The component's reusable Discourse workflow reference is
+`05b8c4ee75d2408ffd23a2fbfb948dd82037fc57`. Available logged identities
+include `discourse/.github@v1` at
+`bee9ee78c8e6fd574a8496f415e08c6eb412d3df` and the latest frontend's
+`discourse/discourse_test:slim-browsers` image digest
+`sha256:23c91b5755b9a76bfe3be39e3daeac7730c27947347923ed06cb7ccfc35deb5a`.
+The configuration job recorded Node 22.23.3, npm 10.9.9, pnpm 10.28.0,
+Git 2.55.0, runner 2.338.0 and Ubuntu 24.04. These are recorded identities,
+not a claim that every transitive dependency is immutable.
+
+All four frontend lanes reported the same seven failed administrator-bundle
+assertions: imported additional colors, Appearance submitted-snapshot
+reconciliation, independent core-header save/reset, imported core-header
+picker reconciliation, bundle snapshot/draft preservation, additional-color
+save/reset, and older-copy setting selection. See
+[Known Issues](https://github.com/CodeWorksLabs/brand-navigation/blob/c6997595bd55c7b814840352841c6979b3299fec/docs/KNOWN_ISSUES.md#rc5-standard-ci-failures--october-22-2026) for
+the exact names and observed values. These are failed checks; their cause has
+not been established and they are not seven independently demonstrated product
+bugs. The CI result is not all green, and publication does not close them or E01.
+
+The initial candidate `6c9befbf82f4d17d68f69f1287562aebda344e96`
+([configuration](https://github.com/CodeWorksLabs/brand-navigation/actions/runs/39742545843),
+[theme](https://github.com/CodeWorksLabs/brand-navigation/actions/runs/39742546313))
+passed 44 configuration behavior cases and all backend/system lanes, but failed
+lint and the same seven frontend assertions per target. The follow-up only
+sorted/formatted existing sources, made an equivalent Ruby style correction,
+and documented a line-scoped observer lint exception for the existing legacy
+ThemeSettings API. It added no test and disabled no runtime assertion.
+
+## Main update and testing closure — October 21, 2026
+
+This update includes the accumulated Appearance state-handling changes,
+checkbox-focus correction, compact-menu content guard, mobile linked-label
+containment, existing regression sources, and support-policy documentation.
+It is not an RC5 tag or release acceptance.
+
+Discourse Work verified the two layout corrections and E03 focus correction in
+Chrome. Its tested English/Arabic, light/dark, Foundation/Horizon compact
+keyboard sequences showed no issue in the actual desktop-Chrome mobile-view
+contexts. E01 immediate native-field/picker display staleness remains unresolved;
+saved values persisted in the corrected save/reload sequence, but its cause is
+unknown. Other incomplete checks are missing coverage, not demonstrated bugs.
+See [Known Issues](https://github.com/CodeWorksLabs/brand-navigation/blob/c6997595bd55c7b814840352841c6979b3299fec/docs/KNOWN_ISSUES.md) for the disposition and exact limits.
+
+Phil closed this testing effort. Reopening requires a new explicit instruction
+from Phil. No new testing is part of this main update; its commit uses
+`[skip ci]`. The refreshed CI pins below remain prepared, not newly tested.
+Historical passing results retain their exact candidate and scope.
+
+## RC5 candidate verification
+
+The RC5 working candidate at commit
+[`238d5ad`](https://github.com/CodeWorksLabs/brand-navigation/commit/238d5ad829eb6053e5c2aefc94f495cf5f83791f)
+completed GitHub CI on October 20, 2026. These results identify that tested
+commit, not a later main revision or a subsequent RC5 release identity.
+
+[RC5 release notes](https://github.com/CodeWorksLabs/brand-navigation/blob/c6997595bd55c7b814840352841c6979b3299fec/docs/RELEASE_NOTES_RC5.md) summarize the corrections,
+scoped verification, support policy and remaining limits. This section retains
+the earlier candidate's evidence; October 22 outcomes are recorded above.
+
+### Discourse versions tested
+
+| Discourse version | Release type                                          | Exact Core revision                        | System-test result         |
+| ----------------- | ----------------------------------------------------- | ------------------------------------------ | -------------------------- |
+| 2026.10.0-latest  | Development snapshot from Discourse's `latest` branch | `121f4209defec81d9d167646fb7743683f7f6883` | 49 examples, zero failures |
+| 2026.7.0-latest   | Earlier development snapshot from the 2026.7 cycle    | `988c31e00fb73713c81b93cd47f68af0fb4c6273` | 49 examples, zero failures |
+| 2026.7.2+14       | Site-derived revision on the 2026.7 ESR line          | `2e46cff73b07ecddbcc5603eb3fbf41d563577f6` | 49 examples, zero failures |
+| 2026.8.0          | Regular monthly release                               | `badad7b0456a628e578bc48b9f8c1259422b5d58` | 49 examples, zero failures |
+
+These are isolated GitHub CI targets, not the current installed versions of the
+live example forums. The `repeal` and `r744` job names identify the compatibility
+revisions originally selected for those sites. R744's operating policy is to
+remain on the oldest still-supported ESR, with updates within that line; the
+fixed CI revision is not a recommendation to remain on that particular patch.
+Discourse's [official release data](https://github.com/discourse/discourse/blob/main/versions.json)
+identifies ESR lines and support periods. The `2026.7.0-latest` snapshot is not
+a published ESR patch.
+
+The R744-derived `2026.7.2+14` revision is not the exact official `v2026.7.2`
+tag, which resolves to `3ab62a8397926ed934b667a5db06284c45b4c774`.
+Its result applies to the exact Core commit in the table.
+
+### Completed checks
+
+[Discourse Theme CI](https://github.com/CodeWorksLabs/brand-navigation/actions/runs/39506144090)
+passed backend, frontend and system-test jobs on all four targets, plus the
+shared lint job. Each system run completed the same 49 examples: 29 Brand
+Navigation checks and 20 Discourse core checks, not 196 different scenarios.
+They cover navigation and submenu rendering, mobile modes and header alignment,
+English/Arabic layouts, colors and sizes, editor saves, Appearance import
+reconciliation, staging-preview imports, application embed exclusion and core
+forum interactions while the component is active.
+
+The added regression completed no-op **Inherit all**, a native color save, a
+different Appearance color save on the same panel, and reload. It checked all
+eleven persisted colors, native fields and Custom states before and after
+reload, plus both changed color pickers. The initial `90abb5a` attempt failed
+at a detached checkbox interaction before finishing that sequence; `238d5ad`
+changed only the test interaction, and the complete example passed on all four
+targets. These results replace neither OS color-dialog nor human accessibility checks.
+
+[Configuration bundles CI](https://github.com/CodeWorksLabs/brand-navigation/actions/runs/39506143547)
+passed all 45 tests, including the full JavaScript lint-coverage guard. Overall,
+18 jobs passed and none failed. Three duplicate lint jobs were covered by the
+passing shared lint job; the compatibility-branch-only job did not apply to this
+`main` push. Those four skips are not counted as passes or unfinished RC5 work.
+
+### What these results do not establish
+
+The source corrections received focused read-only review at `57649be`; the
+tested `9708b01` follow-up only reordered a class member and formatted two files.
+The later `90abb5a` and `238d5ad` commits changed only the regression test.
+The passing full save-and-reload example verifies that specific correction.
+The green shipped suites do not by themselves establish every other corrected
+interaction, a complete installation/upgrade/recovery sequence or complete
+manual accessibility acceptance. Twelve human screen-reader procedures remain
+owner-deferred. Historical results below retain their own candidates and limits;
+they are not fresh verification of this RC5 candidate.
+
+### Discourse support policy adoption
+
+**Policy adopted October 20, 2026:** follow Discourse's support schedule, test
+supported ESR and monthly lines at their latest released patches, and retain a
+separate development `latest` lane. The oldest still-supported ESR is required;
+both ESR lines remain targets during a support overlap. See the
+[release policy](https://github.com/CodeWorksLabs/brand-navigation/blob/c6997595bd55c7b814840352841c6979b3299fec/docs/RELEASE.md#discourse-support-policy) for publication safeguards.
+
+**What is complete:** the results above cover the 2026.7.2+14 ESR-line revision, released
+2026.8.0 and two development snapshots. They are valid evidence for those exact
+revisions, not results for newer patches. No test campaign was restarted to
+adopt this policy. The published RC4 tag remains unchanged.
+
+**What is implemented and executed:** the existing four-lane workflow was
+retargeted and committed on main in `dcb01b2` to the supported releases and
+development lane below. The policy and workflow selection are in place. The
+October 22 existing CI ran these targets at `676cc4a`, with failed frontend
+checks as recorded above. No additional lane, runner or test case was added.
+The earlier main update used `[skip ci]`; October 22 execution is separate.
+
+| October 22 CI target | Exact released Core commit / selection     | Status                    |
+| -------------------- | ------------------------------------------ | ------------------------- |
+| 2026.7.3 ESR         | `8a4ea10470790eba93f5dec65f3cacb0ffae1191` | Executed; frontend failed |
+| 2026.8.1 monthly     | `1dce604a018931ff85572ce9815f7637e843f08c` | Executed; frontend failed |
+| 2026.9.0 monthly     | `343b20f97ef5f6bd70826ee0e993ba348b210fd5` | Executed; frontend failed |
+| Development          | `224e31bc757037f482682ee130fd948947947871` | Executed; frontend failed |
+
+These versions were checked against the
+[official release schedule](https://releases.discourse.org/) and released Git
+tags on October 20. The 2026.1 ESR ended support September 22 and is not a
+current target. The supported 2026.8 monthly line ends support October 27;
+refresh the list before execution rather than retaining an expired target.
+
+**Policy in place; schedule catch-up incomplete:** Phil adopted ESR tracking
+for subsequent releases or prereleases. The policy is established; current
+testing coverage is behind the schedule. Committed pins alone do not prove
+compliance. The October 22 existing GitHub CI exercised the current targets,
+but failed frontend checks prevent a clean compatibility claim. Future cycles
+follow the then-current support
+schedule, including overlapping supported ESRs and retirement of expired lines.
+The failed prior effort remains closed; other coverage limits remain separate.
+
 ## Seven-forum update follow-up — 2026-10-17
 
 All seven forums were confirmed to follow `main` on October 17, 2026.
@@ -824,24 +1035,24 @@ submenu button is present and no Resources parent link is rendered. Its saved
 
 Test the current stable and tests-passed Discourse branches where practical.
 
-| Context                     | Required result                                                                                        |
-| --------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Desktop, anonymous          | Allowed links render; only one submenu opens and Escape restores focus                                 |
-| Desktop, authenticated      | Authenticated entries render; anonymous-only entries do not                                            |
-| Mobile menu                 | One header control opens usable brand navigation                                                       |
-| Mobile bar                  | Responsive bar wraps navigation and exposes unclipped submenus                                         |
-| Mobile hidden               | No brand-navigation surface renders                                                                    |
-| Site-header item            | Direct icon appears once with its tooltip, audience, target, and safe rel                              |
-| Device-specific item        | Renders only for its selected device class, unchanged across phone rotation                            |
-| Descriptive submenu         | Description appears below its label; empty entries remain compact                                      |
-| Administrator object save   | Settings persist and the structured editor remains open                                                |
-| Administrator bundle import | Prepare through an enabled non-live staging theme; complete preflight occurs before one update request |
-| Light/dark schemes          | Correct logo fallback and readable scheme colors                                                       |
-| RTL locale                  | Logical positioning and submenu alignment remain usable                                                |
-| `embed_mode=true` full app  | No bar or mobile trigger mounts                                                                        |
-| Classic embedded comments   | No global brand/navigation content appears                                                             |
-| Embedded interaction        | Core topic, sign-in, reply, like, quote, and composer behavior is unchanged                            |
-| Normal sign-in              | Full-application sign-in remains core Discourse behavior                                               |
+| Context                     | Required result                                                                                                                                 |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Desktop, anonymous          | Allowed links render; only one submenu opens; Escape from it returns focus to its submenu control                                               |
+| Desktop, authenticated      | Authenticated entries render; anonymous-only entries do not                                                                                     |
+| Mobile menu                 | Header button opens navigation; Tab reaches the first link or submenu control; Escape dismisses the menu and returns focus to the header button |
+| Mobile bar                  | Responsive bar wraps navigation and exposes unclipped submenus                                                                                  |
+| Mobile hidden               | No brand-navigation surface renders                                                                                                             |
+| Site-header item            | Direct icon appears once with its tooltip, audience, target, and safe rel                                                                       |
+| Device-specific item        | Renders only for its selected device class, unchanged across phone rotation                                                                     |
+| Descriptive submenu         | Description appears below its label; empty entries remain compact                                                                               |
+| Administrator object save   | Settings persist and the structured editor remains open                                                                                         |
+| Administrator bundle import | Use a separate component copy or staging site for a live installation; complete preflight occurs before one update request                      |
+| Light/dark schemes          | Correct logo fallback and readable scheme colors                                                                                                |
+| RTL locale                  | Logical positioning and submenu alignment remain usable                                                                                         |
+| `embed_mode=true` full app  | No bar or mobile trigger mounts                                                                                                                 |
+| Classic embedded comments   | No global brand/navigation content appears                                                                                                      |
+| Embedded interaction        | Core topic, sign-in, reply, like, quote, and composer behavior is unchanged                                                                     |
+| Normal sign-in              | Full-application sign-in remains core Discourse behavior                                                                                        |
 
 Also test long labels, empty configuration, missing optional icons, external
 links, browser zoom, reduced viewport width, keyboard-only use, and screen
@@ -874,4 +1085,4 @@ substitute for these human checks.
 
 ---
 
-[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/cb2e76f332887b3af298404d800fa7d188c30a52/docs/TESTING.md)
+[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/c6997595bd55c7b814840352841c6979b3299fec/docs/TESTING.md)

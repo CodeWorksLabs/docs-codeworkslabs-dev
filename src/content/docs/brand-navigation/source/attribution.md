@@ -53,4 +53,4 @@ required copyright or license notice must be updated in the same change.
 
 ---
 
-[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/cb2e76f332887b3af298404d800fa7d188c30a52/docs/ATTRIBUTION.md)
+[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/c6997595bd55c7b814840352841c6979b3299fec/docs/ATTRIBUTION.md)

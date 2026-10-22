@@ -1,3 +1,31 @@
+# RC5 documentation publication checkpoint — October 22, 2026
+
+Phil authorized publishing RC5 and updating the CWL release notes/testing record,
+with existing product GitHub CI only. No additional product testing is authorized.
+RC5 is published as a GitHub prerelease at v1.0.0-rc.5, exact product source
+c6997595bd55c7b814840352841c6979b3299fec. Its documentation-only release follow-up
+follows tested candidate 676cc4ae2982093551c2b46f66abecd5b93e74cb.
+
+CI: configuration 45/45; lint and four backend jobs passed; four system lanes each 53 examples,
+zero failures; four frontend lanes each 49 tests, 42 passes, seven same failed assertions. Theme CI
+failed overall. E01 and the prior testing-execution failure remain unresolved;
+the prior campaign stays closed. ESR policy is adopted for subsequent releases/
+prereleases; completed schedule catch-up or clean compatibility is not claimed.
+
+Applied the complete generated nine-page Brand Navigation mirror plus colocated
+manifest from that exact published product commit, using the existing explicit
+refresh command and advisory candidate. Curated release-notes.md now records the
+published RC5 identity, actual CI failures, remaining limits and future ESR policy.
+Ordinary builds must continue to verify committed mirror files offline.
+
+npm ci succeeded. Required npm audit --omit=dev reported nine findings (four moderate/five high).
+No dependency fixes or package changes were made. Offline mirror verification
+passed; the 34-page build and 140-asset deployment dry run passed. The build
+emitted i18n/404-content warnings. Site commit/push, authorized deployment and
+read-back of the two requested live URLs are next. Provider, DNS and route
+configuration and unrelated product docs remain outside this change.
+
+The earlier checkpoint below is historical and does not describe this update.
 # CodeWorksLabs Documentation Site Handoff
 
 Updated: 2026-09-14

@@ -55,4 +55,4 @@ menus and links to the forum.
 
 ---
 
-[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/cb2e76f332887b3af298404d800fa7d188c30a52/docs/SCOPE.md)
+[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/c6997595bd55c7b814840352841c6979b3299fec/docs/SCOPE.md)

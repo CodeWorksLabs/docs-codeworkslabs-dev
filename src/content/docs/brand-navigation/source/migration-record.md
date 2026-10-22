@@ -9,6 +9,14 @@ copying a theme alone does not isolate a shared component's code or settings.
 Detach an old component only from the theme you are changing. Disable it globally
 only when you intend to stop it on every theme using it.
 
+Every procedure below uses this same shared-component rule: settings imports,
+code updates and the **Enabled?** control affect all themes attached to that
+component. For an existing live installation, prepare changes on a separate
+component copy or staging site. Another parent theme, a copied theme or
+**Preview** alone does not isolate them. During cutover, attach or detach the
+appropriate component on the selected theme; do not use global disabling as a
+substitute for detaching it from one theme.
+
 ## Configuration bundles
 
 Use the **Configuration bundles** panel to export and import a versioned JSON
@@ -237,4 +245,4 @@ that resolved ref into **Branch**.
 
 ---
 
-[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/cb2e76f332887b3af298404d800fa7d188c30a52/docs/MIGRATION.md)
+[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/c6997595bd55c7b814840352841c6979b3299fec/docs/MIGRATION.md)
