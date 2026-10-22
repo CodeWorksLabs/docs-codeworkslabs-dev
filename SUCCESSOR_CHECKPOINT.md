@@ -1,3 +1,29 @@
+# CWL What's new copy correction ready — October 22, 2026
+
+The public RC5 What's new section now contains the published date/download link,
+implemented product changes, a brief neutral forward-looking release policy and
+links to known issues/testing results. Personal references, internal directions,
+candidate/workflow details and the testing-process narrative were removed.
+RC4/older history and the generated source records were not changed. The
+underlying CI failures, E01 and testing-process failure retain their prior
+unresolved status in their records. No product tests or investigation ran.
+
+Offline mirror verification passed for the unchanged nine-page RC5 mirror.
+The first docs build failed Rust memory allocation; a one-worker retry failed
+esbuild memory allocation. Available Windows commit memory was below 1 GB.
+A bounded build succeeded with RAYON_NUM_THREADS=1, UV_THREADPOOL_SIZE=1,
+GOMAXPROCS=1, GOMEMLIMIT=64MiB and NODE_OPTIONS=--max-old-space-size=256.
+These were per-process environment settings, not repository/system changes.
+The 34-page build and required 140-asset deployment dry run passed; prior
+existing i18n/404 warnings remain. Dependency files are unchanged, so the
+installation/audit results already recorded below remain applicable.
+
+Only release-notes.md and this checkpoint are being committed/pushed with
+[skip ci]. Normal authorized deployment and a focused read-back of the public
+release-notes URL are next. The RC5 release tag remains unchanged. No new
+product testing, review, dependency changes or source-record refresh is in scope.
+
+The earlier checkpoints below are historical.
 # RC5 documentation publication complete — October 22, 2026
 
 Phil authorized RC5 publication and the CWL release-notes/testing-record update,
