@@ -8,7 +8,7 @@ Give your Discourse forum its own identity and a clear way to get around. Brand 
 
 Brand Navigation is independently maintained by CodeWorksLabs, not an official Discourse product. It adds navigation; it does not replace Discourse's login, topic controls or composer.
 
-[Install](./install/) · [Add links and menus](./configure/) · [See live examples](https://github.com/CodeWorksLabs/brand-navigation#header-and-navigation-examples)
+[Install](./install/) · [Add links and menus](./configure/) · [Preview](./preview/)
 
 ## Two places for your links
 
@@ -19,7 +19,7 @@ Choose which items signed-in and signed-out visitors see, and whether they appea
 
 ![The Bridge: Brand Navigation menus above the Discourse header, with a Versions & Status text link and icons beside the header controls](/images/brand-navigation/the-bridge-header.jpg)
 
-An existing configuration, not a guarantee of the site's current component version. [More examples](https://github.com/CodeWorksLabs/brand-navigation#header-and-navigation-examples).
+An existing configuration, not a guarantee of the site's current component version. [More examples](./preview/).
 
 ## Start with one useful link
 

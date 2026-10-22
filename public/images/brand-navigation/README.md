@@ -20,3 +20,9 @@ desktop view captured on October 17, 2026.
 https://github.com/CodeWorksLabs/brand-navigation/blob/e0acd9c1e166d1908907e9f14c9915b8d08857b5/docs/images/previews/rving-community-header.png
 
 It is an existing user-supplied example, not a new capture or proof of the live site's current component version. No new captures or artwork were created for this documentation update. Publication or repository access does not grant an additional artwork license.
+
+The preview page also uses `repeal-obbba-header.jpg`,
+`rving-community-header.jpg` and `discussionbridge-header.jpg`, copied unchanged
+from the Brand Navigation gallery at source commit
+`18b25e7701be742112249897feebf8ab01c85e2d`. These are existing signed-in desktop
+screenshots, not new captures or evidence of the sites’ current component versions.
