@@ -1,31 +1,43 @@
-# RC5 documentation publication checkpoint — October 22, 2026
+# RC5 documentation publication complete — October 22, 2026
 
-Phil authorized publishing RC5 and updating the CWL release notes/testing record,
-with existing product GitHub CI only. No additional product testing is authorized.
+Phil authorized RC5 publication and the CWL release-notes/testing-record update,
+with existing product GitHub CI only. That work is complete. Further product
+testing remains on hold pending his protocol/testing-task management work and
+new explicit instruction. Do not start more testing, review or investigation.
+
 RC5 is published as a GitHub prerelease at v1.0.0-rc.5, exact product source
-c6997595bd55c7b814840352841c6979b3299fec. Its documentation-only release follow-up
+c6997595bd55c7b814840352841c6979b3299fec. This documentation-only follow-up
 follows tested candidate 676cc4ae2982093551c2b46f66abecd5b93e74cb.
+CI: configuration 45/45 passed; lint and four backend jobs passed; four system
+lanes each passed 53 examples; four frontend lanes each passed 42/49 with the
+same seven failed assertions. Theme CI failed overall. E01, those failed checks
+and the prior testing-execution failure remain unresolved. The prior campaign
+stays closed. ESR policy is in place for subsequent releases/prereleases;
+completed schedule catch-up or clean compatibility is not claimed.
 
-CI: configuration 45/45; lint and four backend jobs passed; four system lanes each 53 examples,
-zero failures; four frontend lanes each 49 tests, 42 passes, seven same failed assertions. Theme CI
-failed overall. E01 and the prior testing-execution failure remain unresolved;
-the prior campaign stays closed. ESR policy is adopted for subsequent releases/
-prereleases; completed schedule catch-up or clean compatibility is not claimed.
+The complete generated nine-page Brand Navigation mirror and colocated manifest
+were applied from that exact published product commit through the existing
+explicit refresh. Curated release notes and the testing record disclose actual
+CI failures and limits. Site source was committed/pushed as
+87ccb96b1be57b010e5bfd544b9d55b1819db6da, tree
+1c0cb49c216171e5f9380300dc2534cf3e356923.
 
-Applied the complete generated nine-page Brand Navigation mirror plus colocated
-manifest from that exact published product commit, using the existing explicit
-refresh command and advisory candidate. Curated release-notes.md now records the
-published RC5 identity, actual CI failures, remaining limits and future ESR policy.
-Ordinary builds must continue to verify committed mirror files offline.
+Normal authorized deployment succeeded: Worker version
+d37d4cbb-42aa-4542-8c1f-f06cdaf691eb. Both requested live URLs returned HTTP 200:
+https://docs.codeworkslabs.dev/brand-navigation/release-notes/
+https://docs.codeworkslabs.dev/brand-navigation/source/testing-record/
+Read-back confirmed RC5 release/exact source links, CI failures, unresolved E01,
+process-failure/hold wording and the adopted ESR policy. This checkpoint-only
+follow-up does not change the deployed content or require another build/deploy.
 
-npm ci succeeded. Required npm audit --omit=dev reported nine findings (four moderate/five high).
-No dependency fixes or package changes were made. Offline mirror verification
-passed; the 34-page build and 140-asset deployment dry run passed. The build
-emitted i18n/404-content warnings. Site commit/push, authorized deployment and
-read-back of the two requested live URLs are next. Provider, DNS and route
-configuration and unrelated product docs remain outside this change.
+Required npm ci succeeded; offline mirror verification, the 34-page build and
+140-asset Wrangler deployment dry run passed. Required production dependency
+audit reported nine findings (four moderate/five high). Build emitted i18n/404
+content warnings. No dependencies or provider/DNS/route configuration changed,
+and no extra product tests or local product suites were run. Unrelated content
+and dependency remediation remain outside this completed request.
 
-The earlier checkpoint below is historical and does not describe this update.
+The checkpoint below is historical and does not describe this update.
 # CodeWorksLabs Documentation Site Handoff
 
 Updated: 2026-09-14
