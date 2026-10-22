@@ -1,4 +1,4 @@
-# Public testing record and RC1 formatting ready — October 22, 2026
+# Public testing record and RC1 formatting deployed — October 22, 2026
 
 Canonical TESTING.md was cleaned and pushed as product commit
 81499e6356394386c2bc5396fcfb0496f1a81690 with [skip ci]. Personal references,
@@ -21,10 +21,17 @@ GOMEMLIMIT=64MiB and Node --max-old-space-size=256. No system settings or
 repository build scripts changed. Existing i18n/404 warnings remain; unchanged
 dependency files retain the previously recorded installation/audit results.
 
-Next: commit/push these docs and checkpoint with [skip ci], normal authorized
-Wrangler deploy, and focused read-back of testing-record and RC1 release notes.
-Use owner context and the same memory caps; avoid the heavyweight shell profile.
-The RC5 tag stays unchanged.
+Docs source d2b41cb7ee96848675cd52d148335a8687acbdc1 was committed/pushed
+and deployed successfully as Worker version 9c660f11-067c-4a81-84a9-db860a74054e.
+The app interrupted the first live read-back, so after resuming both URLs were
+read again and returned HTTP 200. The testing record has no personal references
+or internal directions; its exact source link, actual CI failures, unresolved
+E01/testing-execution failure and October17 seven-forum anchor are present.
+RC1 reference links render as a separate paragraph with three links.
+
+The requested documentation work is complete. This checkpoint-only follow-up
+does not change deployed content or require another build/deploy. The RC5 tag
+is unchanged. Continue with the one-forum-at-a-time boundary below.
 
 Seven-forum next phase: the user performs each update, one forum at a time;
 this task verifies installed revision/native updater status after each update
