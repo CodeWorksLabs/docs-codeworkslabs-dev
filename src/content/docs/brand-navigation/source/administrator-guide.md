@@ -701,4 +701,4 @@ public forum topic or GitHub issue. Report suspected vulnerabilities privately t
 
 ---
 
-[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/c6997595bd55c7b814840352841c6979b3299fec/docs/USER_GUIDE.md)
+[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/81499e6356394386c2bc5396fcfb0496f1a81690/docs/USER_GUIDE.md)

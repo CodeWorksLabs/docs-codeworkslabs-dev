@@ -1,3 +1,38 @@
+# Public testing record and RC1 formatting ready — October 22, 2026
+
+Canonical TESTING.md was cleaned and pushed as product commit
+81499e6356394386c2bc5396fcfb0496f1a81690 with [skip ci]. Personal references,
+internal instructions and task attribution were removed; actual results, dates,
+versions/hashes/counts, failed CI, unresolved E01/testing-execution failure and
+October 17 seven-forum heading/history remain. The full generated nine-page
+mirror and colocated manifest were applied from that exact public source.
+
+RC1's three release/reference links are now a separate paragraph divided by
+middle dots, rather than continuing its Highlights bullet list. Wording, dates,
+URLs and other release sections are unchanged. No product tests, new CI,
+product changes, forum updates or new verification results were introduced.
+
+The existing offline mirror verifier passed. The 34-page docs build and normal
+140-asset deployment dry run passed. Memory pressure caused shell-start failures;
+a restricted direct build also encountered an EPERM cache write. The successful
+build ran in the approved owner context via cmd and the installed Astro CLI,
+with RAYON_NUM_THREADS=1, UV_THREADPOOL_SIZE=1, GOMAXPROCS=1,
+GOMEMLIMIT=64MiB and Node --max-old-space-size=256. No system settings or
+repository build scripts changed. Existing i18n/404 warnings remain; unchanged
+dependency files retain the previously recorded installation/audit results.
+
+Next: commit/push these docs and checkpoint with [skip ci], normal authorized
+Wrangler deploy, and focused read-back of testing-record and RC1 release notes.
+Use owner context and the same memory caps; avoid the heavyweight shell profile.
+The RC5 tag stays unchanged.
+
+Seven-forum next phase: the user performs each update, one forum at a time;
+this task verifies installed revision/native updater status after each update
+signal. Do not update forums or run regression tests. No current forum update
+has been reported yet. The October 17 entry remains historical.
+
+The earlier checkpoints below are historical.
+
 # CWL What's new copy correction complete — October 22, 2026
 
 The public RC5 What's new section now contains the published date/download link,

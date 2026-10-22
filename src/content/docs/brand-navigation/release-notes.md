@@ -78,9 +78,7 @@ Highlights include:
 - adoption of Discourse’s `d-compat/<YYYY>.<M>` compatibility-branch convention; and
 - updated installation, migration and testing documentation.
 
-- [GitHub Release](https://github.com/CodeWorksLabs/brand-navigation/releases/tag/v1.0.0-rc.1)
-- [Complete changelog](/brand-navigation/source/complete-changelog/)
-- [All releases](https://github.com/CodeWorksLabs/brand-navigation/releases)
+[GitHub Release](https://github.com/CodeWorksLabs/brand-navigation/releases/tag/v1.0.0-rc.1) · [Complete changelog](/brand-navigation/source/complete-changelog/) · [All releases](https://github.com/CodeWorksLabs/brand-navigation/releases)
 
 ## Release status and limits
 
