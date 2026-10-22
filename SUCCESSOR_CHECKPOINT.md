@@ -1,4 +1,4 @@
-# CWL What's new copy correction ready — October 22, 2026
+# CWL What's new copy correction complete — October 22, 2026
 
 The public RC5 What's new section now contains the published date/download link,
 implemented product changes, a brief neutral forward-looking release policy and
@@ -18,10 +18,18 @@ The 34-page build and required 140-asset deployment dry run passed; prior
 existing i18n/404 warnings remain. Dependency files are unchanged, so the
 installation/audit results already recorded below remain applicable.
 
-Only release-notes.md and this checkpoint are being committed/pushed with
-[skip ci]. Normal authorized deployment and a focused read-back of the public
-release-notes URL are next. The RC5 release tag remains unchanged. No new
-product testing, review, dependency changes or source-record refresh is in scope.
+Only release-notes.md and this checkpoint were committed/pushed with [skip ci]
+as bbabf42f4d8fd49cfc7f2a1ba418bfc492e7658f, tree
+e2eb8239300884776593a4605e5c1853f876adbd. Authorized deployment succeeded:
+Worker version 1bbe5c74-1ac8-477e-b3c2-8ee46d1cd131.
+https://docs.codeworkslabs.dev/brand-navigation/release-notes/ returned HTTP 200.
+Read-back confirmed product changes, future release policy and both reference
+links, with no personal references or removed process sections. This final
+checkpoint-only follow-up does not change deployed page content.
+
+The request is complete. The RC5 release tag remains unchanged. No new product
+testing, review, dependency changes or source-record refresh occurred. Further
+product testing remains closed/on hold under the existing boundary.
 
 The earlier checkpoints below are historical.
 # RC5 documentation publication complete — October 22, 2026
