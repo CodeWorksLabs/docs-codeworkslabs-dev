@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CodeWorksLabs">
-  <rect width="64" height="64" rx="8" fill="#ff6b57"/>
-  <path d="M15 20h8l4 24h-8zm18 0h7l5 24h-8zm-8 0h7l-1 24h-7z" fill="#080d1b"/>
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="CodeWorksLabs">
+  <rect x="6" y="6" width="108" height="108" rx="12" fill="#ff6b57"/>
+  <text x="60" y="72" text-anchor="middle" fill="#080d1b" font-family="Inter,Arial,sans-serif" font-size="32" font-weight="800" letter-spacing="1">CWL</text>
 </svg>
