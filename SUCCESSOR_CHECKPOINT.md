@@ -1,3 +1,49 @@
+# New top seven-forum section ready to deploy — October 22, 2026
+
+User correction: preserve earlier record and create a new follow-up at the top,
+omit Discourse component ID from the new table, and collect Discourse versions.
+Product source d94534fdb71eb02d9e182768fbbe1b8ca7ba59aa was pushed with [skip ci].
+It restores the October 22 snapshot exactly from pre-update source 3a7eb19,
+preserves October 17 history, and inserts a separate new top section.
+
+All seven versions were read from authenticated native administrator dashboards:
+Repeal 2026.10.0-latest+114; Bridge 2026.10.0-latest+138; DB Forum
+2026.10.0-latest+613; sandbox and Citizen Activist 2026.10.0-latest+142;
+RVing 2026.9.0-latest+565; R744 2026.7.2+14. Detailed Core identities are in the
+product checkpoint. New table has five columns and no component ID. Revision
+and updater results are clearly identified as earlier recorded update checks,
+not a new seven-forum updater pass. No product testing or forum changes.
+
+Complete nine-page mirror and manifest applied from exact d94534f. Offline
+verification, 34-page docs build and 140-asset deployment dry run passed. Direct
+comparison confirms the earlier October22 block restored exactly and October17
+plus following history unchanged. Built page places the new section first.
+Next: commit/push, deploy and focused live read-back. Same-day dependency
+installation/audit results remain applicable;
+dependency files are unchanged. RC5 wording correction remains in place.
+
+Earlier checkpoints below are historical.
+
+# Latest DB Forum record and RC5 wording correction complete — October 22, 2026
+
+The latest DB Forum table update is deployed from site sourceb57a611 and exact
+product mirror2240fe73119258bc613a2c077bb29acbaae4590b. The public record was
+read back HTTP200 with Discourse2026.10.0-latest+613 and component3a7eb19,
+default main, up-to-date/zero behind at its recorded check. Other six earlier
+observations were retained. No forum rechecks or product tests were repeated.
+
+The subsequent redundant RC5 Implemented changes subheading is removed, with
+all bullets/links/dates preserved. Source746499e27933acb887c3ca22bc1c71cb4a0a4256
+was pushed and deployed as Workerad90710c-3a87-4d70-b554-4580152e4604. Offline
+mirror verification, 34-page docs build and 140-asset deployment dry run passed.
+Live release-notes HTTP200 read-back showed the RC5 bullets directly under the
+release section without the removed heading. Source mirror stayed at2240fe7.
+No new product CI/tests, code, dependencies, tags or forum settings changed.
+Both documentation requests are complete. This final checkpoint is local only;
+no additional commit, push or deployment is required.
+
+Earlier checkpoints below are historical.
+
 # RC5 redundant subheading correction ready to deploy — October 22, 2026
 
 The latest DB Forum record is already deployed: source

@@ -3,13 +3,33 @@ title: "Testing record"
 description: "Exact compatibility, automated, and manual evidence for Brand Navigation."
 editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/TESTING.md
 ---
+## Seven-forum installation follow-up — October 22, 2026
+
+Discourse versions were read from all seven administrator dashboards on October 22.
+Component revisions and updater status below come from their latest recorded
+update checks. These are read-only observations; no product testing was run.
+
+| Forum | Discourse version | Update branch | Installed revision | Updater status |
+| --- | --- | --- | --- | --- |
+| Repeal OBBBA Forum | `2026.10.0-latest+114` | Default (`main`) | [`412448f`](https://github.com/CodeWorksLabs/brand-navigation/commit/412448fc5e5abc396c4f668f1fe76eb31e239b1b) | Up-to-date; 0 behind |
+| The Bridge | `2026.10.0-latest+138` | Default (`main`) | `412448f` | Up-to-date; 0 behind |
+| DiscussionBridge Forum | `2026.10.0-latest+613` | Default (`main`) | [`3a7eb19`](https://github.com/CodeWorksLabs/brand-navigation/commit/3a7eb19d7c4d520f52b71fc5518b9a5e574cf146) | Up-to-date; 0 behind |
+| DiscussionBridge sandbox | `2026.10.0-latest+142` | `main` | `412448f` | Up-to-date; 0 behind |
+| Citizen Activist Network | `2026.10.0-latest+142` | Default (`main`) | `412448f` | Up-to-date; 0 behind |
+| RVing Community | `2026.9.0-latest+565` | `main` | `412448f` | Up-to-date; 0 behind |
+| R744 Community | `2026.7.2+14` | `main` | `412448f` | Up-to-date; 0 behind |
+
+Earlier follow-ups below retain their original observations. These installation
+records do not resolve E01, the recorded CI failures, or the testing-execution
+failure; see [Known Issues](https://github.com/CodeWorksLabs/brand-navigation/blob/d94534fdb71eb02d9e182768fbbe1b8ca7ba59aa/docs/KNOWN_ISSUES.md).
+
 ## Current testing disposition and RC5 sequence — October 22, 2026
 
 The previous testing effort failed to produce a complete overall assessment.
 That testing-execution failure remains unresolved. Finding reproducible issues
 and verifying corrections did not make the overall execution successful.
 This is a testing-process failure, not evidence of additional product bugs.
-See [Brand Navigation Known Issues](https://github.com/CodeWorksLabs/brand-navigation/blob/2240fe73119258bc613a2c077bb29acbaae4590b/docs/KNOWN_ISSUES.md) for the unresolved process
+See [Brand Navigation Known Issues](https://github.com/CodeWorksLabs/brand-navigation/blob/d94534fdb71eb02d9e182768fbbe1b8ca7ba59aa/docs/KNOWN_ISSUES.md) for the unresolved process
 issue, implemented changes, scoped verification, and remaining limitations.
 
 The two layout corrections and E03 checkbox-focus correction were verified in
@@ -63,7 +83,7 @@ assertions: imported additional colors, Appearance submitted-snapshot
 reconciliation, independent core-header save/reset, imported core-header
 picker reconciliation, bundle snapshot/draft preservation, additional-color
 save/reset, and older-copy setting selection. See
-[Known Issues](https://github.com/CodeWorksLabs/brand-navigation/blob/2240fe73119258bc613a2c077bb29acbaae4590b/docs/KNOWN_ISSUES.md#rc5-standard-ci-failures--october-22-2026) for
+[Known Issues](https://github.com/CodeWorksLabs/brand-navigation/blob/d94534fdb71eb02d9e182768fbbe1b8ca7ba59aa/docs/KNOWN_ISSUES.md#rc5-standard-ci-failures--october-22-2026) for
 the exact names and observed values. These are failed checks; their cause has
 not been established and they are not seven independently demonstrated product
 bugs. The CI result is not all green, and publication does not close them or E01.
@@ -90,7 +110,7 @@ keyboard sequences showed no issue in the actual desktop-Chrome mobile-view
 contexts. E01 immediate native-field/picker display staleness remains unresolved;
 saved values persisted in the corrected save/reload sequence, but its cause is
 unknown. Other incomplete checks are missing coverage, not demonstrated bugs.
-See [Known Issues](https://github.com/CodeWorksLabs/brand-navigation/blob/2240fe73119258bc613a2c077bb29acbaae4590b/docs/KNOWN_ISSUES.md) for the disposition and exact limits.
+See [Known Issues](https://github.com/CodeWorksLabs/brand-navigation/blob/d94534fdb71eb02d9e182768fbbe1b8ca7ba59aa/docs/KNOWN_ISSUES.md) for the disposition and exact limits.
 
 This main update used `[skip ci]` and did not run a new suite. The refreshed
 CI pins had not yet been executed on October 21; their later October 22 results
@@ -104,7 +124,7 @@ The RC5 working candidate at commit
 completed GitHub CI on October 20, 2026. These results identify that tested
 commit, not a later main revision or a subsequent RC5 release identity.
 
-[RC5 release notes](https://github.com/CodeWorksLabs/brand-navigation/blob/2240fe73119258bc613a2c077bb29acbaae4590b/docs/RELEASE_NOTES_RC5.md) summarize the corrections,
+[RC5 release notes](https://github.com/CodeWorksLabs/brand-navigation/blob/d94534fdb71eb02d9e182768fbbe1b8ca7ba59aa/docs/RELEASE_NOTES_RC5.md) summarize the corrections,
 scoped verification, support policy and remaining limits. This section retains
 the earlier candidate's evidence; October 22 outcomes are recorded above.
 
@@ -173,7 +193,7 @@ they are not fresh verification of this RC5 candidate.
 supported ESR and monthly lines at their latest released patches, and retain a
 separate development `latest` lane. The oldest still-supported ESR is required;
 both ESR lines remain targets during a support overlap. See the
-[release policy](https://github.com/CodeWorksLabs/brand-navigation/blob/2240fe73119258bc613a2c077bb29acbaae4590b/docs/RELEASE.md#discourse-support-policy) for publication safeguards.
+[release policy](https://github.com/CodeWorksLabs/brand-navigation/blob/d94534fdb71eb02d9e182768fbbe1b8ca7ba59aa/docs/RELEASE.md#discourse-support-policy) for publication safeguards.
 
 **What is complete:** the results above cover the 2026.7.2+14 ESR-line revision, released
 2026.8.0 and two development snapshots. They are valid evidence for those exact
@@ -209,15 +229,15 @@ and retirement of expired lines. Other coverage limits remain separate.
 
 ## Seven-forum update follow-up — 2026-10-22
 
-Each row records a read-only installation check. All seven installations
-reported matching local and remote Brand Navigation revisions, matching `main`
-at the time of their check, with zero commits behind.
+All seven installations reported matching local and remote Brand Navigation
+revision [`412448f`](https://github.com/CodeWorksLabs/brand-navigation/commit/412448fc5e5abc396c4f668f1fe76eb31e239b1b),
+matching `main` when checked, with zero commits behind.
 
 | Forum | Discourse version | Discourse component ID | Update branch | Installed revision | Updater status |
 | --- | --- | --- | --- | --- | --- |
-| Repeal OBBBA Forum | Not recorded | 19 | Default (`main`) | [`412448f`](https://github.com/CodeWorksLabs/brand-navigation/commit/412448fc5e5abc396c4f668f1fe76eb31e239b1b) | Up-to-date; 0 behind |
+| Repeal OBBBA Forum | Not recorded | 19 | Default (`main`) | `412448f` | Up-to-date; 0 behind |
 | The Bridge | Not recorded | 6 | Default (`main`) | `412448f` | Up-to-date; 0 behind |
-| DiscussionBridge Forum | `2026.10.0-latest+613` | 3 | Default (`main`) | [`3a7eb19`](https://github.com/CodeWorksLabs/brand-navigation/commit/3a7eb19d7c4d520f52b71fc5518b9a5e574cf146) | Up-to-date; 0 behind |
+| DiscussionBridge Forum | `2026.10.0-latest+142` | 3 | Default (`main`) | `412448f` | Up-to-date; 0 behind |
 | DiscussionBridge sandbox | Not recorded | 3 | `main` | `412448f` | Up-to-date; 0 behind |
 | Citizen Activist Network | Not recorded | 1 | Default (`main`) | `412448f` | Up-to-date; 0 behind |
 | RVing Community | Not recorded | 16 | `main` | `412448f` | Up-to-date; 0 behind |
@@ -234,7 +254,7 @@ The table records existing source selections. Normal installations leave
 
 These are read-only installation/status observations, with no new product
 testing. They do not resolve the existing CI failures, E01, or testing-execution
-failure recorded in [Known Issues](https://github.com/CodeWorksLabs/brand-navigation/blob/2240fe73119258bc613a2c077bb29acbaae4590b/docs/KNOWN_ISSUES.md). Discourse versions marked
+failure recorded in [Known Issues](https://github.com/CodeWorksLabs/brand-navigation/blob/d94534fdb71eb02d9e182768fbbe1b8ca7ba59aa/docs/KNOWN_ISSUES.md). Discourse versions marked
 "Not recorded" were not collected during those update checks.
 
 ## Seven-forum update follow-up — 2026-10-17
@@ -1099,4 +1119,4 @@ accessibility tests do not substitute for these human checks.
 
 ---
 
-[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/2240fe73119258bc613a2c077bb29acbaae4590b/docs/TESTING.md)
+[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/d94534fdb71eb02d9e182768fbbe1b8ca7ba59aa/docs/TESTING.md)

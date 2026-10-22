@@ -131,4 +131,4 @@ similarity and must be reevaluated when the candidate changes.
 
 ---
 
-[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/2240fe73119258bc613a2c077bb29acbaae4590b/docs/PROVENANCE.md)
+[Source on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/d94534fdb71eb02d9e182768fbbe1b8ca7ba59aa/docs/PROVENANCE.md)
