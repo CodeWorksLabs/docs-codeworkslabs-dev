@@ -6,6 +6,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "CodeWorksLabs Docs",
+      favicon: "/favicon.png",
       lastUpdated: true,
       customCss: ["./src/styles/custom.css"],
       components: {
