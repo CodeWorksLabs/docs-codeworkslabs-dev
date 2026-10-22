@@ -1,3 +1,22 @@
+# RC5 redundant subheading correction ready to deploy — October 22, 2026
+
+The latest DB Forum record is already deployed: source
+b57a611ce1d2f31e48d79e80a7e4656fd1ac39b5, Worker
+373010ea-3fef-41a6-853c-7eb5f555af39, exact product mirror source2240fe7.
+Public record HTTP200 read-back showed Discourse2026.10.0-latest+613,
+component3, default main, installed3a7eb19, up-to-date/zero behind.
+
+The user then identified Implemented changes as redundant under What's new.
+Remove only that RC5 subheading from curated release-notes.md, preserving all
+bullets, links, dates and other releases. Source mirror remains at exact product
+2240fe73119258bc613a2c077bb29acbaae4590b; no new refresh is needed.
+No product tests, CI, forum changes, dependency changes or tag changes.
+Offline verifier, 34-page docs build and 140-asset deployment dry run passed.
+Next: commit/push, deploy and focused live read-back of the RC5 section.
+Keep completion checkpoints local.
+
+Earlier checkpoints below are historical.
+
 # Latest DB Forum observation ready to deploy — October 22, 2026
 
 The user requested a docs update after the read-only post-swap verification.

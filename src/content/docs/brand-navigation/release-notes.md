@@ -10,8 +10,6 @@ RC5 was published on 2026-10-22 as a GitHub prerelease.
 
 [Read the RC5 release notes and download](https://github.com/CodeWorksLabs/brand-navigation/releases/tag/v1.0.0-rc.5).
 
-### Implemented changes
-
 - **Safer Appearance saves:** saving one color submits only explicitly edited colors. A no-change **Inherit all** action clears its empty drafts.
 - **Custom color controls:** each checkbox has a purpose-specific accessible name, and Space toggles retain checkbox focus.
 - **Compact-menu keyboard entry:** group-only submenu controls can receive keyboard focus.
