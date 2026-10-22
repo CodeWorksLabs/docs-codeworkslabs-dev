@@ -4,8 +4,6 @@ description: See Brand Navigation on live Discourse communities and explore its 
 editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/preview.md
 ---
 
-Compare [header and navigation examples](#header-and-navigation-examples), or explore the [administration screenshots](#administration-screenshots).
-
 Site content and navigation may change after the screenshots are captured. These desktop views were captured while signed in. The examples show existing configurations, not a guarantee of a site's current component version.
 
 ## Header and navigation examples
