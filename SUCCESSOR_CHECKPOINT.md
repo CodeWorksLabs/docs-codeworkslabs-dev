@@ -1,3 +1,47 @@
+# Latest DB Forum observation ready to deploy — October 22, 2026
+
+The user requested a docs update after the read-only post-swap verification.
+Canonical docs/TESTING.md now records DB Forum component3 at
+3a7eb19d7c4d520f52b71fc5518b9a5e574cf146 on Discourse2026.10.0-latest+613,
+repository-default main, matching local/remote revisions and zero commits behind
+at its recorded check. Other six rows retain their earlier412448f observations.
+The intro no longer claims a common installed revision across all seven.
+Public copy remains concise. Existing branch policy and unresolved issues are
+unchanged. No repeat forum checks, product tests, source settings or CI runs.
+
+Exact published product documentation source:
+2240fe73119258bc613a2c077bb29acbaae4590b [skip ci]. The complete nine-page
+mirror plus manifest was applied from this exact source. Offline verification,
+34-page docs build and 140-asset deployment dry run passed. Next: commit/push,
+authorized deployment and one focused live read-back. Same-day dependency installation
+and audit results remain applicable; dependency files are unchanged.
+
+Earlier checkpoints below are historical.
+
+# Seven-forum documentation deployed; await new DB Forum update — October 22, 2026
+
+Requested CWL documentation work is complete. Source commit
+051df452da3188b52c7b717fdeffc3a2225ca698 was pushed and deployed successfully
+as Worker version 0b549400-9948-40ed-991d-15e6d69845e3. Complete nine-page
+mirror and manifest identify canonical product source
+3a7eb19d7c4d520f52b71fc5518b9a5e574cf146. Offline verification, final 34-page
+docs build and 140-asset deployment dry run succeeded. Public testing-record
+and updates-and-compatibility pages returned HTTP 200; read-back confirmed
+the concise October 22 table and blank-default/explicit-main/fixed-tag guidance.
+No product tests or new CI ran. Existing CI failures, E01 and testing-execution
+failure remain unresolved. Release notes and RC5 tag were unchanged.
+
+During deployment, the user reported updating DB Forum after a swap change.
+Await the update-complete signal before another read-only revision/version/status
+observation. No tests, updater actions, source-setting changes or server work
+are authorized by that progress report. The published table records earlier
+observations; do not assume its installed revision has remained current.
+
+This completion checkpoint is local-only and changes no deployed content.
+No further commit, push or deployment is required for this checkpoint.
+
+Earlier checkpoints below are historical.
+
 # Seven-forum RC5 installation follow-up ready to deploy — October 22, 2026
 
 The user reported the final DiscussionBridge Forum update completed and authorized
