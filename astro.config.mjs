@@ -94,7 +94,7 @@ export default defineConfig({
                 { label: "Release notes", slug: "analytics-for-astro/release-notes" },
               ],
             },
-            { label: "Astro Bluesky Comments", slug: "astro-bluesky-comments" },
+            { label: "Bluesky Comments for Astro", slug: "astro-bluesky-comments" },
           ],
         },
       ],

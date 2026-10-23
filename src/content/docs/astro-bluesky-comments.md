@@ -1,6 +1,6 @@
 ---
-title: Astro Bluesky Comments
-description: Current status of the experimental CodeWorksLabs Astro Bluesky comments integration.
+title: Bluesky Comments for Astro
+description: Current status of Bluesky Comments for Astro, the experimental CodeWorksLabs integration.
 editUrl: false
 ---
 
