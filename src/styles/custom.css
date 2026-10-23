@@ -12,6 +12,49 @@
   --sl-color-black: #080d1b;
   --sl-font: Inter, ui-sans-serif, system-ui, sans-serif;
   --sl-font-system-mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  --cwl-brand-nav-height: 3.5rem;
+  --cwl-docs-controls-height: 3.5rem;
+  --sl-nav-height: calc(var(--cwl-brand-nav-height) + var(--cwl-docs-controls-height));
+}
+
+/* Starlight uses the full fixed-header height for content, sidebars and anchors.
+   Its own controls keep their original height in a separate row below CWL. */
+.page > header.header {
+  padding: 0;
+  border-bottom: 0;
+}
+
+/* The native sidebar toggle is a fixed sibling of the header. Raise the
+   compact CWL overlay above it only while open, retaining native controls
+   above their header background when the CWL menu is closed. */
+.page > header.header:has(.cwl-navigation[data-compact-open="true"]) {
+  z-index: calc(var(--sl-z-index-navbar) + 1);
+}
+
+.cwl-docs-controls {
+  --sl-nav-height: var(--cwl-docs-controls-height);
+  box-sizing: border-box;
+  height: var(--cwl-docs-controls-height);
+  padding: var(--sl-nav-pad-y) var(--sl-nav-pad-x);
+  border-bottom: 1px solid var(--sl-color-hairline-shade);
+}
+
+[data-has-sidebar] .cwl-docs-controls {
+  padding-inline-end: calc(var(--sl-nav-gap) + var(--sl-nav-pad-x) + var(--sl-menu-button-size));
+}
+
+starlight-menu-button button {
+  top: calc(var(--cwl-brand-nav-height) + (var(--cwl-docs-controls-height) - var(--sl-menu-button-size)) / 2);
+}
+
+@media (min-width: 50rem) {
+  :root {
+    --cwl-docs-controls-height: 4rem;
+  }
+
+  [data-has-sidebar] .cwl-docs-controls {
+    padding-inline-end: var(--sl-nav-pad-x);
+  }
 }
 
 :root[data-theme="light"] {

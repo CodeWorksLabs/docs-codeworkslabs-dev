@@ -1,0 +1,203 @@
+---
+interface NavigationLink {
+  label: string;
+  url: string;
+  title: string;
+  children?: NavigationLink[];
+}
+
+const items: NavigationLink[] = [
+  {
+    label: "Products",
+    url: "https://codeworkslabs.dev/products/",
+    title: "Explore CodeWorksLabs products",
+    children: [
+      { label: "Analytics for Astro", url: "https://docs.codeworkslabs.dev/analytics-for-astro/", title: "Analytics for Astro documentation" },
+      { label: "Bluesky Comments for Astro", url: "https://docs.codeworkslabs.dev/astro-bluesky-comments/", title: "Bluesky Comments for Astro documentation and status" },
+      { label: "Brand Navigation", url: "https://codeworkslabs.dev/products/brand-navigation/", title: "Brand Navigation for Discourse" },
+      { label: "DiscussionBridge", url: "https://codeworkslabs.dev/products/discussionbridge/", title: "DiscussionBridge" },
+      { label: "DiscussionBridge Platform Migrator", url: "https://codeworkslabs.dev/products/discussionbridge-platform-migrator/", title: "DiscussionBridge Platform Migrator — In process - Seeking Inputs" },
+      { label: "Discourse Network", url: "https://codeworkslabs.dev/products/discourse-network/", title: "Discourse Network — In process - Seeking Inputs" },
+      { label: "Discourse Federation", url: "https://codeworkslabs.dev/products/discourse-federation/", title: "Discourse Federation — In process - Seeking Inputs" },
+      { label: "Comments Migrator", url: "https://codeworkslabs.dev/products/comments-migrator/", title: "Comments Migrator — In process - Seeking Inputs" },
+      { label: "DiscussionBridge ActivityPub (exploratory)", url: "https://codeworkslabs.dev/products/discussionbridge-activitypub/", title: "DiscussionBridge ActivityPub — Exploratory" },
+    ],
+  },
+  { label: "Platforms", url: "https://codeworkslabs.dev/platforms/", title: "Explore supported platforms" },
+  { label: "Demos", url: "https://demo.codeworkslabs.dev/", title: "Explore CodeWorksLabs demos" },
+  { label: "Docs", url: "https://docs.codeworkslabs.dev/", title: "Browse CodeWorksLabs documentation" },
+  { label: "Blog", url: "https://codeworkslabs.dev/blog/", title: "Read the CodeWorksLabs blog" },
+  {
+    label: "Support",
+    url: "https://codeworkslabs.dev/support/",
+    title: "Find CodeWorksLabs product help and support routes",
+    children: [
+      { label: "General Support", url: "https://forum.codeworkslabs.dev/c/support/5", title: "Get help with non-product-specific issues" },
+      { label: "Brand Navigation", url: "https://forum.codeworkslabs.dev/c/brand-navigation/support/7", title: "Get help with Brand Navigation setup and troubleshooting" },
+    ],
+  },
+];
+---
+
+<div class="cwl-navigation" data-cwl-navigation data-compact-open="false">
+  <nav class="cwl-bar" aria-label="CodeWorksLabs navigation">
+    <a class="cwl-brand" href="https://codeworkslabs.dev/" aria-label="CodeWorksLabs home">
+      <span class="cwl-mark" aria-hidden="true">CWL</span>
+      <span>CodeWorksLabs</span>
+    </a>
+    <button class="cwl-compact-toggle" type="button" aria-label="CodeWorksLabs menu" aria-expanded="false" aria-controls="cwl-global-links" data-cwl-compact-toggle>
+      <span>Menu</span>
+      <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" /></svg>
+    </button>
+    <div class="cwl-links" id="cwl-global-links" data-cwl-links>
+      {items.map((item) => item.children ? (
+        <div class:list={["cwl-dropdown", { "cwl-support": item.label === "Support" }]}>
+          <a class="cwl-top-link" href={item.url} title={item.title}>{item.label}</a>
+          <button class="cwl-disclosure" type="button" aria-expanded="false" aria-controls={`cwl-${item.label.toLowerCase()}-links`} aria-label={`Show ${item.label} menu`} data-cwl-disclosure>
+            <svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="m5 7 5 5 5-5" /></svg>
+          </button>
+          <ul class="cwl-dropdown-panel" id={`cwl-${item.label.toLowerCase()}-links`} hidden>
+            {item.children.map((child) => <li><a href={child.url} title={child.title}>{child.label}</a></li>)}
+          </ul>
+        </div>
+      ) : <a class="cwl-top-link" href={item.url} title={item.title}>{item.label}</a>)}
+      <a class="cwl-top-link cwl-forum" href="https://forum.codeworkslabs.dev/">Forum <span aria-hidden="true">↗</span></a>
+    </div>
+  </nav>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-cwl-navigation]").forEach((navigation) => {
+    if (navigation.dataset.cwlReady) return;
+    navigation.dataset.cwlReady = "true";
+    const buttons = [...navigation.querySelectorAll<HTMLButtonElement>("[data-cwl-disclosure]")];
+    const compactToggle = navigation.querySelector<HTMLButtonElement>("[data-cwl-compact-toggle]");
+    const links = navigation.querySelector<HTMLElement>("[data-cwl-links]");
+    if (!compactToggle || !links) return;
+    const compact = window.matchMedia("(max-width: 67.99rem)");
+    const panelFor = (button: HTMLButtonElement) => navigation.querySelector<HTMLElement>(`#${button.getAttribute("aria-controls")}`);
+
+    const closeDropdown = (button: HTMLButtonElement) => {
+      button.setAttribute("aria-expanded", "false");
+      const panel = panelFor(button);
+      if (panel) panel.hidden = true;
+    };
+    const closeDropdowns = (except?: HTMLButtonElement) => buttons.forEach((button) => {
+      if (button !== except) closeDropdown(button);
+    });
+    const openDropdown = (button: HTMLButtonElement) => {
+      closeDropdowns(button);
+      button.setAttribute("aria-expanded", "true");
+      const panel = panelFor(button);
+      if (panel) panel.hidden = false;
+    };
+    const closeCompact = () => {
+      navigation.dataset.compactOpen = "false";
+      compactToggle.setAttribute("aria-expanded", "false");
+      links.hidden = compact.matches;
+      closeDropdowns();
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        if (button.getAttribute("aria-expanded") === "true") closeDropdown(button);
+        else openDropdown(button);
+      });
+      button.addEventListener("keydown", (event) => {
+        if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+        event.preventDefault();
+        openDropdown(button);
+        const children = panelFor(button)?.querySelectorAll<HTMLAnchorElement>("a");
+        if (children?.length) children[event.key === "ArrowUp" ? children.length - 1 : 0].focus();
+      });
+    });
+
+    compactToggle.addEventListener("click", () => {
+      if (compactToggle.getAttribute("aria-expanded") === "true") closeCompact();
+      else {
+        navigation.dataset.compactOpen = "true";
+        compactToggle.setAttribute("aria-expanded", "true");
+        links.hidden = false;
+      }
+    });
+    navigation.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      const expanded = buttons.find((button) => button.getAttribute("aria-expanded") === "true");
+      if (expanded) {
+        event.preventDefault();
+        event.stopPropagation();
+        closeDropdown(expanded);
+        expanded.focus();
+      } else if (compact.matches && compactToggle.getAttribute("aria-expanded") === "true") {
+        event.preventDefault();
+        event.stopPropagation();
+        closeCompact();
+        compactToggle.focus();
+      }
+    });
+    navigation.addEventListener("focusin", (event) => {
+      buttons.forEach((button) => {
+        if (event.target instanceof Node && !button.closest(".cwl-dropdown")?.contains(event.target)) closeDropdown(button);
+      });
+    });
+    navigation.addEventListener("focusout", (event) => {
+      if (!(event.relatedTarget instanceof Node) || !navigation.contains(event.relatedTarget)) closeCompact();
+    });
+    document.addEventListener("click", (event) => {
+      if (event.target instanceof Node && !navigation.contains(event.target)) closeCompact();
+    });
+    compact.addEventListener("change", closeCompact);
+    closeCompact();
+  });
+</script>
+
+<style>
+  .cwl-navigation {
+    position: relative;
+    z-index: 100;
+    isolation: isolate;
+    height: 3.5rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid #35415a;
+    background: #111a2c;
+    color: #e4ebf7;
+    font: 600 .875rem/1.4 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    text-align: start;
+  }
+  .cwl-navigation *, .cwl-navigation *::before, .cwl-navigation *::after { box-sizing: border-box; }
+  .cwl-bar { height: 100%; max-width: 1440px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; gap: 1.5rem; }
+  .cwl-navigation a { color: inherit; text-decoration: none; }
+  .cwl-navigation a:hover { color: #35d8ff; }
+  .cwl-navigation a:focus-visible, .cwl-navigation button:focus-visible { outline: 2px solid #35d8ff; outline-offset: 3px; }
+  .cwl-navigation button { margin: 0; border: 0; border-radius: .2rem; background: transparent; color: inherit; font: inherit; cursor: pointer; }
+  .cwl-brand { display: inline-flex; align-items: center; flex-shrink: 0; gap: .65rem; white-space: nowrap; font-weight: 750; letter-spacing: -.02em; }
+  .cwl-mark { display: grid; place-items: center; width: 2.25rem; height: 1.9rem; background: #ff6b57; color: #101522; font-size: .65rem; font-weight: 800; letter-spacing: .025em; }
+  .cwl-links { display: flex; align-items: center; flex: 1; gap: .25rem; min-width: 0; }
+  .cwl-links[hidden], .cwl-dropdown-panel[hidden] { display: none; }
+  .cwl-top-link { display: flex; align-items: center; gap: .4rem; min-height: 2.5rem; padding: .55rem .7rem; border-radius: .2rem; white-space: nowrap; }
+  .cwl-top-link:hover, .cwl-disclosure:hover, .cwl-compact-toggle:hover { background: #23314a; }
+  .cwl-dropdown { position: relative; display: flex; align-items: center; }
+  .cwl-dropdown > .cwl-top-link { padding-inline-end: .4rem; }
+  .cwl-disclosure { display: grid; place-items: center; width: 2rem; min-height: 2.5rem; padding: .35rem; }
+  .cwl-navigation svg { display: block; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .cwl-disclosure[aria-expanded="true"] svg { transform: rotate(180deg); }
+  .cwl-dropdown-panel { position: absolute; z-index: 1; top: calc(100% + .45rem); inset-inline-start: 0; width: max-content; max-width: calc(100vw - 2rem); max-height: calc(100dvh - 4.5rem); overflow-y: auto; margin: 0; padding: .4rem; border: 1px solid #45516a; border-radius: .25rem; background: #172238; box-shadow: 0 .8rem 2rem #0006; list-style: none; }
+  .cwl-dropdown-panel li { margin: 0; padding: 0; }
+  .cwl-dropdown-panel a { display: block; padding: .6rem .75rem; border-radius: .15rem; overflow-wrap: anywhere; font-weight: 550; }
+  .cwl-dropdown-panel a:hover, .cwl-dropdown-panel a:focus-visible { background: #263650; }
+  .cwl-support .cwl-dropdown-panel { inset-inline-start: auto; inset-inline-end: 0; }
+  .cwl-forum { margin-inline-start: auto; border: 1px solid #ac5d54; color: #ffb3a6 !important; }
+  .cwl-compact-toggle { display: none; }
+  @media (max-width: 67.99rem) {
+    .cwl-bar { justify-content: space-between; padding-inline: 1rem; }
+    .cwl-navigation .cwl-compact-toggle { display: inline-flex; align-items: center; gap: .65rem; min-height: 2.5rem; padding: .45rem .7rem; border: 1px solid #52617d; }
+    .cwl-links { position: absolute; top: calc(100% + .45rem); inset-inline: 1rem; display: none; flex-direction: column; align-items: stretch; gap: .2rem; max-height: calc(100dvh - 4.5rem); overflow-y: auto; padding: .5rem; border: 1px solid #45516a; border-radius: .25rem; background: #172238; box-shadow: 0 .8rem 2rem #0006; }
+    .cwl-navigation[data-compact-open="true"] .cwl-links:not([hidden]) { display: flex; }
+    .cwl-dropdown { display: grid; grid-template-columns: minmax(0, 1fr) 2.75rem; }
+    .cwl-disclosure { width: 2.75rem; }
+    .cwl-top-link { min-height: 2.75rem; }
+    .cwl-dropdown-panel { position: static; grid-column: 1 / -1; width: auto; max-width: none; max-height: none; overflow: visible; margin: .1rem .35rem .4rem; padding: .25rem; border: 0; border-inline-start: 2px solid #52617d; border-radius: 0; background: #111a2c; box-shadow: none; }
+    .cwl-forum { margin-inline-start: 0; margin-top: .25rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .cwl-navigation *, .cwl-navigation *::before, .cwl-navigation *::after { scroll-behavior: auto; } }
+</style>
