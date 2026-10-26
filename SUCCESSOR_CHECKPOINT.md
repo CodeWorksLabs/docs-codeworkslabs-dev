@@ -1,3 +1,54 @@
+## Current handoff — analytics, social metadata, and deployment verified (2026-10-25)
+
+Complete. Source commit `7bf772685bda9e421417b60e5b2dd9f473e9a98e`
+(tree `77191de5b782f898d7eb0266f3dbd904ce0f9022`) is pushed on `main` and
+active at 100% traffic on `docs.codeworkslabs.dev`. GitHub Verify run
+`40254989666` passed. Cloudflare's GitHub-connected native build
+`fc48cbc2-655e-405f-9a63-7f32e42f81e3` succeeded with Node 24.19.0 and
+produced deployment `975690af-ed02-4999-adf6-2c3e46b63c86`, active Worker
+version `50526907-1b20-4a9c-8aba-7b719ea0ea5f`.
+
+The release added consent-independent Google Analytics measurement ID
+`G-GVB6HKL9PR`, canonical Open Graph/Twitter metadata using the governed
+CodeWorksLabs image, deployment/security headers, the Node 24 CI baseline,
+and current Astro/Wrangler dependency security updates. Public verification
+covered HTTPS/redirect behavior, GA and canonical metadata, crawler image
+access, security and cache headers, the 34-URL sitemap, and preservation of
+the existing Worker identity and bindings. No ad-hoc local upload was used.
+Deployment evidence is preserved under
+`C:\CodeProjects\Operations\Infrastructure\evidence\DOCS_GA_RELEASE_20261025`.
+
+No further source, Git, provider, or deployment action is pending for this
+release. Earlier checkpoints below are historical.
+
+## Historical handoff — compact docs hero published (2026-10-22)
+
+User explicitly approved: “Looks good Yes, push and deploy it.” Earlier automatic approval block resolved by this explicit approval. Docs main pushed as 387845a5ee4248b66d3159a79b9476d29fcedab4. Cloudflare deployment completed successfully, Worker version d196eb38-8dbb-4c54-8b6d-b71e27c43b56, custom domain docs.codeworkslabs.dev. Live browser visibly confirms protected-artwork compact background hero, smaller heading/padding, retained sidebar and existing links. Proof: rc5-preparation/docs-preview/docs-compact-hero-published.jpg. Only four approved public files committed. Private checkpoints/preparation excluded. No product testing or CI. Offline mirror verification, required site build and dry-run previously passed. Homepage task complete; no further work authorized.
+
+## Historical handoff — homepage ready, publication awaiting approval (2026-10-22)
+
+Compact protected-artwork background hero is implemented and visually confirmed in local preview at http://127.0.0.1:4327/. Screenshot: rc5-preparation/docs-preview/docs-compact-hero-draft.jpg. Sidebar remains present; heading/padding compact; existing copy/actions preserved. Protected 768×512 PNG retains embedded XMP and exact build bytes. Applied-source build, offline mirror verification and deployment dry-run succeeded; no product tests/CI ran.
+
+Automatic approval review rejected combined Git commit/push before execution: it requires explicit authorization for this exact public homepage revision. Do not bypass or deploy indirectly. Nothing committed/pushed/deployed for this hero change. Docs main remains 5290e10e32afe6c433d550de0c56c9a7b75c2713. Source changes ready in index.mdx/custom.css + new IMAGE_RIGHTS.md/public/media/codeworkslabs-systems-768.png. Private checkpoints must not be staged. User approval question should cover push main and deploy to docs.codeworkslabs.dev. Prepared publish-hero.mjs has strict main/source allowlist and remote freshness guard; run only after explicit approval. Local Astro preview background PID48444, port4327; stop with astro preview stop when no longer needed.
+
+# New top seven-forum record and restored history deployed — October 22, 2026
+
+Complete: site source 9b971d98e84f56937d801e57493d47ea7597d79e was pushed and
+deployed as Worker 302f3a06-e6c2-43b8-aba8-7a2998131837. Complete nine-page
+mirror and manifest use exact product d94534fdb71eb02d9e182768fbbe1b8ca7ba59aa.
+Offline mirror verification, 34-page docs build and 140-asset dry run passed.
+
+Public testing-record HTTP200 read-back showed the new first section at
+seven-forum-installation-follow-up--october-22-2026 with all seven collected
+Discourse versions and five columns, without component ID. Earlier October22
+snapshot is restored exactly; October17/following history is unchanged. Live
+old DB row is +142/412448f; new top DB row is +613/3a7eb19. Fresh versions were
+collected read-only; component/updater entries retain their recorded check times.
+No product tests, new CI, updater actions, settings or server changes.
+
+This final checkpoint is local only; no further commit/push/deploy is required.
+Further work awaits user direction. Earlier checkpoints below are historical.
+
 # New top seven-forum section ready to deploy — October 22, 2026
 
 User correction: preserve earlier record and create a new follow-up at the top,
