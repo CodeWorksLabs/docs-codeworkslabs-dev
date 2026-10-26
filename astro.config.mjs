@@ -14,7 +14,16 @@ export default defineConfig({
         Footer: "./src/components/Footer.astro",
       },
       head: [
-        { tag: "meta", attrs: { name: "twitter:card", content: "summary" } },
+        { tag: "meta", attrs: { property: "og:image", content: "https://docs.codeworkslabs.dev/media/codeworkslabs-systems-768.png" } },
+        { tag: "meta", attrs: { property: "og:image:width", content: "768" } },
+        { tag: "meta", attrs: { property: "og:image:height", content: "512" } },
+        { tag: "meta", attrs: { property: "og:image:type", content: "image/png" } },
+        { tag: "meta", attrs: { property: "og:image:alt", content: "Abstract CodeWorksLabs artwork depicting connected systems and product architecture." } },
+        { tag: "meta", attrs: { name: "twitter:card", content: "summary_large_image" } },
+        { tag: "meta", attrs: { name: "twitter:image", content: "https://docs.codeworkslabs.dev/media/codeworkslabs-systems-768.png" } },
+        { tag: "meta", attrs: { name: "twitter:image:alt", content: "Abstract CodeWorksLabs artwork depicting connected systems and product architecture." } },
+        { tag: "script", attrs: { async: true, src: "https://www.googletagmanager.com/gtag/js?id=G-GVB6HKL9PR" } },
+        { tag: "script", content: "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-GVB6HKL9PR');" },
       ],
       social: [
         { icon: "blueSky", label: "CodeWorksLabs on Bluesky", href: "https://bsky.app/profile/codeworkslabs.bsky.social" },
