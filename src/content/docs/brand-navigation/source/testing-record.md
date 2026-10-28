@@ -1,7 +1,7 @@
 ---
 title: "Testing record"
 description: "Exact compatibility, automated, and manual evidence for Brand Navigation."
-editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/TESTING.md
+editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/source/testing-record.md
 ---
 ## Seven-forum installation follow-up — October 22, 2026
 

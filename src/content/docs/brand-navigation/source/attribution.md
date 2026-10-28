@@ -1,7 +1,7 @@
 ---
 title: "Attribution"
 description: "The complete Brand Navigation attribution record."
-editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/ATTRIBUTION.md
+editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/source/attribution.md
 ---
 Brand Navigation was newly authored from its product specifications as an
 independent theme component.

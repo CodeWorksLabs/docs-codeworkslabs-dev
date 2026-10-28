@@ -19,7 +19,7 @@ RC5 was published on 2026-10-22 as a GitHub prerelease.
 - **Clearer guidance:** documentation distinguishes shared-component settings from separate-copy staging and explains disabling, detaching, and Escape/focus behavior.
 - **Release compatibility policy:** subsequent releases and prereleases will track supported Discourse ESR and monthly releases at their latest patches, including both supported ESR lines during an overlap.
 
-See [known issues](https://github.com/CodeWorksLabs/brand-navigation/blob/main/docs/KNOWN_ISSUES.md) for outstanding issues and the [testing record](/brand-navigation/source/testing-record/) for verification results.
+See [known issues](/brand-navigation/known-issues/) for outstanding issues and the [testing record](/brand-navigation/source/testing-record/) for verification results.
 
 ## v1.0.0-rc.4
 

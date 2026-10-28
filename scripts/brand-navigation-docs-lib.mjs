@@ -6,7 +6,12 @@ export const repository = "CodeWorksLabs/brand-navigation";
 export const sourceChannel = "main";
 export const manifestFilename = "src/content/docs/brand-navigation/source/brand-navigation-docs-source.json";
 export const generator = "codeworkslabs-brand-navigation-mirror";
-export const transformVersion = 3;
+export const transformVersion = 4;
+export const docsRepository = "CodeWorksLabs/docs-codeworkslabs-dev";
+
+function docsEditUrl(generatedPath) {
+  return `https://github.com/${docsRepository}/edit/main/${generatedPath}`;
+}
 
 export const members = [
   { sourcePath: "docs/USER_GUIDE.md", generatedPath: "src/content/docs/brand-navigation/source/administrator-guide.md", title: "Administrator guide", description: "The complete administrator workflow from the Brand Navigation repository." },
@@ -81,7 +86,7 @@ export function renderPage(rawSource, member, sourceCommit) {
     "---",
     `title: ${JSON.stringify(member.title)}`,
     `description: ${JSON.stringify(member.description)}`,
-    `editUrl: ${repositoryUrl(member.sourcePath, "edit", sourceChannel)}`,
+    `editUrl: ${docsEditUrl(member.generatedPath)}`,
     "---",
     "",
   ].join("\n");
@@ -93,6 +98,7 @@ export function createManifest(sourceCommit, renderedMembers) {
     schemaVersion: 1,
     generator,
     transformVersion,
+    maintenanceMode: "docs-repository",
     repository,
     sourceCommit,
     sourceChannel,
@@ -101,7 +107,7 @@ export function createManifest(sourceCommit, renderedMembers) {
       sourcePath: member.sourcePath,
       generatedPath: member.generatedPath,
       sourceSha256,
-      generatedSha256,
+      importedPageSha256: generatedSha256,
     })),
   };
 }
@@ -114,8 +120,11 @@ export async function verifySnapshot(siteRoot) {
   } catch (error) {
     throw new Error(`Unable to read ${manifestFilename}: ${error.message}`);
   }
+  const maintainedCopy = manifest?.maintenanceMode === "docs-repository";
+  const legacySnapshot = manifest?.maintenanceMode === undefined;
   if (manifest?.schemaVersion !== 1 || manifest?.generator !== generator ||
-      manifest?.transformVersion !== transformVersion || manifest?.repository !== repository ||
+      (!maintainedCopy && !legacySnapshot) ||
+      manifest?.transformVersion !== (maintainedCopy ? transformVersion : 3) || manifest?.repository !== repository ||
       manifest?.sourceChannel !== sourceChannel || manifest?.memberCount !== members.length ||
       !/^[0-9a-f]{40}$/u.test(manifest?.sourceCommit ?? "") ||
       !Array.isArray(manifest?.members) || manifest.members.length !== members.length) {
@@ -135,7 +144,7 @@ export async function verifySnapshot(siteRoot) {
     if (recorded.sourcePath !== expected.sourcePath || recorded.generatedPath !== expected.generatedPath ||
         seenSourcePaths.has(recorded.sourcePath) || seenGeneratedPaths.has(recorded.generatedPath) ||
         !/^[0-9a-f]{64}$/u.test(recorded?.sourceSha256 ?? "") ||
-        !/^[0-9a-f]{64}$/u.test(recorded?.generatedSha256 ?? "")) {
+        !/^[0-9a-f]{64}$/u.test((maintainedCopy ? recorded?.importedPageSha256 : recorded?.generatedSha256) ?? "")) {
       throw new Error(`Brand Navigation manifest member ${index + 1} is invalid.`);
     }
     seenSourcePaths.add(recorded.sourcePath);
@@ -145,15 +154,20 @@ export async function verifySnapshot(siteRoot) {
     let content;
     try {
       const bytes = await readFile(generatedFile);
-      if (sha256(bytes) !== recorded.generatedSha256) {
+      // Maintained copies retain their original import hash as provenance.
+      // Body edits in the docs repository do not claim to reproduce that import.
+      if (!maintainedCopy && sha256(bytes) !== recorded.generatedSha256) {
         throw new Error(`Brand Navigation generated hash mismatch: ${recorded.generatedPath}`);
       }
       content = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
     } catch (error) {
       throw new Error(`Unable to read ${recorded.generatedPath}: ${error.message}`);
     }
-    const editUrl = `editUrl: https://github.com/${repository}/edit/${sourceChannel}/${recorded.sourcePath}`;
-    if (!content.includes(editUrl) || !content.endsWith(`${sourceNotice(recorded.sourcePath, manifest.sourceCommit)}\n`)) {
+    const editUrl = `editUrl: ${maintainedCopy ? docsEditUrl(recorded.generatedPath) : repositoryUrl(recorded.sourcePath, "edit", sourceChannel)}`;
+    const frontmatter = content.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/u);
+    const editLines = frontmatter?.[1].split(/\r?\n/u).filter((line) => /^editUrl\s*:/u.test(line)) ?? [];
+    if (editLines.length !== 1 || editLines[0] !== editUrl ||
+        !content.endsWith(`${sourceNotice(recorded.sourcePath, manifest.sourceCommit)}\n`)) {
       throw new Error(`Brand Navigation provenance wrapper mismatch: ${recorded.generatedPath}`);
     }
   }

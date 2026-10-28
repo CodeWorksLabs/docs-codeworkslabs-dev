@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generator": "codeworkslabs-brand-navigation-mirror",
-  "transformVersion": 3,
+  "transformVersion": 4,
   "repository": "CodeWorksLabs/brand-navigation",
   "sourceCommit": "d94534fdb71eb02d9e182768fbbe1b8ca7ba59aa",
   "sourceChannel": "main",
@@ -11,55 +11,56 @@
       "sourcePath": "docs/USER_GUIDE.md",
       "generatedPath": "src/content/docs/brand-navigation/source/administrator-guide.md",
       "sourceSha256": "69c962e13be83dfbef49aedfdcef3dd3745bca51b8ae56a916d3c0020971bd09",
-      "generatedSha256": "51e5c2862681137d2ee7bb71c2b7eed142e5b1465a7bf8c999b18d5165bf08ec"
+      "importedPageSha256": "51e5c2862681137d2ee7bb71c2b7eed142e5b1465a7bf8c999b18d5165bf08ec"
     },
     {
       "sourcePath": "docs/SCOPE.md",
       "generatedPath": "src/content/docs/brand-navigation/source/product-scope.md",
       "sourceSha256": "7cf25837c7b3e3740a86c01e262e73c7c9129c780ecb183cb455b872e8fb9dc6",
-      "generatedSha256": "0dbc40fb878a0ad0dcbb9b18b770b3493e837639bfc0092e9307736de6871b18"
+      "importedPageSha256": "0dbc40fb878a0ad0dcbb9b18b770b3493e837639bfc0092e9307736de6871b18"
     },
     {
       "sourcePath": "docs/ARCHITECTURE.md",
       "generatedPath": "src/content/docs/brand-navigation/source/architecture.md",
       "sourceSha256": "2992155195e26137cf570ada7c086fb3f05c04bc1052322f884b8a8dcb217960",
-      "generatedSha256": "5a9dad81b4dba9d8a0677677d2c76f9bf6387c5820c6c55b6b030d5bc95a4c0c"
+      "importedPageSha256": "5a9dad81b4dba9d8a0677677d2c76f9bf6387c5820c6c55b6b030d5bc95a4c0c"
     },
     {
       "sourcePath": "docs/TESTING.md",
       "generatedPath": "src/content/docs/brand-navigation/source/testing-record.md",
       "sourceSha256": "73103ae8abc415d2bb0a2e2e09c8df70dd8fb280bc6da9d94ac061edbfb9d45e",
-      "generatedSha256": "6f28c1af19a0e8d48f31bce1f6487ed0c41b97add1e195ad43316539355b3485"
+      "importedPageSha256": "6f28c1af19a0e8d48f31bce1f6487ed0c41b97add1e195ad43316539355b3485"
     },
     {
       "sourcePath": "docs/MIGRATION.md",
       "generatedPath": "src/content/docs/brand-navigation/source/migration-record.md",
       "sourceSha256": "bb9514fd0a37de592c871440d97702456ffaaed3889760eb628b431c536633b6",
-      "generatedSha256": "526b04cf6f96380070fff3f13db63a55a9d0bd33a887a3136ad3cd578d501deb"
+      "importedPageSha256": "526b04cf6f96380070fff3f13db63a55a9d0bd33a887a3136ad3cd578d501deb"
     },
     {
       "sourcePath": "CHANGELOG.md",
       "generatedPath": "src/content/docs/brand-navigation/source/complete-changelog.md",
       "sourceSha256": "05f3574448829119ae26c8b48c304350bc69540396783bd953055001ad8b7acb",
-      "generatedSha256": "40784bdcbdba7ba6b47edca7a3140668daad32601e549c12b3a5873403003dfc"
+      "importedPageSha256": "40784bdcbdba7ba6b47edca7a3140668daad32601e549c12b3a5873403003dfc"
     },
     {
       "sourcePath": "SECURITY.md",
       "generatedPath": "src/content/docs/brand-navigation/source/security-policy.md",
       "sourceSha256": "9efa72db4c1a5d3838ad632031c6d12003a60f52013c8c4e7955204dd7792bef",
-      "generatedSha256": "54d907db1968f6a4dc9ff583924200f48d2abf1367dc8404c935c8f33968f71b"
+      "importedPageSha256": "54d907db1968f6a4dc9ff583924200f48d2abf1367dc8404c935c8f33968f71b"
     },
     {
       "sourcePath": "docs/ATTRIBUTION.md",
       "generatedPath": "src/content/docs/brand-navigation/source/attribution.md",
       "sourceSha256": "da5bb91402eaf6c8f9857e6b8636d2ac61585392688e4968bb00d1fa6c02959b",
-      "generatedSha256": "5d9aeccb2069db575d8e7aeb7fa8bd35f0789aeabb63567348e2c7ae98ae915a"
+      "importedPageSha256": "5d9aeccb2069db575d8e7aeb7fa8bd35f0789aeabb63567348e2c7ae98ae915a"
     },
     {
       "sourcePath": "docs/PROVENANCE.md",
       "generatedPath": "src/content/docs/brand-navigation/source/provenance.md",
       "sourceSha256": "770ec79fecb4fa4851a592d5b879b89b9e97bad3cf749aa03890692366004f48",
-      "generatedSha256": "7e2a3c25aa9bb956ae3c59339838766592ad36b2fdd29d99604e29978576aa53"
+      "importedPageSha256": "7e2a3c25aa9bb956ae3c59339838766592ad36b2fdd29d99604e29978576aa53"
     }
-  ]
+  ],
+  "maintenanceMode": "docs-repository"
 }

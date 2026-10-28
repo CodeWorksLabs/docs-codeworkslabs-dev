@@ -1,7 +1,7 @@
 ---
 title: "Provenance"
 description: "The complete Brand Navigation authorship and source-provenance record."
-editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/PROVENANCE.md
+editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/source/provenance.md
 ---
 Record date: 2026-09-06
 

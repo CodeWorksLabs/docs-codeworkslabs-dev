@@ -30,4 +30,4 @@ for setup and configuration questions, and
 for ideas. Use [GitHub Issues](https://github.com/CodeWorksLabs/brand-navigation/issues)
 for non-sensitive bugs, compatibility reports and documentation corrections.
 
-[Security policy on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/main/SECURITY.md)
+[Security policy on GitHub](/brand-navigation/source/security-policy/)

@@ -1,7 +1,7 @@
 ---
 title: "Administrator guide"
 description: "The complete administrator workflow from the Brand Navigation repository."
-editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/USER_GUIDE.md
+editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/source/administrator-guide.md
 ---
 This guide explains how to install, configure, verify, and disable Brand
 Navigation. The component adds site-wide brand identity and one-level

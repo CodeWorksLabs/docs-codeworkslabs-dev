@@ -1,7 +1,7 @@
 ---
 title: "Migration and rollback record"
 description: "The complete canonical migration and rollback procedure."
-editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/MIGRATION.md
+editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/source/migration-record.md
 ---
 Prepare the replacement on a non-default preview theme first. If Brand Navigation
 is already used by visitors, use a separate component copy or staging site:

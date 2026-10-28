@@ -1,7 +1,7 @@
 ---
 title: "Product scope"
 description: "The accepted Brand Navigation product scope and explicit exclusions."
-editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/SCOPE.md
+editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/source/product-scope.md
 ---
 Brand Navigation is a Discourse theme component that adds your site's branding,
 menus and links to the forum.

@@ -1,7 +1,7 @@
 ---
 title: "Complete changelog"
 description: "The complete Brand Navigation version history from the repository."
-editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/CHANGELOG.md
+editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/source/complete-changelog.md
 ---
 Brand Navigation follows [Semantic Versioning](https://semver.org/). Git tags
 and matching GitHub Releases identify published versions; Discourse continues

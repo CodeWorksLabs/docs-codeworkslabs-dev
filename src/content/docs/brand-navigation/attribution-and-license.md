@@ -21,4 +21,4 @@ These projects helped inspire Brand Navigation's features and presentation:
 
 You do not need to install these components to use Brand Navigation. If you already use one for your navigation, see [Switch from another header component](../migration-and-rollback/) before replacing it.
 
-For development history and source references, see the [repository record on GitHub](https://github.com/CodeWorksLabs/brand-navigation/blob/main/docs/PROVENANCE.md).
+For development history and source references, see the [repository record on GitHub](/brand-navigation/source/provenance/).

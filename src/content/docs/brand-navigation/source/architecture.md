@@ -1,7 +1,7 @@
 ---
 title: "Architecture"
 description: "The canonical Brand Navigation rendering and integration architecture."
-editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/ARCHITECTURE.md
+editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/source/architecture.md
 ---
 This developer reference explains how Brand Navigation integrates with Discourse,
 renders navigation and validates settings. For installation and configuration,

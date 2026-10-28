@@ -1,7 +1,7 @@
 ---
 title: "Security policy"
 description: "The canonical Brand Navigation security and supported-version policy."
-editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/SECURITY.md
+editUrl: https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/src/content/docs/brand-navigation/source/security-policy.md
 ---
 ## Supported versions
 
