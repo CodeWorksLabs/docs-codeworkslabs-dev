@@ -1,119 +1,193 @@
 ---
-title: Runtime and safety model
-description: Browser ownership, lifecycle, failure isolation, and privacy boundaries.
+title: Pageviews and privacy
+description: Understand pageviews, add consent controls and exclude sensitive URLs.
 editUrl: false
 ---
 
-The browser runtime has three layers: one location policy, one shared event
-coordinator, and a small provider adapter for each configured service. Provider
-adapters share script loading, consent handling, Astro lifecycle observation,
-route context, error cleanup, and registration logic.
+This guide explains when tracking starts, how to connect a consent interface,
+and what happens during navigation or on sensitive URLs.
 
-## Page lifecycle
+## How pageviews work
 
-On an ordinary document, an adapter records the current URL, title, and allowed
-document referrer and sends the initial pageview after its vendor becomes ready.
-With Astro ClientRouter, it waits for `astro:page-load`, which occurs after the
-new document has been swapped into place. `astro:before-preparation` marks a
-navigation as in flight so vendor readiness cannot send the destination early.
+On an ordinary Astro page, tracking waits until the page and provider are ready.
+With ClientRouter, package-owned pageviews wait for Astro's `astro:page-load`
+event, after the destination content has replaced the previous page.
 
-Each completed ClientRouter navigation is a pageview, including consecutive
-completions with the same URL. If several pages complete before a vendor is
-ready, only the most recent completed route is retained. A prerendered page is
-held until `prerenderingchange` confirms activation.
+Back and Forward navigation count as completed visits too. Two completed visits
+to the same URL can count separately. If a tracker is slow to load, only the
+latest completed page is retained; the package does not replay a visitor's full
+history after the tracker becomes ready. Prerendered documents wait for activation.
 
-For GA4, `pageviews: "provider"` leaves the normal Google config pageview and
-Enhanced Measurement history tracking in control; the package sends no manual
-pageviews. `pageviews: "astro"` disables the config pageview and uses the
-package lifecycle above. Operators selecting that advanced mode must disable
-GA history-based page changes so ownership is not duplicated. Other providers
-continue to use the package lifecycle for both labels because their adapters do
-not claim an equivalent native SPA guarantee. Non-GA providers support
-`pageviews: "none"` to suppress package pageviews. GA4 rejects that mode because
-it cannot suppress native Enhanced Measurement history pageviews. Use
-`providers: false` to disable the integration completely.
+GA4 is different by default: Google's tag owns its pageviews. If you want Astro
+to send them, follow [GA4 pageview setup](/analytics-for-astro/configuration/#let-astro-send-ga4-pageviews)
+and disable Google's history-change pageviews first.
 
-## Blocked query parameters
+## Wait for consent
 
-`blockedQueryParameters` is a fail-closed privacy boundary for the package. A
-matching initial URL starts neither the shared client nor any adapter. On
-ClientRouter navigation, the package suppresses pageview and custom-event
-dispatch for matching routes and defers first provider activation. Already-loaded
-scripts, globals, adapters and the public client can remain present. A blocked
-URL is excluded from package-supplied document and virtual referrer context, so
-a clean return does not forward that URL in those package tracking payloads.
+Set `consent: { mode: "deferred" }` for every provider that should wait. This
+complete configuration uses Fathom:
 
-This boundary controls package activation and tracking dispatch. It does not
-retract vendor code already executed or data already sent, and does not prove
-the absence of autonomous provider behavior. Other scripts on the page can
-still read browser state or send requests.
+```js
+// astro.config.mjs
+import { defineConfig } from "astro/config";
+import analytics from "@codeworkslabs/astro-analytics";
 
-Provider-owned GA4 history tracking is also outside this boundary after Google
-has loaded. Configuration rejects that ownership mode when
-`blockedQueryParameters` is non-empty; use Astro-owned mode with the explicit
-`historyPageviewsDisabled: true` operator assertion. That assertion is required
-for every GA4 Astro-owned configuration and is not verified by the package.
+export default defineConfig({
+  integrations: [analytics({
+    providers: [{
+      name: "fathom",
+      siteId: "YOUR-SITE-ID",
+      consent: { mode: "deferred" },
+    }],
+    events: true,
+  })],
+});
+```
 
-## Consent
+Before grant, deferred providers load no vendor script, create no vendor global
+and send no tracking calls. `external` has the same waiting behavior; use that
+name when your own consent manager supplies the choice. Neither mode detects
+your consent manager automatically.
 
-Immediate consent permits vendor loading. Deferred and external consent modes
-implement basic consent: they begin `pending`, create no vendor script/global,
-and dispatch nothing. `setConsent("denied")` preserves that zero-load state;
-`setConsent("granted")` starts providers without a reload. Repeated decisions
-are idempotent. Activation also waits for an allowed route outside navigation
-and prerendering. A retained grant starts the vendor on a later allowed
-completion; granting on a blocked route creates no vendor script or global.
+Your site calls `setConsent("granted")` or `setConsent("denied")`. One call
+applies the choice to all configured providers. Granting starts asynchronous
+script loading; it does not make an adapter ready immediately.
 
-Withdrawal changes provider state to `denied`, blocks package events and manual
-pageviews, and retains only the latest allowed route for a possible later
-regrant. GA4 receives an `analytics_storage` Consent Mode update. Its already
-loaded tag may send consent-aware cookieless measurements under Google's
-advanced behavior, especially when GA owns Enhanced Measurement pageviews.
-Other vendor code already executed cannot be uninstalled generically. No
-provider can retract transmissions made before withdrawal. The site—not this
-package—persists the user's choice between documents. Within a document, the
-coordinator retains the decision across script failure and matching re-entry.
-Local denial remains effective even if vendor notification fails; restoration
-of a vendor global alone cannot reauthorize package calls.
+### A complete consent component
 
-## Script ownership and collisions
+Create `src/components/AnalyticsConsent.astro`. Include it once in your shared
+layout so visitors can change their decision later. This small example stores
+only the analytics choice in local storage; adapt the copy and persistence to
+your site's consent design.
 
-Each adapter creates one identifiable script element. If its preferred DOM ID
-is occupied, it chooses a package-prefixed suffix instead of changing the
-existing element. Matching runtime reentry is idempotent. Conflicting runtime
-configuration is ignored rather than replacing an active adapter.
+```astro
+<section aria-label="Analytics preference">
+  <p>May we use analytics to understand how this site is used?</p>
+  <button id="analytics-allow" type="button">Allow analytics</button>
+  <button id="analytics-deny" type="button">Do not allow analytics</button>
+  <p id="analytics-choice" role="status"></p>
+</section>
 
-Provider globals that the package must initialize—Plausible, GA4, and Matomo—are
-not overwritten when already present. Script failures remove only the element
-and globals created by that adapter and allow a later clean initialization
-attempt. Exceptions are contained so analytics cannot break the host page.
+<script>
+  import { setConsent, type ConsentDecision }
+    from "@codeworkslabs/astro-analytics/client";
 
-These checks provide ordinary collision avoidance and cleanup. They are not a
-security boundary against arbitrary same-origin JavaScript, which can inspect or
-replace any browser global.
+  const storageKey = "site-analytics-choice";
 
-## Event behavior
+  function connectConsent() {
+    const allow = document.querySelector<HTMLButtonElement>("#analytics-allow");
+    const deny = document.querySelector<HTMLButtonElement>("#analytics-deny");
+    const message = document.querySelector<HTMLParagraphElement>("#analytics-choice");
+    if (!allow || !deny || !message) return;
 
-The optional event coordinator preserves configured provider order and returns
-one result per provider. A ready adapter accepts synchronously; vendor network
-delivery remains outside the return contract. Provider-specific limits are
-documented in [Event client](/analytics-for-astro/events/).
+    function apply(decision: ConsentDecision, remember: boolean) {
+      let saved = true;
+      if (remember) {
+        try { localStorage.setItem(storageKey, decision); }
+        catch { saved = false; }
+      }
+      const result = setConsent(decision);
+      if (!message) return;
+      message.textContent = result.ok
+        ? decision === "granted"
+          ? "Analytics is allowed. Trackers may still be loading."
+          : "Analytics is turned off for package tracking."
+        : "Your choice could not be applied to all adapters. Check analytics setup.";
+      if (!saved) message.textContent += " This browser could not save your choice.";
+    }
 
-`providerStatuses()` is intended for operator feedback. It reports `ready`,
-`adapter-not-loaded`, `consent-pending`, or `consent-denied` for each provider.
-`consentStatuses()` reports the separate package authorization state.
+    try {
+      const previous = localStorage.getItem(storageKey);
+      if (previous === "granted" || previous === "denied") apply(previous, false);
+    } catch {
+      message.textContent = "Choose a preference. This browser may not remember it.";
+    }
 
-## Provider notes
+    allow.onclick = () => apply("granted", true);
+    deny.onclick = () => apply("denied", true);
+  }
 
-- Fathom uses `trackPageview()` and `trackEvent()` with automatic pageviews off.
-- Plausible initializes with `autoCapturePageviews: false` and sends explicit
-  pageviews and event props.
-- GA4 initializes consent before configuration. Provider-owned mode leaves the
-  ordinary config pageview enabled; explicit Astro ownership forces
-  `send_page_view: false` and requires the unverified operator assertion.
-  Public GA4 `pageviews: "none"` is rejected. Events route to the configured
-  Measurement ID.
-- Matomo initializes its queue with tracker URL and site ID, then maintains
-  route context with `setCustomUrl`, `setDocumentTitle`, and `setReferrerUrl`.
-- Umami sets `data-auto-pageview="false"` and uses payload factories so pageview
-  and event metadata come from the same completed route.
+  connectConsent();
+  document.addEventListener("astro:page-load", connectConsent);
+</script>
+```
+
+For a layout at `src/layouts/Layout.astro`, import and render it like this:
+
+```astro
+---
+import AnalyticsConsent from "../components/AnalyticsConsent.astro";
+---
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8" /><title>My website</title></head>
+  <body>
+    <AnalyticsConsent />
+    <main><slot /></main>
+  </body>
+</html>
+```
+
+The package remembers the latest decision within the current document. Your
+site must restore it on each full page load, as this example does. Repeating
+the same decision does not duplicate tracker scripts or pageviews. A consent
+manager can call the same API from its choice-change callback instead of using
+this component.
+
+## What withdrawal does
+
+Denial stops subsequent package events and manual pageviews, even if notifying
+a vendor fails. A later grant resumes from the current allowed page. Recovering
+a failed tracker never grants consent on its own.
+
+Already executed vendor scripts stay loaded, and data already sent cannot be
+taken back. GA4 also receives a Google Consent Mode update; a loaded Google tag
+may still make consent-aware, cookieless requests. Other vendor automation can
+also act independently of this package. Withdrawal controls package calls; it
+does not promise to erase data or silence every script on the page.
+
+## Exclude sensitive URLs
+
+If a site uses a query parameter for a temporary token, add its name to
+`blockedQueryParameters`:
+
+```js
+// astro.config.mjs
+import { defineConfig } from "astro/config";
+import analytics from "@codeworkslabs/astro-analytics";
+
+export default defineConfig({
+  integrations: [analytics({
+    providers: [{ name: "fathom", siteId: "YOUR-SITE-ID" }],
+    blockedQueryParameters: ["handoff_token"],
+  })],
+});
+```
+
+Opening `/welcome?handoff_token=example` directly starts neither the package's
+client nor its providers. After analytics has started on another page, navigating
+to a blocked URL suppresses package pageviews and custom events there. Previously
+loaded scripts and the client can remain present. A return to an allowed page
+does not forward the blocked URL as the package-supplied referrer.
+
+This protects the package's activation and tracking calls. It does not hide a
+URL from other JavaScript or prevent autonomous activity by an already loaded
+vendor. GA4's default provider-owned history tracking cannot respect this route
+check, so configuration rejects that combination. Use
+[Astro-owned GA4 pageviews](/analytics-for-astro/configuration/#let-astro-send-ga4-pageviews) instead.
+
+## When a tracker fails or another script is present
+
+A failing provider does not stop other providers. Use
+[`providerStatuses()`](/analytics-for-astro/events/#check-readiness-without-tracking) to inspect
+readiness. Do not assume that an unrelated existing vendor global is a working
+installation: the adapters require their own startup conditions.
+
+The package avoids overwriting occupied globals it needs to initialize and
+cleans up its own failed startup state. It cannot protect browser globals from
+other scripts on the same page. Use one installation per provider.
+
+Recovery cannot reconstruct navigation missed while a provider was inactive.
+For example, Matomo can fall back to an allowed original `document.referrer`
+when there is no preceding observed route. That may differ from the visitor's
+last virtual page. Keep this in mind when investigating attribution gaps.

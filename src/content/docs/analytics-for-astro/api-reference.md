@@ -4,111 +4,147 @@ description: Public package entry points, exports, and browser helpers.
 editUrl: false
 ---
 
-The package exposes three entry points. This reference inventories every current
-runtime export and the main exported types so that changes can be evaluated as
-public-contract changes.
+Use the main entry point in your Astro configuration, the client entry point in
+browser code, and the Starlight entry point for a Starlight plugin.
 
-## Core entry point
+| Import path | Use it for |
+| --- | --- |
+| `@codeworkslabs/astro-analytics` | Configuring the Astro integration |
+| `@codeworkslabs/astro-analytics/client` | Sending events, applying consent and checking readiness |
+| `@codeworkslabs/astro-analytics/starlight` | Configuring the Starlight plugin |
 
-```ts
-import analytics, {
-  isEnabledForCommand,
-  normalizeConfig,
-  type AstroAnalyticsConfig,
-  type NormalizedAstroAnalyticsConfig,
-} from "@codeworkslabs/astro-analytics";
-```
+For complete working examples, start with [Getting started](/analytics-for-astro/getting-started/),
+[Custom events](/analytics-for-astro/events/) or [Starlight](/analytics-for-astro/starlight/).
 
-### `analytics(config)`
-
-The default export validates `AstroAnalyticsConfig` immediately and returns an
-Astro integration. During `astro:config:setup`, it injects the shared provider
-coordinator and each implemented adapter runtime, subject to configuration and
-command policy. Fathom, Plausible, Google Analytics 4, Matomo, and Umami each register an
-independently observable runtime adapter.
-
-### `normalizeConfig(value)`
+## `analytics(config)`
 
 ```ts
-function normalizeConfig(value: unknown): NormalizedAstroAnalyticsConfig;
+import analytics, { type AstroAnalyticsConfig }
+  from "@codeworkslabs/astro-analytics";
+
+const config: AstroAnalyticsConfig = {
+  providers: [{ name: "fathom", siteId: "YOUR-SITE-ID" }],
+};
+const integration = analytics(config);
 ```
 
-Validates and copies the supported configuration. It throws `TypeError` for an
-invalid shape or value. This low-level export is useful for tooling and tests;
-most sites should call the default integration factory instead.
+The default export returns an Astro integration. Add it to `integrations` in
+your Astro config. Invalid options throw `TypeError` when you create it; see the
+[configuration reference](/analytics-for-astro/configuration/) for provider and shared options.
 
-### `isEnabledForCommand(config, command)`
+## `track(name, properties?)`
 
 ```ts
-function isEnabledForCommand(
-  config: NormalizedAstroAnalyticsConfig,
-  command: "dev" | "build" | "preview" | "sync",
-): boolean;
+import { track } from "@codeworkslabs/astro-analytics/client";
+
+const result = track("plan_selected", { plan: "starter" });
+console.log(result.providers);
 ```
 
-Evaluates the normalized config-setup policy. It does not inspect or change a
-built artifact and is not a browser-runtime switch.
-
-### Core types
-
-The entry point exports the configuration types documented in the
-[configuration reference](/analytics-for-astro/configuration/):
-
-- `AnalyticsCommand`
-- `AnalyticsEnvironments`
-- `AnalyticsProvider`
-- `AstroAnalyticsConfig`
-- `ConsentMode` and `ConsentState`
-- `FathomProvider`, `GoogleAnalyticsProvider`, `MatomoProvider`, `PlausibleProvider`, and `UmamiProvider`
-- `GoogleConsentConfig`
-- `NormalizedAnalyticsProvider` and `NormalizedAstroAnalyticsConfig`
-- `PageviewMode`
-
-Provider runtime factories are internal; sites configure them through their
-exported provider types.
-
-## Client entry point
+Returns a synchronous `TrackResult`. `ok` is true only if every configured
+provider accepts the event locally. It does not confirm network delivery.
+Properties contain strings, finite numbers or booleans. See [event limits and
+results](/analytics-for-astro/events/) for provider-specific rules and partial failures.
 
 ```ts
-import {
-  EVENT_NAME_MAX_LENGTH,
-  EVENT_PROPERTY_COUNT_MAX,
-  EVENT_PROPERTY_KEY_MAX_LENGTH,
-  EVENT_PROPERTY_STRING_MAX_LENGTH,
-  configuredProviders,
-  consentStatuses,
-  providerStatuses,
-  setConsent,
-  track,
-  type AstroAnalyticsClient,
-  type ConsentDecision,
-  type ConsentUpdateResult,
-  type EventProperties,
-  type ProviderName,
-  type ProviderConsentState,
-  type ProviderConsentStates,
-  type ProviderRuntimeStatus,
-  type ProviderRuntimeStatuses,
-  type ProviderTrackFailureReason,
-  type ProviderTrackResult,
-  type ProviderTrackResults,
-  type TrackFailureReason,
-  type TrackResult,
-} from "@codeworkslabs/astro-analytics/client";
+type TrackResult =
+  | { ok: true; providers: ProviderTrackResults }
+  | { ok: false; providers: ProviderTrackResults; reason?: TrackFailureReason };
 ```
 
-`track()`, consent transitions, provider/status inspection, and the result types
-are described in the [event client guide](/analytics-for-astro/events/).
-The four constants are the numeric limits enforced by `track()` and may be used
-by forms or adapter code to mirror the package boundary.
+`TrackFailureReason` is `disabled`, `adapter-not-loaded`, `consent-pending`,
+`consent-denied` or `invalid-event`. Per-provider reasons exclude `disabled`.
+`ProviderTrackResults` maps provider names to `{ ok: true }` or
+`{ ok: false; reason: ProviderTrackFailureReason }`.
 
-## Starlight entry point
+## `configuredProviders()`
+
+Returns the ordered, read-only provider names for the current usable client, or
+an empty array when no usable client exists. It does not choose a provider or
+start tracking.
+
+## `providerStatuses()`
+
+Returns a read-only map of configured providers to `ready`, `adapter-not-loaded`,
+`consent-pending` or `consent-denied`. Use it for readiness feedback without
+sending events. No usable client produces an empty map. Readiness does not
+override a blocked route or establish server availability.
+
+## `consentStatuses()`
+
+Returns each configured provider's current package consent state: `pending`,
+`granted` or `denied`. No usable client produces an empty map.
+
+## `setConsent(decision)`
 
 ```ts
-import {
-  starlightAnalytics,
-} from "@codeworkslabs/astro-analytics/starlight";
+import { setConsent } from "@codeworkslabs/astro-analytics/client";
+
+const result = setConsent("granted"); // or "denied"
+console.log(result.ok, result.providers);
 ```
 
-`starlightAnalytics(config)` accepts the same `AstroAnalyticsConfig` and returns
-a Starlight plugin. See [Starlight integration](/analytics-for-astro/starlight/).
+Applies the site decision to all configured providers. Returns immediately:
+
+```ts
+type ConsentUpdateResult =
+  | { ok: true; providers: ProviderConsentStates }
+  | {
+      ok: false;
+      providers: ProviderConsentStates;
+      reason: "adapter-not-loaded" | "disabled" | "invalid-consent";
+    };
+```
+
+An accepted grant can start scripts loading; it does not mean they are ready.
+The site must remember and restore the choice across full page loads. See the
+[complete consent example](/analytics-for-astro/runtime-and-safety/#wait-for-consent).
+
+## `starlightAnalytics(config)`
+
+```ts
+import { starlightAnalytics } from "@codeworkslabs/astro-analytics/starlight";
+
+const plugin = starlightAnalytics({
+  providers: [{ name: "fathom", siteId: "YOUR-SITE-ID" }],
+});
+```
+
+Returns a Starlight plugin. Add it to Starlight's `plugins` array. It accepts
+the same `AstroAnalyticsConfig` as `analytics()`.
+
+## Helpers for configuration tools
+
+Most sites do not need these two main-entry-point exports:
+
+- `normalizeConfig(value: unknown): NormalizedAstroAnalyticsConfig` validates,
+  copies and fills in defaults. Invalid values throw `TypeError`.
+- `isEnabledForCommand(config, command): boolean` checks a normalized config for
+  the Astro `dev`, `build`, `preview` or `sync` command. It cannot change tracking
+  in an already built page.
+
+## Types and validation constants
+
+The main entry point exports `AstroAnalyticsConfig`, `AnalyticsProvider`, the
+five provider types (`FathomProvider`, `PlausibleProvider`,
+`GoogleAnalyticsProvider`, `MatomoProvider`, `UmamiProvider`),
+`GoogleConsentConfig`, `ConsentMode`, `ConsentState`, `PageviewMode`,
+`AnalyticsEnvironments`, `AnalyticsCommand`, `NormalizedAnalyticsProvider` and
+`NormalizedAstroAnalyticsConfig`.
+
+The client entry point exports `EventProperties`, `ProviderName`, `TrackResult`,
+`TrackFailureReason`, `ProviderTrackResult`, `ProviderTrackResults`,
+`ProviderTrackFailureReason`, `ProviderRuntimeStatus`, `ProviderRuntimeStatuses`,
+`ConsentDecision`, `ConsentUpdateResult`, `ProviderConsentState`,
+`ProviderConsentStates` and `AstroAnalyticsClient`.
+
+For form validation, the client also exports `EVENT_NAME_MAX_LENGTH` (128),
+`EVENT_PROPERTY_COUNT_MAX` (100), `EVENT_PROPERTY_KEY_MAX_LENGTH` (128) and
+`EVENT_PROPERTY_STRING_MAX_LENGTH` (1,024). Provider limits can be lower.
+
+## Browser global
+
+When injected, `window.astroAnalytics` exposes `providers`, `track()`, `status()`,
+`consent()` and `setConsent()`. Prefer the imported helpers: they also handle
+missing or unusable browser clients. The global is frozen, but it is not a
+security boundary against other JavaScript on the page.

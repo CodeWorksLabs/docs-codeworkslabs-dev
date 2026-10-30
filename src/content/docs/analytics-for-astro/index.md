@@ -4,39 +4,45 @@ description: Configure privacy-conscious, multi-provider analytics for Astro and
 editUrl: false
 ---
 
-> **Pre-release documentation** · This public snapshot describes the commit-pinned
-> candidate `0.1.0-alpha.25` at product commit `725ea10b4a839e2f5a8c2959edb0c04481cbbc94`
-> before any release tag. The package is not yet published to npm.
+Connect your Astro website to Fathom, Plausible, Google Analytics 4, Matomo or
+Umami. Use one provider or several together, without adding separate tracking
+snippets to your pages. Starlight sites use the same settings through a plugin.
 
-These documents describe the npm-unpublished `0.1.0-alpha.25` source of
-`@codeworkslabs/astro-analytics`.
+Analytics for Astro handles pageviews and gives you one browser API for custom
+events, such as a newsletter signup or a download. You can also wait for a
+visitor's consent before loading tracking scripts.
 
-The package provides Fathom, Plausible, Google Analytics 4, Matomo, and Umami
-adapters for completed-page lifecycle tracking and bounded custom events. It
-supports simultaneous providers, per-provider outcomes, blocked-query privacy,
-runtime consent transitions, and a Starlight wrapper. It does not provide event
-queueing, a consent UI, or persistence of the site's consent decision.
+## Start here
 
-## Guides
+- **Adding analytics to an Astro site?** Follow [Getting started](/analytics-for-astro/getting-started/).
+- **Using Starlight?** Follow [Starlight integration](/analytics-for-astro/starlight/).
+- **Choosing or connecting providers?** See [Configuration](/analytics-for-astro/configuration/).
+- **Tracking a button or another action?** See [Custom events](/analytics-for-astro/events/).
+- **Checking whether data arrived?** Use [Verify tracking and troubleshoot](/analytics-for-astro/verification-and-troubleshooting/).
 
-1. [Getting started](/analytics-for-astro/getting-started/)
-2. [Configuration](/analytics-for-astro/configuration/)
-3. [API reference](/analytics-for-astro/api-reference/)
-4. [Event client](/analytics-for-astro/events/)
-5. [Starlight](/analytics-for-astro/starlight/)
-6. [Runtime behavior](/analytics-for-astro/runtime-and-safety/)
-7. [Development](/analytics-for-astro/development/)
-8. [Versioning and releases](/analytics-for-astro/versioning-and-releases/)
-9. [Changelog](/analytics-for-astro/release-notes/)
-10. [Verification and troubleshooting](/analytics-for-astro/verification-and-troubleshooting/)
+## What it handles
 
-## Package entry points
+Pageviews work on ordinary page loads and Astro ClientRouter navigation. With
+several providers configured, a single event is offered to each one and you can
+inspect each result separately.
 
-| Entry point | Purpose |
+Consent controls let your site grant or withdraw permission to make tracking
+calls. Your site supplies the consent interface and remembers the visitor's
+choice. The package does not include a consent banner.
+
+An event result tells you whether the local adapter accepted the call. It does
+not confirm that an analytics server received it. Events are not queued or
+retried; the verification guide shows how to check delivery.
+
+## Explore further
+
+| I want to… | Read |
 | --- | --- |
-| `@codeworkslabs/astro-analytics` | Astro integration and configuration types |
-| `@codeworkslabs/astro-analytics/client` | Browser-safe event and status helpers |
-| `@codeworkslabs/astro-analytics/starlight` | Starlight plugin wrapper |
+| Understand pageviews, consent and sensitive URLs | [Pageviews and privacy](/analytics-for-astro/runtime-and-safety/) |
+| Look up a function, result or type | [API reference](/analytics-for-astro/api-reference/) |
+| Work on the package | [Contributing and testing](/analytics-for-astro/development/) |
+| Check availability and version compatibility | [Versions and availability](/analytics-for-astro/versioning-and-releases/) |
+| See what changed | [Release notes](/analytics-for-astro/release-notes/) |
 
-The source repository is public. The npm package is unpublished and retains its
-publication safeguard.
+These are preview docs. See [Versions and availability](/analytics-for-astro/versioning-and-releases/)
+for the current package status and how to obtain a test copy.

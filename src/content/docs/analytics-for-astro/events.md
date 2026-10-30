@@ -1,187 +1,165 @@
 ---
-title: Event client
-description: Bounded multi-provider custom events and exact result handling.
+title: Custom events
+description: Track button clicks and other actions, and understand each provider result.
 editUrl: false
 ---
 
-Import the public event helper from the client entry point:
+Use custom events to measure actions a pageview does not explain: a signup, a
+download or a click on a pricing button. Set `events: true` in your integration
+configuration first.
 
-```ts
-import {
-  configuredProviders,
-  consentStatuses,
-  providerStatuses,
-  setConsent,
-  track,
-  type ConsentDecision,
-  type ConsentUpdateResult,
-  type EventProperties,
-  type ProviderTrackFailureReason,
-  type TrackResult,
-} from "@codeworkslabs/astro-analytics/client";
-```
+Choose names you can recognize in reports, such as `pricing_opened`. Do not put
+email addresses, access tokens or other sensitive values in event names or data.
 
-## Track an event
+## Track a button click
 
-```ts
-const result = track("checkout", {
-  total: 12.5,
-  currency: "USD",
-  member: true,
-});
-```
+Create `src/components/PricingButton.astro`:
 
-`track()` is synchronous and does not throw for malformed browser globals,
-clients, or adapter results. It validates and
-copies the event before invoking `window.astroAnalytics.track()`.
+```astro
+<button id="pricing-button" type="button">I'm interested in pricing</button>
+<p id="pricing-feedback" role="status"></p>
 
-The current package connects the client to Fathom's `trackEvent()`, Plausible's
-`plausible()`, Google Analytics 4's `gtag()`, Matomo's `_paq`, and Umami's
-`umami.track()` APIs. Calls made before an integration's script load is verified return `adapter-not-loaded`; they are not
-queued or retried. Unrelated preexisting vendor globals are not treated as
-package readiness.
+<script>
+  import { configuredProviders, providerStatuses, track }
+    from "@codeworkslabs/astro-analytics/client";
 
-`configuredProviders()` returns the ordered provider names owned by the current
-runtime. It is intended for diagnostics and operator-facing test surfaces; it
-does not select or activate a provider.
+  function connectPricingButton() {
+    const button = document.querySelector<HTMLButtonElement>("#pricing-button");
+    const feedback = document.querySelector<HTMLParagraphElement>("#pricing-feedback");
+    if (!button || !feedback) return;
 
-`providerStatuses()` returns an exact status for every configured provider:
-`ready`, `adapter-not-loaded`, `consent-pending`, or `consent-denied`. It
-performs no tracking and is the appropriate readiness signal for controls that
-must not fire probe events. The shared client is present for consent and status
-control even when `events` is false; `events: true` additionally permits
-`track()` dispatch.
+    button.onclick = () => {
+      const providers = configuredProviders();
+      const statuses = providerStatuses();
+      if (providers.length === 0 || providers.some((name) => statuses[name] !== "ready")) {
+        feedback.textContent = "Analytics is not ready. Check consent and tracker loading.";
+        return;
+      }
 
-## Consent transitions
-
-```ts
-console.log(consentStatuses());
-const result = setConsent("granted");
-```
-
-`consentStatuses()` returns `pending`, `granted`, or `denied` for each provider.
-`setConsent("granted" | "denied")` applies one site decision to every configured
-adapter synchronously. Deferred and external providers load only after grant;
-denial before grant creates no provider script or global. Repeated decisions do
-not duplicate scripts or pageviews. Withdrawal blocks subsequent package calls;
-see [Runtime behavior](/analytics-for-astro/runtime-and-safety/) for provider-specific limits.
-
-The package does not persist the choice. A consent UI or CMP must store the
-decision and call `setConsent()` on each new document. The return value confirms
-that the local adapters accepted the transition, not that a provider deleted or
-withheld data already transmitted.
-
-## Input limits
-
-| Input | Limit |
-| --- | --- |
-| Event name | Non-empty after trimming; at most 128 characters |
-| Property count | At most 100 own properties |
-| Property key | Non-empty string; at most 128 characters |
-| String value | At most 1,024 characters |
-| Number value | Must be finite |
-| Other values | Booleans are accepted; objects, arrays, `null`, symbols, and functions are rejected |
-
-Property bags must be ordinary or null-prototype records containing only
-enumerable string-keyed data properties. Symbol-keyed, non-enumerable, and
-accessor properties are rejected, as are branded objects such as `Map`, `Date`,
-`Set`, boxed primitives, and regular expressions.
-
-## Results
-
-```ts
-type TrackResult =
-  | { ok: true; providers: ProviderTrackResults }
-  | {
-      ok: false;
-      providers: ProviderTrackResults;
-      reason?: TrackFailureReason;
+      const result = track("pricing_opened", { plan: "starter" });
+      feedback.textContent = result.ok
+        ? "The configured adapters accepted the event."
+        : `Some adapters did not accept it: ${JSON.stringify(result.providers)}`;
     };
+  }
 
-type ProviderTrackResults = Partial<Record<ProviderName,
-  | { ok: true }
-  | { ok: false; reason: ProviderTrackFailureReason }
->>;
+  connectPricingButton();
+  document.addEventListener("astro:page-load", connectPricingButton);
+</script>
 ```
 
-Every configured provider receives an independent result. `ok` is true only
-when every configured provider accepts the event. Mixed results intentionally
-omit the top-level `reason`; a top-level reason is present only for generic
-pre-dispatch failures or when every configured provider fails for that same
-reason.
+Include it once in a page or layout:
 
-| Reason | Meaning |
+```astro
+---
+import PricingButton from "../components/PricingButton.astro";
+---
+<PricingButton />
+```
+
+This component waits for all configured providers to be ready before offering
+the event. That is a choice made by this example: `track()` itself can attempt
+several providers and report partial success. No probe events or automatic
+retries are needed. The component's fixed IDs assume one instance per page.
+
+Keep analytics separate from essential behavior: a failed analytics call should
+not prevent a visitor from buying, downloading or navigating.
+
+## Read the result
+
+`track(name, properties?)` returns immediately. For a site using Fathom and
+Plausible, a result can look like this:
+
+```json
+{
+  "ok": false,
+  "providers": {
+    "fathom": { "ok": true },
+    "plausible": { "ok": false, "reason": "adapter-not-loaded" }
+  }
+}
+```
+
+Fathom accepted this call; Plausible did not. Do not retry the entire call
+automatically: that could count the Fathom event twice.
+
+| Result | Meaning and next step |
 | --- | --- |
-| `disabled` | No usable browser client exists, including during SSR |
-| `adapter-not-loaded` | That provider API is not ready or its client boundary failed |
-| `consent-pending` | A provider is configured for deferred or external consent and is not loaded |
-| `consent-denied` | The site denied or withdrew package authorization for that provider |
-| `invalid-event` | The event name or properties failed validation |
+| `ok: true` | Every configured provider accepted the call locally. Check dashboards to confirm delivery |
+| `adapter-not-loaded` | A tracker is not ready, failed to load or has an unusable API |
+| `consent-pending` | Your consent interface has not supplied a grant |
+| `consent-denied` | The visitor's current decision denies tracking |
+| `invalid-event` | Check the name, data and provider limits below |
+| `disabled` | There is no usable browser client, for example during server rendering or when injection is off |
 
-Input validation runs before environment and client lookup. Therefore,
-`invalid-event` takes precedence over `disabled` or `adapter-not-loaded` for a
-malformed call, including during SSR. A valid call with no browser client returns
-`disabled`.
+For mixed outcomes, read `result.providers`. A top-level `reason` is supplied
+for general failures or when every provider fails for the same reason; it is
+omitted for mixed results. Malformed input returns `invalid-event` even when
+tracking is otherwise disabled. The helper handles unusable clients or adapter
+results without throwing them into your UI.
 
-That ordering describes the public helper's generic event validation. Fathom's
-provider-specific `_value` rule is evaluated only after consent permits tracking
-and the Fathom API is ready. Consequently, a negative or fractional `_value`
-returns `consent-pending` while consent is pending, `adapter-not-loaded` before
-Fathom loads, and `invalid-event` once `fathom.trackEvent()` is callable.
+An accepted call is **not a delivery receipt**. There is no event queue, retry,
+flush operation or delivery promise. In particular, starting a full page
+navigation immediately after `track()` can interrupt vendor transport. Test
+your actual interaction using the [verification guide](/analytics-for-astro/verification-and-troubleshooting/).
 
-Unexpected adapter results are converted to per-provider `adapter-not-loaded`
-failures rather than escaping the public result union or hiding another
-provider's success.
+## What data can I send?
 
-## Browser global
+Pass an ordinary object containing strings, finite numbers or booleans:
 
-When configuration and environment policy permit injection, the bootstrap
-defines a frozen `window.astroAnalytics` client with a frozen, ordered
-`providers` list plus `consent()`, `setConsent()`, `status()`, and `track()`.
-The coordinator preserves its client across matching page bootstraps and leaves
-unrelated occupied globals unchanged.
-Provider adapters register independently, so one adapter cannot overwrite or
-suppress another by integration order. Direct calls to this declared public
-client receive the same event name and property validation as the imported
-helper; they cannot bypass the limits above.
+```ts
+import { track } from "@codeworkslabs/astro-analytics/client";
 
-Fathom supports an optional monetary event value in cents. The adapter forwards
-only a non-negative safe-integer `_value` property. An invalid supplied `_value`
-returns `invalid-event`; other validated properties are not transmitted by this
-provider adapter.
+const result = track("plan_selected", {
+  plan: "starter",
+  monthly_price: 12.5,
+  annual: false,
+});
+console.log(result.providers);
+```
 
-For provider-side confirmation, reporting setup and navigation timing, use the
-[verification and troubleshooting guide](/analytics-for-astro/verification-and-troubleshooting/).
-In particular, Plausible requires a matching custom-event goal for dashboard
-conversions; local adapter acceptance alone does not establish ingestion.
+Call this from browser code, such as a component's `<script>`, not Astro's
+server-rendered frontmatter. Arrays, nested objects, `null` and functions are not
+accepted. Objects with getters, symbol keys or hidden properties are also rejected.
 
-Plausible receives validated properties as `props`; numeric and boolean values
-are serialized to strings to match its current tracker contract. Its current
-service limit is 30 properties per event, so a larger otherwise-valid property
-bag returns a Plausible `invalid-event` result without calling the vendor API.
+The shared limits are 128 characters for a trimmed, non-empty event name,
+100 properties, 128 characters per non-empty key and 1,024 characters per string.
+Providers can impose narrower limits:
 
-Google Analytics 4 receives up to 25 validated event parameters. Caller-supplied
-`send_to` is rejected because the adapter owns routing to its Measurement ID.
+| Provider | Data sent by this adapter |
+| --- | --- |
+| Fathom | Event name and optional `_value` in cents, a non-negative safe integer. Other valid properties are not forwarded |
+| Plausible | Up to 30 properties. Numbers and booleans are converted to strings |
+| GA4 | Up to 25 event parameters. `send_to` is reserved for the integration's Measurement ID |
+| Matomo | The configured category and event name as the action. Optional `_name` must be a non-empty string; `_value` must be a finite number. Other valid properties are not forwarded |
+| Umami | Name up to 50 characters, up to 50 properties, strings up to 500 characters and numbers with at most four decimal places |
 
-Matomo receives `trackEvent(eventCategory, action, name?, value?)`. The provider's
-configured `eventCategory` supplies the category and the package event name
-supplies the action. Optional `_name` and finite numeric `_value` properties
-supply Matomo's third and fourth arguments. Other validated properties are not
-sent to Matomo, allowing another configured provider to consume them without
-inventing Matomo semantics. An empty or non-string `_name` produces Matomo's
-per-provider `invalid-event` result. When Matomo uses `pageviews: "none"`, its
-Astro page-load listener still applies the URL, title, and preceding virtual URL
-of each completed route before later events; it does not send `trackPageView`.
+For example, this browser call supplies a value Fathom can use:
 
-Umami receives a payload-factory call containing the event name and data plus
-the last completed Astro route's URL, title, and referrer. This keeps events
-aligned with package pageviews after browser-history traversal and delayed
-tracker readiness. Provider-specific validation limits event names to 50
-characters, property bags to 50 entries, strings to 500 characters, and numbers
-to four decimal places. The shared client currently accepts primitive values
-only, even though Umami itself can accept arrays and nested objects. An accepted
-synchronous call produces Umami's independent `{ ok: true }` result; it does not
-prove server delivery.
+```ts
+import { track } from "@codeworkslabs/astro-analytics/client";
 
-The browser client and its metadata are not a security boundary against other
-same-origin JavaScript.
+const result = track("purchase", { _value: 2500 }); // Fathom: 2,500 cents
+console.log(result.providers);
+```
+
+`_value` has different meanings across providers. Matomo uses its numeric event
+value without a cents conversion; Plausible and GA4 receive it as a property.
+Decide whether that meaning fits your reports before sharing one event.
+
+## Check readiness without tracking
+
+```ts
+import { configuredProviders, consentStatuses, providerStatuses }
+  from "@codeworkslabs/astro-analytics/client";
+
+console.log(configuredProviders()); // e.g. ["fathom", "plausible"]
+console.log(providerStatuses());    // ready, adapter-not-loaded, consent-pending or consent-denied
+console.log(consentStatuses());     // pending, granted or denied
+```
+
+These functions do not send events. `ready` describes the adapter, not whether
+the current route permits tracking or whether the provider's server is reachable.
+See [consent and sensitive URLs](/analytics-for-astro/runtime-and-safety/) for those separate rules.
+
+For all types and function signatures, see [API reference](/analytics-for-astro/api-reference/).

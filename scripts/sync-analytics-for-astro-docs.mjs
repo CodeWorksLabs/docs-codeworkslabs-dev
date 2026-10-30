@@ -2,9 +2,10 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
+import { rewriteLinks } from "./analytics-docs-links.mjs";
 
-const sourceRef = "725ea10b4a839e2f5a8c2959edb0c04481cbbc94";
-const expectedCommit = "725ea10b4a839e2f5a8c2959edb0c04481cbbc94";
+const sourceRef = "e72e7052ad56fc473e97cfbb616afff8b9c0569e";
+const expectedCommit = "e72e7052ad56fc473e97cfbb616afff8b9c0569e";
 const expectedVersion = "0.1.0-alpha.25";
 const rootArgument = process.argv[2] === "--root" ? process.argv[3] : undefined;
 if (process.argv[2] === "--root" && !rootArgument) throw new Error("Verification root is required.");
@@ -95,13 +96,12 @@ const pages = [
     sourceTitle: "Analytics for Astro documentation",
     title: "Analytics for Astro",
     description: "Configure privacy-conscious, multi-provider analytics for Astro and Starlight.",
-    banner: true,
   },
   {
     source: "docs/getting-started.md",
     target: "getting-started.md",
     title: "Getting started",
-    description: "Requirements and setup for the commit-pinned Analytics for Astro candidate.",
+    description: "Install the package, connect a provider and check your first pageview.",
   },
   {
     source: "docs/configuration.md",
@@ -118,8 +118,9 @@ const pages = [
   {
     source: "docs/events.md",
     target: "events.md",
-    title: "Event client",
-    description: "Bounded multi-provider custom events and exact result handling.",
+    sourceTitle: "Event client",
+    title: "Custom events",
+    description: "Track button clicks and other actions, and understand each provider result.",
   },
   {
     source: "docs/verification-and-troubleshooting.md",
@@ -138,33 +139,31 @@ const pages = [
     source: "docs/runtime-and-safety.md",
     target: "runtime-and-safety.md",
     sourceTitle: "Runtime behavior and safety",
-    title: "Runtime and safety model",
-    description: "Browser ownership, lifecycle, failure isolation, and privacy boundaries.",
+    title: "Pageviews and privacy",
+    description: "Understand pageviews, add consent controls and exclude sensitive URLs.",
   },
   {
     source: "docs/development.md",
     target: "development.md",
-    title: "Development and verification",
-    description: "Repository layout, local gates, package inspection, and consumer qualification.",
+    sourceTitle: "Development and verification",
+    title: "Contributing and testing",
+    description: "Set up a checkout, run tests and try your changes in a website.",
   },
   {
     source: "docs/versioning-and-releases.md",
     target: "versioning-and-releases.md",
-    title: "Versioning and releases",
-    description: "Semantic versioning, compatibility evidence, and release gates.",
+    sourceTitle: "Versioning and releases",
+    title: "Versions and availability",
+    description: "Check package availability, supported versions and upgrade steps.",
   },
   {
     source: "CHANGELOG.md",
     target: "release-notes.md",
     sourceTitle: "Changelog",
     title: "Release notes",
-    description: "Complete pre-release history for Analytics for Astro.",
+    description: "Changes and upgrade notes for Analytics for Astro.",
   },
 ];
-
-const rewriteLinks = (body) => body
-  .replaceAll("(../CHANGELOG.md)", "(/analytics-for-astro/release-notes/)")
-  .replace(/\((?:\.\/)?([a-z0-9-]+)\.md\)/giu, "(/analytics-for-astro/$1/)");
 
 const renderedPages = [];
 
@@ -179,17 +178,7 @@ for (const page of pages) {
     throw new Error(`${page.source} does not begin with the expected ${heading}.`);
   }
 
-  let body = rewriteLinks(source.slice(heading.length + 1).trimStart());
-  if (page.banner) {
-    body = [
-      `> **Pre-release documentation** · This public snapshot describes the commit-pinned`,
-      `> candidate \`${packageVersion}\` at product commit \`${expectedCommit}\``,
-      `> before any release tag. The package is not yet published to npm.`,
-      "",
-      body,
-    ].join("\n");
-  }
-
+  const body = rewriteLinks(source.slice(heading.length + 1).trimStart());
   const frontmatter = [
     "---",
     `title: ${page.title}`,

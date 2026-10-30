@@ -4,127 +4,110 @@ description: Provider evidence, GA4 pageview ownership, Plausible goals and miss
 editUrl: false
 ---
 
-Verify the installed package in a production build of your actual Astro or
-Starlight site. Development builds do not inject tracking under the default
-environment policy. Use a dedicated test property when possible, and record
-the package version, site commit, provider identifiers and selected consent and
-pageview modes before testing. Do not put credentials in a report or repository.
+A working installation should show the pages you visit and the custom events
+you send in the right provider account. Start with a short, recognizable test
+instead of repeatedly clicking and trying to interpret a growing counter.
 
-## Establish one pageview owner
+## Check a short journey
 
-GA4 defaults to `pageviews: "provider"`: Google's tag owns pageviews. The
-integration does not add manual pageviews in that mode.
+1. Build your site with `npm run build` and open it with `npm run preview`, or
+   visit your deployed test site. Analytics is off in development by default.
+2. Make the required consent choice. Wait for your providers to load; use
+   [`providerStatuses()`](/analytics-for-astro/events/#check-readiness-without-tracking) to check.
+3. Visit one known page. Find its path in the correct provider dashboard.
+4. Send one named event, such as `analytics_test`, using the
+   [test page](/analytics-for-astro/getting-started/#4-try-a-custom-event). Inspect each provider's
+   result, then look for that event in the dashboard.
+5. Visit a second page and confirm its path too.
 
-For `pageviews: "astro"`, complete this operator prerequisite in the correct
-GA4 web stream:
+Keep the browser on the event page while checking the first event. Then test
+your real button or link separately. Leaving a page immediately after a
+`track()` call can interrupt the vendor's request; `track()` does not wait for
+delivery or provide a flush operation.
 
-1. Open **Admin → Data streams → your web stream**.
-2. Open the configuration for **Enhanced measurement**.
-3. Under **Page views**, expand the advanced settings.
-4. Disable **Page changes based on browser history events** and save.
-5. Reopen the setting to confirm it persisted, then configure
-   `historyPageviewsDisabled: true` in the integration.
+Use a reporting period that includes your test and check the dashboard's
+timezone. Reporting can take time, and browsers or providers can filter traffic.
+Two sites can share `/` and `/pricing/`, so check the hostname or site selection,
+not just the path. With several providers, inspect each one separately.
 
-The overall Enhanced Measurement switch can remain enabled. This prerequisite
-concerns its history-change option; it does not require turning off scrolls,
-outbound clicks or every other measurement. Choose those options according to
-your site's requirements. The package cannot read or enforce your GA settings,
-so recheck this assertion after configuration changes. Google's
-[Enhanced Measurement reference](https://support.google.com/analytics/answer/9216061)
-explains the individual options.
+## Where to look
 
-Other vendor automation can still run after its script has loaded. See
-[Runtime behavior](/analytics-for-astro/runtime-and-safety/) for the limits of package-controlled
-pageviews, blocked routes and consent withdrawal.
+| Provider | Pageviews | Custom events |
+| --- | --- | --- |
+| Fathom | Your site's page paths | Exact event name and completion count |
+| Plausible | The selected site's page paths | Matching custom-event goal conversion |
+| GA4 | Page locations in the correct property/stream, including hostname | Exact event name in Realtime or processed event reports |
+| Matomo | Page actions in the selected site's visit log | Your configured event category and event name as Event Action |
+| Umami | Pageview records for the selected website | Exact event name in its events |
+
+An adapter's `{ ok: true }` means it accepted the call locally. Only provider
+evidence confirms that the server received it. Counts need not match across
+different services because their reporting and filtering differ.
 
 ## Prepare Plausible custom-event reporting
 
-Plausible pageviews do not need a custom-event goal. To report a custom event
-sent through `track()`, add a **Custom event** goal in the correct Plausible
-site, using the exact event name your code sends. Case, spaces and underscores
-must match. Check for an existing goal first, and create only the intended goal.
+Pageviews do not need a custom-event goal. For custom events, open the correct
+Plausible site's settings and add a **Custom event** goal whose event name
+exactly matches your call. For `track("analytics_test")`, enter `analytics_test`.
+Case, spaces and underscores matter.
 
-For example, `track("journey_continued")` needs the event name
-`journey_continued`; a display label does not replace the matching trigger.
-Create the goal before the verification run and trigger a fresh event afterward.
-An empty Goals panel alone does not establish that the tracker failed.
-Plausible can expose received but unconfigured event names in its goal-creation
-interface. Inspecting that evidence does not require adding every detected event.
-See [Plausible custom-event goals](https://plausible.io/docs/custom-event-goals).
+Check for an existing goal first. After creating one, send a fresh event and
+look for its conversion. A missing goal can explain an empty Goals panel even
+when the script is working. Plausible may also show received event names while
+you create a goal; that is evidence of receipt, not an existing goal conversion.
+See [Plausible's goal instructions](https://plausible.io/docs/custom-event-goals).
 
-## Run a small, observable journey
+## Avoid duplicate GA4 pageviews
 
-1. Open the landing page in the browser/profile you intend to support. Confirm
-   the actual consent decision and wait for the configured adapters to be ready.
-2. Record the landing pageview in each provider's reporting interface.
-3. Send one explicitly named event through the public client. Record every
-   provider's result, including mixed outcomes.
-4. Confirm the named event in each provider, then navigate to the destination
-   and confirm its pageview. Keeping the event test separate from navigation
-   helps distinguish event delivery from document-unload timing.
-5. Test your real navigation interaction as a separate case. `track()` is
-   synchronous: its return value does not wait for vendor transport to finish.
-   Immediate full-document navigation can therefore require separate delivery
-   qualification. No queue, retry, flush or delivery promise is provided.
+First check `pageviews` in your provider configuration:
 
-Use `providerStatuses()` for readiness, rather than firing probe events. A
-successful per-provider result means that adapter accepted the call locally.
-It is not a provider receipt, conversion, delivery guarantee or permission to
-ignore another provider's failure. See [Event client](/analytics-for-astro/events/).
+- **Omitted or `"provider"`:** Google owns pageviews. The package does not add
+  manual ones. Google's normal history tracking can stay enabled.
+- **`"astro"`:** the package owns pageviews. Google's history-change pageviews
+  must be disabled to avoid two trackers counting the same navigation.
 
-With simultaneous providers, the same `track()` call attempts each configured
-provider independently. Inspect `result.providers`, rather than interpreting
-one successful provider or a selected UI label as success for all providers.
+For Astro-owned pageviews, check the saved setting in the correct stream:
 
-## Read provider-side evidence
+1. Open **Admin → Data streams → your web stream** in GA4.
+2. Open the **Enhanced measurement** configuration.
+3. Under **Page views**, expand the advanced settings.
+4. Turn off **Page changes based on browser history events** and save.
+5. Reopen the settings to confirm the change persisted. Then set
+   `historyPageviewsDisabled: true` in your integration configuration.
 
-| Provider | Pageview evidence | Custom-event evidence |
-| --- | --- | --- |
-| Fathom | Correct site's landing and destination paths | Exact event name and completion count |
-| Plausible | Correct site's page paths | Matching goal conversion, or received-event evidence with its reporting limitation stated |
-| GA4 | Correct property's page locations, including hostname | Exact event name in Realtime or the processed event report |
-| Matomo | Correct site's page actions in its visit log | Configured event category and the `track()` name as Event Action |
-| Umami | Correct website's pageview records | Exact event name in its event records |
+The overall Enhanced Measurement switch may stay enabled. Scrolls, outbound
+clicks and other measurements are separate choices. The package cannot read or
+change these settings. See [Google's Enhanced Measurement reference](https://support.google.com/analytics/answer/9216061).
 
-Use a reporting period that includes the run and check the provider's timezone.
-Two sites can share the same paths, so a path alone does not identify a GA4
-stream or hostname. Record full page locations where the reporting UI provides
-them. Reporting delays and vendor filtering can differ across providers; a
-single common total is not the success criterion. Allow a bounded reporting
-delay without generating repeated traffic to force a larger counter.
+Also check for a second embed or tag-manager installation of the same tracker.
+For non-GA providers, this integration already disables automatic pageviews and
+sends its own completed-page calls.
 
-## Diagnose a missing result
+## Something is missing
 
-| Observation | Next check |
+| What you see | What to check |
 | --- | --- |
-| `consent-pending` | Has the site's consent UI/CMP supplied an explicit grant? |
-| `consent-denied` | Is the current decision denied or withdrawn? Do not grant implicitly to make a test pass. |
-| `adapter-not-loaded` | Production injection, script loading, occupied vendor globals, current route policy and browser console/network errors |
-| `invalid-event` | Shared event validation and that provider's narrower limits |
-| Adapter accepts; dashboard is empty | Correct property/site, reporting period/timezone, reporting delay, Plausible goal definition and provider filtering |
-| One browser works; another fails | Compare browser console/network evidence and existing privacy/extension policy; do not assume either a package defect or an extension cause without evidence |
-| Duplicate GA4 pageviews | Check which owner is selected and the saved history-change option for that exact stream |
+| No analytics in `npm run dev` | Expected by default. Test a production build or explicitly enable development tracking |
+| `disabled` | Confirm the integration is enabled and called from browser code, not Astro frontmatter. A directly opened blocked-query URL also omits the client |
+| `consent-pending` | Has the consent interface actually called `setConsent("granted")`? |
+| `consent-denied` | Respect the visitor's choice. Test with your own explicit grant if appropriate |
+| `adapter-not-loaded` | Check the browser console/network panel for a failed script, an occupied vendor global, or an invalid script address |
+| `invalid-event` | Compare the event with the [shared and provider limits](/analytics-for-astro/events/#what-data-can-i-send) |
+| Accepted locally, absent in reports | Check site/property, hostname, period, timezone, reporting delay, filtering and Plausible goals |
+| One browser works, another does not | Compare console/network errors and existing extension or privacy policy; do not assume the cause |
+| Missing page after a slow tracker load | Only the most recent completed page is retained before readiness; earlier visits are not replayed |
 
-Do not silently disable browser protections, change consent, substitute provider
-IDs, add a proxy or alter account filters to obtain a passing result. Such a
-change can conceal the original failure and changes what the test establishes.
+Do not disable browser protections or change provider IDs just to turn a test
+green. Record what the affected browser reports so you can identify the actual
+cause. A blocked script may be expected under that browser's policy.
 
-## Qualify lifecycle and privacy separately
+## Before relying on privacy or navigation behavior
 
-A successful landing/event/destination journey establishes basic ingestion,
-not every supported lifecycle or privacy property. Before relying on those
-claims, verify the applicable cases in both plain Astro and Starlight:
+After the basic journey works, test the interactions your site uses: ordinary
+links, ClientRouter links, Back and Forward, a slow or failed tracker, and
+consent withdrawal and regrant. If using blocked query parameters, test direct
+entry to a sensitive URL and navigation there after tracking has already started.
 
-- full-document navigation, ClientRouter completion, back/forward traversal and
-  consecutive completions at the same URL;
-- direct entry to a blocked-query URL, navigation to a blocked URL after
-  activation, and return to an allowed route, including supplied referrers;
-- deferred/external consent before grant, explicit grant, withdrawal and
-  regrant, including a new document where the host must restore its decision;
-- delayed or failed provider script loading and recovery, mixed provider
-  outcomes, and disabling/re-enabling the integration.
-
-Distinguish package-originated calls from autonomous vendor activity and record
-the exact evidence obtained. Browser UI receipts, network observations and
-provider ingestion establish different facts. Synthetic tests remain useful,
-but do not label them as executed native browser/provider qualification.
+Check both the URL and referrer in the evidence you can inspect. These checks
+answer different questions from a dashboard conversion. See
+[Pageviews and privacy](/analytics-for-astro/runtime-and-safety/) for the behavior to expect.

@@ -1,63 +1,64 @@
 ---
-title: Versioning and releases
-description: Semantic versioning, compatibility evidence, and release gates.
+title: Versions and availability
+description: Check package availability, supported versions and upgrade steps.
 editUrl: false
 ---
 
-Analytics for Astro uses [Semantic Versioning 2.0.0](https://semver.org/).
-Astro does not require a different version-number scheme for community
-integrations. Astro and Starlight compatibility is declared separately through
-bounded peer dependencies.
+## Current availability
 
-## Current version
+The current test package is `@codeworkslabs/astro-analytics` version
+`0.1.0-alpha.25`. It is a preview, not RC.1, and is not published to npm yet.
+Ask the maintainer for the prerelease tarball if you are taking part in a trial,
+then follow [Getting started](/analytics-for-astro/getting-started/).
 
-The repository currently identifies `0.1.0-alpha.25`. It is an unpublished
-development version with alpha-stage runtime contract changes:
+The public source repository may lag this documentation preview. There is no
+public registry installation command for this candidate. Do not substitute an
+unrelated package with a similar name.
 
-- `providers` is the sole provider configuration input;
-- `events` is boolean;
-- the public package exports only implemented configuration, client, and
-  Starlight contracts;
-- all five provider runtimes use shared lifecycle, location, script, event, and
-  consent-transition infrastructure; and
-- GA4 provider-owned pageviews are the ordinary default, while manual
-  Astro-owned pageviews require an explicit unverified operator assertion; GA4
-  `none` is rejected; and
-- local authorization is retained across provider failure/re-entry, with
-  blocked-route gating on activation and fail-closed local withdrawal.
+## Supported versions
 
-The version in `package.json` identifies source intent. It does not prove an npm
-publication, Git tag, GitHub Release, deployment, or compatibility result.
+| Software | Accepted version |
+| --- | --- |
+| Node.js | 22.18.0 or later, also meeting your Astro version's requirements |
+| Astro | `>=7.3.2 <8` |
+| Starlight, when used | `>=0.41.11 <0.43` |
+| Umami tracker, when used | 3.2.0 or later |
 
-## Increment rules
+Starlight is not required for plain Astro sites. Accepted ranges describe what
+the package allows; they do not mean every combination has been tested. The
+[contributor guide](/analytics-for-astro/development/) lists the versions used for the current
+source checks.
 
-Before `1.0.0`:
+## What the version means
 
-- increment `alpha.N` for each changed alpha package candidate;
-- move to `beta.N` only when the intended feature set is complete and wider
-  validation is the remaining work;
-- use `rc.N` only when no planned product change remains before the matching
-  stable version; and
-- increment the base minor or major version when the intended public contract
-  requires it.
+Analytics for Astro uses [Semantic Versioning](https://semver.org/). A suffix
+such as `alpha.25` identifies a prerelease. An `rc.1` suffix will identify a
+release candidate intended for final validation before the matching stable
+version. A preview's API can still change; read the release notes before upgrading.
 
-After `1.0.0`, use ordinary SemVer PATCH, MINOR, and MAJOR meaning. Changes to
-entry points, configuration, runtime globals, result semantics, or peer ranges
-are public-contract changes.
+After 1.0.0, patch versions are for compatible fixes, minor versions add
+compatible functionality, and major versions can change the public contract.
+Astro and Starlight compatibility is listed separately from the package version.
 
-## Release identity
+## Upgrade a test installation
 
-An authorized release uses an immutable annotated Git tag named `v<VERSION>`, a
-matching GitHub Release, and—when authorized—a package with the same version.
-Never move or reuse a published tag or version. Prereleases use the matching npm
-distribution tag rather than `latest`.
+1. Read the [release notes](/analytics-for-astro/release-notes/) for configuration or behavior changes.
+2. Obtain the new tarball and put it in your site's `vendor` directory.
+3. Run `npm install ./vendor/NEW-PACKAGE-FILENAME.tgz`, using its actual filename.
+4. Commit the tarball and updated package/lock files together.
+5. Build and test before deploying. Confirm pageviews and custom events again.
 
-The package currently retains `private: true`, so npm publication is disabled.
-Changing that safeguard is a separate release action.
+Keep the previous site revision and package available if you need to roll back.
+Do not reuse a published package version for different contents.
 
-## Compatibility claims
+## For release maintainers
 
-Peer ranges state eligibility; they do not prove every admitted version was
-tested. Release notes should name the exact Node, Astro, and Starlight versions
-used for qualification. The package ships TypeScript source for Astro or another
-TypeScript-aware build pipeline.
+Version numbers, source tags and package publication are separate steps. A
+release uses an immutable annotated Git tag `v<VERSION>` and a matching GitHub
+Release. An npm release, when published, uses that same version. Prereleases
+belong on a prerelease distribution tag rather than `latest`.
+
+The package's `private: true` safeguard currently prevents accidental npm
+publication. Removing it is part of a deliberate release, not installation or
+documentation editing. Qualify the exact tarball in Astro and Starlight before
+publishing; see [Contributing and testing](/analytics-for-astro/development/).

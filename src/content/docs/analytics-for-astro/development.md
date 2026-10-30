@@ -1,85 +1,95 @@
 ---
-title: Development and verification
-description: Repository layout, local gates, package inspection, and consumer qualification.
+title: Contributing and testing
+description: Set up a checkout, run tests and try your changes in a website.
 editUrl: false
 ---
 
-## Repository boundary
+Use this guide to work on the package itself. To add it to a website, follow
+[Getting started](/analytics-for-astro/getting-started/) instead.
 
-Reusable package source belongs in this repository. Site implementations belong
-under `C:\CodeProjects\Sites`, and reusable Astro operating doctrine belongs
-under `C:\CodeProjects\Platforms\Astro`.
+## Set up a checkout
 
-## Install pinned development dependencies
+You need Node.js and npm, Git, and a checkout containing the candidate you are
+working on. The docs preview can be newer than the public repository, so ask
+the maintainer for the matching source when reproducing a preview issue.
 
-```powershell
+From the package repository root, install its locked dependencies and run its
+source checks:
+
+```sh
 npm ci
-```
-
-The lockfile pins the development verification environment, including Astro,
-Starlight, TypeScript, and Node type declarations.
-
-The current preparation gate uses Node 22.22.2, npm 11.12.1, Astro 7.3.3,
-Starlight 0.42.0 and TypeScript 5.9.3. These identify the source/typecheck
-environment, not proof that every version admitted by the peer ranges has
-been exercised in a clean consumer or native browser. Record those results
-separately against the exact artifact and consumer lockfile.
-
-## Run the complete local source gate
-
-```powershell
 npm run verify
 ```
 
-This runs:
+`verify` runs TypeScript checking and the test suite. The checks cover
+configuration, browser helpers, provider behavior, consent, navigation and the
+Astro/Starlight integration types.
 
-```powershell
-npm run typecheck
-npm test
-```
+The Alpha.25 checks used Node 22.22.2, npm 11.12.1, Astro 7.3.3, Starlight 0.42.0
+and TypeScript 5.9.3. These are tested versions, not a promise that every version
+in the peer ranges has been exercised.
 
-The typecheck compiles package source, tests, and the real Astro/Starlight type
-fixture without emitting files. The test suite exercises configuration, event,
-provider, lifecycle, Astro integration, and Starlight wrapper behavior.
+## Find the code you need
 
-## Inspect the package surface
+| Location | Contents |
+| --- | --- |
+| `src/index.ts` | Astro integration |
+| `src/config.ts` | Configuration types, defaults and validation |
+| `src/events.ts` | Browser event, readiness and consent helpers |
+| `src/runtime.ts` | Shared browser behavior and provider adapters |
+| `src/starlight/` | Starlight wrapper |
+| `docs/` | User and contributor guides |
+| `test/` | Source tests and supporting fixtures |
 
-```powershell
+## Try a change in a real site
+
+From the package checkout, inspect the files npm would include:
+
+```sh
 npm pack --dry-run
 ```
 
-The package allowlist intentionally includes `src`, `docs`, and `CHANGELOG.md`;
-npm also includes required metadata such as `package.json`, `README.md`, and
-`LICENSE`. Including `docs` keeps links from the packaged README usable.
-Repository governance, tests, checkpoints, and development fixtures must not
-enter the package artifact.
+For a reproducible test package, first commit your intended changes, then export
+that exact commit into a new directory. This example uses a POSIX-compatible
+shell and assumes the new directory does not exist:
 
-The artifact intentionally contains Astro-native TypeScript source rather than
-compiled JavaScript. Test both Astro loading and ordinary TypeScript resolution;
-plain Node.js 22 import from `node_modules` is outside the current contract.
+```sh
+git archive --format=tar --output=../analytics-source.tar HEAD
+mkdir ../analytics-package
+tar -xf ../analytics-source.tar -C ../analytics-package
+cd ../analytics-package
+npm pack
+```
 
-The repository enforces LF for text files through `.gitattributes`. Release
-tarballs should be packed from a clean export of the committed tree,
-not from a platform-normalized working copy, and package members must be checked
-against the corresponding Git blobs before consumer qualification.
+Run `npm pack` in the export, not a working copy with uncommitted changes or
+platform-converted line endings. The repository uses LF for text. Keep the
+resulting tarball intact and record its checksum when sharing test results.
 
-## Consumer qualification
+Install it in a separate Astro site using the
+[tarball installation steps](/analytics-for-astro/getting-started/#1-install-the-package). Check a
+plain Astro site and a Starlight site. For each site run its clean install,
+type checks, production build and production dependency audit. Test the real
+navigation and consent interactions described in the
+[verification guide](/analytics-for-astro/verification-and-troubleshooting/).
 
-Before release or site integration, qualify an exact tarball in clean stock Astro
-and Starlight consumers. Bind the evidence to the package hash, consumer commit
-and lockfile, generated runtime chunk, installed versions, and command results.
+For Cloudflare sites, also run the site's Wrangler deployment dry-run before an
+actual deployment. A successful dry-run checks packaging; it does not prove
+live provider delivery.
 
-At minimum, run the consumer's clean install, production build, production-only
-dependency audit, and hosting dry-run. A dry-run is not authorization to deploy.
+## What belongs in the package?
 
-## Current restrictions
+The package includes TypeScript source, user docs, release notes and standard
+package metadata. It is loaded by Astro's build pipeline; directly importing it
+from plain Node.js 22 is outside the supported usage.
 
-`main` is the authoritative integrated development branch. Short-lived working
-branches may be used for bounded changes, but they must be merged or otherwise
-integrated deliberately and removed when their work is complete; a permanent
-Codex development branch is not part of the release model. Tags, GitHub Releases,
-npm publication, and production package integration are separate release
-activities.
+Keep tests, local websites, credentials and internal handoff records out of the
+tarball. A source test passing is useful, but it does not replace building the
+exact package in a consumer site or checking provider-side results.
 
-Version choice and artifact qualification are separate from release authority.
-See [Versioning and releases](/analytics-for-astro/versioning-and-releases/).
+## Report a useful issue
+
+Include the package version, Node/Astro/Starlight versions, provider name,
+relevant configuration with sensitive values removed, reproduction steps,
+expected behavior and actual browser errors. Say whether the result was seen
+in a local build, a deployed site or a provider dashboard. A short reproducible
+example is more helpful than repeated dashboard screenshots without context.

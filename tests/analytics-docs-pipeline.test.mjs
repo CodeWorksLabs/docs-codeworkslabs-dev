@@ -6,6 +6,8 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import test from "node:test";
 
+import { rewriteLinks } from "../scripts/analytics-docs-links.mjs";
+
 const siteRoot = process.cwd();
 const verifier = path.join(siteRoot, "scripts/sync-analytics-for-astro-docs.mjs");
 const manifestName = "analytics-docs-source.json";
@@ -93,4 +95,11 @@ test("fixture contains exactly the eleven generated files claimed by the manifes
   const claimed = manifest.files.map(({ path: filePath }) => path.basename(filePath)).sort();
   assert.equal(names.length, 11);
   assert.deepEqual(names, claimed);
+});
+
+test("published links retain task-guide anchors and source-relative routes", () => {
+  assert.equal(rewriteLinks("[Install](getting-started.md#1-install-the-package)"), "[Install](/analytics-for-astro/getting-started/#1-install-the-package)");
+  assert.equal(rewriteLinks("[Versions](docs/versioning-and-releases.md)"), "[Versions](/analytics-for-astro/versioning-and-releases/)");
+  assert.equal(rewriteLinks("[Changes](../CHANGELOG.md#earlier-alpha-development)"), "[Changes](/analytics-for-astro/release-notes/#earlier-alpha-development)");
+  assert.equal(rewriteLinks("[External](https://example.com/guide.md#intro)"), "[External](https://example.com/guide.md#intro)");
 });

@@ -1,52 +1,52 @@
 {
   "repository": "CodeWorksLabs/astro-analytics",
-  "ref": "725ea10b4a839e2f5a8c2959edb0c04481cbbc94",
-  "commit": "725ea10b4a839e2f5a8c2959edb0c04481cbbc94",
+  "ref": "e72e7052ad56fc473e97cfbb616afff8b9c0569e",
+  "commit": "e72e7052ad56fc473e97cfbb616afff8b9c0569e",
   "version": "0.1.0-alpha.25",
   "files": [
     {
       "path": "src/content/docs/analytics-for-astro/index.md",
-      "sha256": "54983d08bae2f35d01f238890cd04f70bd76506d4b0e83efd273030086fa0cd4"
+      "sha256": "fe8b0209c3be80fde52088418fe4fe5e763c26236b79a7ad5704205628a838a3"
     },
     {
       "path": "src/content/docs/analytics-for-astro/getting-started.md",
-      "sha256": "898661c63eb712e688adda915a1e0d9da51b7a00659821bdafa99ef6e9d668e6"
+      "sha256": "4734ee1b873b5dcd64fe1868aa66eca2b05c507928398124e706ccc4a909964a"
     },
     {
       "path": "src/content/docs/analytics-for-astro/configuration.md",
-      "sha256": "02d49dd0ff50e125b67c5d1097b791520b22f001414d0ff75de71f0388052750"
+      "sha256": "5862c86168c22c466a9ce6207597407e927ae0c676807a7cef283593177bab72"
     },
     {
       "path": "src/content/docs/analytics-for-astro/api-reference.md",
-      "sha256": "83f082e71483d39c7f003a4322c5064bba1dea272ff098f916c8ee6716c60db2"
+      "sha256": "081c84aecb08c9a2fa46cafb815e7f3506cc0544a754340cde89a3dbdcdddbaf"
     },
     {
       "path": "src/content/docs/analytics-for-astro/events.md",
-      "sha256": "04bd22282dba71dc2b92a22d941c681f3fb73811e8376ae9a8f37efd2e3550b0"
+      "sha256": "77589cab0f4aadee03bcef30a6e9443ec6825cbbe3cf71eb61a329d5e5c9c63d"
     },
     {
       "path": "src/content/docs/analytics-for-astro/verification-and-troubleshooting.md",
-      "sha256": "4fbad2cad58e4c0bc471c25796f70fb0a9f1f009afe8d4051eba14458e8c8380"
+      "sha256": "0737561d4879fd7d72a7facb86c88d858c0d82213922873fe794ffb88e629785"
     },
     {
       "path": "src/content/docs/analytics-for-astro/starlight.md",
-      "sha256": "4af6c1b4d147be202924591e3a165d7924198d67ae53df72db5e727fe5310fe5"
+      "sha256": "ce832381755f8ccc8b55979938664f8bf5eba9661509c544ead994de51543923"
     },
     {
       "path": "src/content/docs/analytics-for-astro/runtime-and-safety.md",
-      "sha256": "f9e4490e2d2cd63c943ac75afecfa0cc57f0458e87ae60530c6349645fabd44a"
+      "sha256": "c6874a4986046cadb5ab8de31ab174fe399eaf4339c3802fd3c0dec6ba1692d8"
     },
     {
       "path": "src/content/docs/analytics-for-astro/development.md",
-      "sha256": "8b8dde623b0f0436e9a5307c5e7eb2edd46fca10bfbe1c0c77ade27d8f11f267"
+      "sha256": "27322a312d41b31b79ae661f01076c9af03ee91bd06f2839d608986fc4ace359"
     },
     {
       "path": "src/content/docs/analytics-for-astro/versioning-and-releases.md",
-      "sha256": "08eb6a0a9fd2f35780b7e8d434449e2c0dad36e5bda5f90cdca92690ab33649a"
+      "sha256": "57d34491dd352c5f32371bce9dbd126da3c1a4fd9b770dc689358368d0f86512"
     },
     {
       "path": "src/content/docs/analytics-for-astro/release-notes.md",
-      "sha256": "57d67b091d29f45409bbe70d3d69adcc7f40851c4ddf34b88bcb9fef452fc6e8"
+      "sha256": "52563ad00113045338925a479567befc87db13781bf7099d4c8ca5f420f57662"
     }
   ]
 }
