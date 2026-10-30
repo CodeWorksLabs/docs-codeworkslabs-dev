@@ -60,15 +60,17 @@ async function expectRejected(mutator, messagePattern) {
 
 test("ordinary build is offline and leaves Brand Navigation committed inputs unchanged", { timeout: 120_000 }, async () => {
   const before = await estateSnapshot();
-  const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
+  const npmCli = process.env.npm_execpath;
+  const npmCommand = npmCli ? process.execPath : process.platform === "win32" ? "npm.cmd" : "npm";
+  const npmArgs = npmCli ? [npmCli, "run", "build"] : ["run", "build"];
   const existingNodeOptions = process.env.NODE_OPTIONS ? `${process.env.NODE_OPTIONS} ` : "";
-  const result = spawnSync(npmCommand, ["run", "build"], {
+  const result = spawnSync(npmCommand, npmArgs, {
     cwd: siteRoot,
     encoding: "utf8",
-    shell: process.platform === "win32",
+    shell: !npmCli && process.platform === "win32",
     env: {
       ...process.env,
-      NODE_OPTIONS: `${existingNodeOptions}--require=${denyNetwork}`,
+      NODE_OPTIONS: `${existingNodeOptions}--require=${JSON.stringify(denyNetwork)}`,
     },
     timeout: 120_000,
   });

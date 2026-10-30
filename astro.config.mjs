@@ -1,3 +1,5 @@
+import { starlightAnalytics } from '@codeworkslabs/astro-analytics/starlight';
+import { analyticsOptions } from './analytics.config.mjs';
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
@@ -5,6 +7,7 @@ export default defineConfig({
   site: "https://docs.codeworkslabs.dev",
   integrations: [
     starlight({
+      plugins: [starlightAnalytics(analyticsOptions)],
       title: "CodeWorksLabs Docs",
       favicon: "/favicon.png",
       lastUpdated: true,
@@ -22,8 +25,6 @@ export default defineConfig({
         { tag: "meta", attrs: { name: "twitter:card", content: "summary_large_image" } },
         { tag: "meta", attrs: { name: "twitter:image", content: "https://docs.codeworkslabs.dev/media/codeworkslabs-systems-768.png" } },
         { tag: "meta", attrs: { name: "twitter:image:alt", content: "Abstract CodeWorksLabs artwork depicting connected systems and product architecture." } },
-        { tag: "script", attrs: { async: true, src: "https://www.googletagmanager.com/gtag/js?id=G-GVB6HKL9PR" } },
-        { tag: "script", content: "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-GVB6HKL9PR');" },
       ],
       social: [
         { icon: "blueSky", label: "CodeWorksLabs on Bluesky", href: "https://bsky.app/profile/codeworkslabs.bsky.social" },

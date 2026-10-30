@@ -1,0 +1,43 @@
+---
+interface Props { eventName: string; }
+const { eventName } = Astro.props;
+---
+<section class="analytics-trial" data-event-name={eventName}>
+  <h2>Try a real analytics event</h2>
+  <p>This page records a normal pageview. The button sends one named event to our five configured analytics providers. No personal information is requested.</p>
+  <button type="button" class="send-event">Send trial event</button>
+  <p class="event-status" role="status">Ready when you are.</p>
+  <ul class="provider-results" aria-label="Provider event results"></ul>
+  <p>“Accepted” means the browser handed the event to that provider’s tracker. Its dashboard is the place to confirm that the event was received.</p>
+  <p><a href="/analytics-trial/next/">Continue to the next page →</a></p>
+</section>
+<script>
+  import { track } from '@codeworkslabs/astro-analytics/client';
+  const labels: Record<string, string> = {
+    fathom: 'Fathom', plausible: 'Plausible', 'google-analytics': 'Google Analytics 4', matomo: 'Matomo', umami: 'Umami',
+  };
+  for (const panel of document.querySelectorAll<HTMLElement>('.analytics-trial')) {
+    const button = panel.querySelector<HTMLButtonElement>('.send-event');
+    const status = panel.querySelector<HTMLElement>('.event-status');
+    const results = panel.querySelector<HTMLUListElement>('.provider-results');
+    button?.addEventListener('click', () => {
+      const name = panel.dataset.eventName;
+      if (!name || !status || !results) return;
+      const response = track(name, { action: 'trial', hostname: window.location.hostname });
+      results.replaceChildren();
+      for (const [provider, result] of Object.entries(response.providers)) {
+        const item = document.createElement('li');
+        item.textContent = result?.ok
+          ? `${labels[provider] ?? provider} accepted the event.`
+          : `${labels[provider] ?? provider}: ${result?.reason ?? 'not available'}.`;
+        results.append(item);
+      }
+      status.textContent = response.ok ? `Sent ${name}.` : 'Some trackers could not accept the event. Check the results below.';
+    });
+  }
+</script>
+<style>
+  .analytics-trial { max-width: 48rem; margin: 2rem auto; padding: 1.5rem; border: 1px solid currentColor; border-radius: .75rem; }
+  button { font: inherit; padding: .6rem 1rem; cursor: pointer; }
+  p, li { line-height: 1.6; }
+</style>
