@@ -4,7 +4,7 @@ description: Requirements and setup for the commit-pinned Analytics for Astro ca
 editUrl: false
 ---
 
-Analytics for Astro is currently `0.1.0-alpha.20` and is not published to npm.
+Analytics for Astro is currently `0.1.0-alpha.25` and is not published to npm.
 Use an authorized local package artifact or workspace dependency.
 
 ## Requirements
@@ -49,16 +49,27 @@ analytics({
 ## Use the client helper
 
 ```ts
-import { configuredProviders, providerStatuses, track }
+import { configuredProviders, consentStatuses, providerStatuses, setConsent, track }
   from "@codeworkslabs/astro-analytics/client";
 
+// Invoke after the site has obtained the visitor's grant.
+setConsent("granted");
 const result = track("purchase", { value: 25 });
 console.log(result.providers);
-console.log(configuredProviders(), providerStatuses());
+console.log(configuredProviders(), consentStatuses(), providerStatuses());
 ```
 
 Before an adapter is ready, its result is `adapter-not-loaded`. Deferred and
-external consent configurations return `consent-pending` and load no vendor.
+external consent configurations return `consent-pending` and load no vendor
+until `setConsent("granted")`; denial before grant remains zero-load.
+
+For ordinary GA4 setup, provide the Measurement ID and leave `pageviews` at its
+default `"provider"`; Google owns its normal config and Enhanced Measurement
+pageviews. Select `pageviews: "astro"` only when the site deliberately wants
+manual Astro lifecycle ownership and has disabled GA history-based page changes.
+That mode requires `historyPageviewsDisabled: true` as an explicit operator
+assertion; the package cannot inspect the provider setting. GA4 `none` is not
+supported. Use `providers: false` for completely disabled analytics.
 
 ## Self-hosted providers
 

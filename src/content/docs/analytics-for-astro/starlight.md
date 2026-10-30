@@ -40,9 +40,14 @@ core Analytics for Astro integration and does not override Starlight components.
 
 The same [configuration reference](/analytics-for-astro/configuration/) applies to Astro and
 Starlight.
+Use the shared [verification guide](/analytics-for-astro/verification-and-troubleshooting/) to
+check provider-side reporting, consent transitions and navigation separately.
 
-The current package loads Fathom, Plausible, immediate-consent Google Analytics 4, Matomo, or Umami
-and tracks Astro-lifecycle-owned pageviews in production output.
+The current package supports the same consent transitions and provider-specific
+pageview ownership in Starlight as in plain Astro. GA4 provider-owned pageviews
+remain the default; explicit Astro ownership follows Starlight's post-swap
+`astro:page-load` lifecycle. Deferred and external consent load no vendor until
+the shared client receives a grant.
 
 Matomo and Umami use this same wrapper and configuration contract. Umami's
 tracker attributes and browser runtime are injected by the core Astro

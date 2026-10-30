@@ -97,6 +97,7 @@ export default defineConfig({
                 { label: "Configuration", slug: "analytics-for-astro/configuration" },
                 { label: "API reference", slug: "analytics-for-astro/api-reference" },
                 { label: "Event client", slug: "analytics-for-astro/events" },
+                { label: "Verify tracking and troubleshoot", slug: "analytics-for-astro/verification-and-troubleshooting" },
                 { label: "Starlight", slug: "analytics-for-astro/starlight" },
                 { label: "Runtime and safety", slug: "analytics-for-astro/runtime-and-safety" },
                 { label: "Development and verification", slug: "analytics-for-astro/development" },

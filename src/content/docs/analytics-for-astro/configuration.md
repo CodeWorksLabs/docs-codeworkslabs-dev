@@ -18,8 +18,8 @@ current adapters.
 | `providers` | `false` or non-empty provider array | Required | `false` disables the integration; an array enables one or more independently reported providers |
 | `enabled` | `boolean` | `true` | Master integration switch |
 | `environments` | object | Production only | Selects Astro config-setup commands that may inject analytics |
-| `events` | `boolean` | `false` | `true` installs the package event client |
-| `blockedQueryParameters` | unique parameter-name array | `[]` | Suppresses the complete runtime on matching routes and screens provider-bound referrer context |
+| `events` | `boolean` | `false` | `true` enables custom-event dispatch; the client remains available for consent and status control |
+| `blockedQueryParameters` | unique parameter-name array | `[]` | Defers first provider activation on matching routes, suppresses package tracking dispatch there, and screens package-supplied referrer context |
 | `debug` | `boolean` | `false` | Reserved normalized setting; the current runtime emits no debug output |
 
 Only the listed keys are accepted.
@@ -32,11 +32,25 @@ independent and observable.
 
 `blockedQueryParameters` accepts at most 32 non-empty, unpadded names of at
 most 128 characters each. It is intended for one-time handoff tokens and other
-URL state that must never reach analytics providers. A matching current URL fails
-closed: no provider script, pageview adapter, or public event client is
-available on that route. Initial document-referrer context is screened by the
-same rule, including after a clean ClientRouter transition, so blocked identity
-cannot reach provider pageview or event payloads through a referrer fallback.
+URL state that must be excluded from this integration's tracking payloads. An
+initially blocked route prevents first provider activation/load by this
+integration. After activation on an allowed route, navigation to a blocked route
+suppresses further package-originated pageviews and custom events and defers
+provider activation. Already-loaded scripts, globals, adapters and the public
+client can remain present; adapter readiness does not mean tracking is permitted
+on the current route. Package-supplied document and virtual referrers are also
+screened, so a clean return does not forward the blocked URL through that context.
+
+These gates do not retract vendor code already executed or data already sent.
+They do not prove the absence of autonomous provider behavior or requests.
+
+GA4 provider-owned pageviews are intentionally incompatible with this boundary:
+once Enhanced Measurement owns browser-history tracking, the package cannot
+screen a client route before Google observes it. Configuration therefore rejects
+`blockedQueryParameters` together with GA4 `pageviews: "provider"`. Select
+`pageviews: "astro"` with `historyPageviewsDisabled: true` when this privacy
+boundary is required. This is an operator assertion, not a provider setting the
+package can verify. GA4 `none` is rejected.
 
 ## Environments
 
@@ -55,18 +69,43 @@ Injection becomes part of generated output; the flags are not runtime kill
 switches. In particular, `astro preview` serves an existing build and does not
 remove analytics that was included when that output was built.
 
+## Consent modes
+
+`immediate` authorizes package startup immediately. `deferred` and `external`
+implement the package's basic-consent boundary: the adapter records only local
+Astro route state and creates no vendor global, script, network-capable queue, or
+event dispatch until the site calls `setConsent("granted")`. Calling
+`setConsent("denied")` before grant keeps that zero-load state. A later grant
+starts every configured adapter without reloading the page, once the current
+route is allowed and navigation/prerender activation is complete.
+
+After a loaded provider is denied, the package stops its own events and manual
+pageviews. GA4 also receives `gtag("consent", "update", ...)`. Other providers
+do not expose one shared equivalent, so their already-executed code cannot be
+unloaded or prior transmissions retracted; their automatic pageviews remain
+disabled, and the package makes no later calls while denied. Regrant resumes
+from the most recently confirmed allowed route. The site owns persistence of
+the user's choice and must apply it on each new document.
+
+The coordinator retains the latest decision through provider errors and
+matching bootstrap re-entry for this document. Vendor notification failure
+cannot prevent local denial. Vendor recovery alone never resumes package calls.
+
 ## Pageview modes
 
 Every provider accepts an optional `pageviews` field:
 
 | Value | Intended ownership |
 | --- | --- |
-| `"provider"` | Package-owned pageviews after the applicable completed-page lifecycle; the default |
-| `"astro"` | Explicitly selects the same package-owned lifecycle |
-| `"none"` | No automatic pageviews |
+| `"provider"` | Provider-native ownership where the adapter supports it; the default. GA4 uses its normal config pageview and Enhanced Measurement history behavior |
+| `"astro"` | Package-owned pageviews after confirmed Astro/ClientRouter completion |
+| `"none"` | No package pageviews for non-GA providers; unsupported for GA4 |
 
-All three modes are implemented for Fathom, Plausible, Google Analytics 4, Matomo,
-and Umami.
+Providers are not behaviorally identical.
+For GA4, `"provider"` is native ownership and `"astro"` is manual ownership.
+Fathom, Plausible, Matomo, and Umami continue to disable their eager automation
+and use the package's confirmed-route lifecycle for both `"provider"` and
+`"astro"`; this avoids inventing unsupported native SPA guarantees.
 For Matomo, `"none"` still maintains the last completed Astro route's URL,
 title, and virtual-referrer context so custom events are attributed correctly;
 it never calls `trackPageView`.
@@ -102,23 +141,43 @@ analytics({
 | `consent.initial.analyticsStorage` | Required when `initial` is present; `"granted"` or `"denied"` |
 | Other initial consent fields | Optional `"granted"` or `"denied"` values |
 | `scriptSrc` | Optional absolute HTTPS URL without credentials; defaults to the GA4 gtag URL |
-| `config` | Optional plain record of strings, finite numbers, and booleans; `send_page_view` is always forced to `false` |
+| `config` | Optional plain record of strings, finite numbers, and booleans; `send_page_view` is rejected because `pageviews` owns that decision |
 | `pageviews` | Optional pageview mode; default `"provider"` |
+| `historyPageviewsDisabled` | Literal `true` required for GA4 Astro ownership; rejected with provider ownership. Operator assertion, not a setting verified by this package |
 
 With `consent.mode: "immediate"`, the adapter creates package-owned `gtag` and
-`dataLayer` globals, emits any configured consent default before `config`, and
-loads gtag.js. `deferred` and `external` fail closed as `consent-pending` until a
-future consent-transition API is implemented. When `initial` is supplied, set
-all four Consent Mode v2 storage fields to the site's actual policy.
+`dataLayer` globals, emits any configured Google consent default before
+`config`, and loads gtag.js. This is immediate or advanced Consent Mode behavior,
+not basic preauthorization blocking. `deferred` and `external` start pending and
+load no Google code or script until `setConsent("granted")`; that grant occurs
+without a reload. Later denial sends a Google Consent Mode update and blocks
+package event/manual-pageview dispatch. Google may still send consent-aware,
+cookieless measurements after a loaded tag is denied; already sent data cannot
+be withdrawn.
 
-The adapter always disables the config command's eager pageview and sends
-manual `page_view` events after Astro's post-swap `astro:page-load` signal. It
-includes the current location and title and carries the preceding virtual URL as
-the next pageview's referrer. Each observed completion remains distinct even
-when its URL matches the preceding completion. If the Astro page-load observer
-cannot be installed, GA4 remains not loaded. In the GA4 web stream, also disable **Page changes
-based on browser history events** under Enhanced Measurement; otherwise GA4 can
-send duplicate SPA pageviews independently of `send_page_view: false`.
+The default `pageviews: "provider"` leaves `send_page_view` at Google's normal
+default. The initial config pageview and Enhanced Measurement own subsequent
+history-based page changes; the package never adds manual `page_view` events in
+this mode. This is the ordinary Measurement-ID-only setup and requires no
+special GA Admin change. Because Google owns the route observation, package
+virtual-referrer and blocked-query guarantees do not apply to those native
+pageviews.
+
+`pageviews: "astro"` forces `send_page_view: false` and sends manual
+`page_view` events after `astro:page-load`, including the current location,
+title, and preceding allowed virtual URL. In this advanced mode, disable **Page
+changes based on browser history events** under GA4 Enhanced Measurement so the
+two owners are not combined, then set `historyPageviewsDisabled: true` to assert
+that prerequisite. The package cannot inspect GA Admin or enforce that setting.
+The overall **Enhanced measurement** switch may remain enabled; it is the
+specific history-change checkbox that must be off for Astro ownership. Other
+measurement options are separate operator choices. See the
+[verification guide](/analytics-for-astro/verification-and-troubleshooting/) for the saved-setting
+check and provider reporting procedure.
+GA4 `pageviews: "none"` is unsupported: `send_page_view: false` does not disable
+Enhanced Measurement history tracking. Events without any GA pageviews are not
+a supported guarantee. `providers: false` is the canonical fully-off state and
+injects no package runtime, provider script, global, request, event, or pageview.
 
 Custom events accept at most 25 properties. `send_to` is reserved and rejected
 in caller properties because the adapter supplies the configured Measurement ID.
@@ -149,8 +208,16 @@ The adapter calls `plausible.init()` before loading the script with
 `autoCapturePageviews: false`, the configured endpoint when present, and the
 configured localhost policy. Astro owns initial and client-navigation
 pageviews, including consecutive observed completions at the same URL. A missing
-Astro page-load observer keeps the adapter not loaded. Omit consent or use `immediate` to load Plausible; `deferred` and
-`external` fail closed until the shared consent controller is implemented.
+Astro page-load observer keeps the adapter not loaded. Omit consent or use
+`immediate` to load Plausible. `deferred` and `external` remain zero-load until
+the shared client receives a grant; withdrawal stops later package calls but
+cannot remove Plausible code that already executed.
+
+Plausible custom events need a matching **Custom event** goal in the correct
+site to appear as dashboard conversions. Use the exact `track()` event name,
+including case, spaces and underscores. Create the goal before testing and
+trigger a fresh event afterward. A missing goal does not imply failed delivery;
+see [provider-side verification](/analytics-for-astro/verification-and-troubleshooting/).
 
 ## Fathom
 
@@ -172,11 +239,9 @@ analytics({
 `siteId` is required and is trimmed. `scriptSrc` is optional and defaults to
 `https://cdn.usefathom.com/script.js`. `honorDnt` and `canonical` must be boolean.
 Consent, when present, contains only `mode`. Omit consent or use `immediate` to
-load Fathom. `deferred` and `external` fail closed: the vendor is not loaded and
-event calls return `consent-pending` because the package has no activation API.
-Consent mode is fixed before the first Fathom load attempt. A conflicting later
-bootstrap cannot retroactively cancel an already prepared vendor script and is
-therefore ignored; no runtime consent-transition API is provided.
+load Fathom. `deferred` and `external` create no vendor script until grant.
+Withdrawal stops later package pageview and event calls; it cannot retract data
+already accepted by Fathom.
 
 For Fathom, `honorDnt: true` emits `data-honor-dnt="true"` and
 `canonical: false` emits `data-canonical="false"`. The default
@@ -234,26 +299,25 @@ exact tracker URL and site ID and loads `matomo.js`. It deliberately omits Matom
 eager `trackPageView` call. After script readiness, Astro sends the initial and
 client-navigation pageviews with current URL and title plus the preceding
 virtual URL as referrer. The adapter does not enable Matomo's automatic link
-tracking. Completed navigation history is retained separately from a pending
-send and observed for the coordinator's full document lifetime, so delayed
-readiness, failed-loading intervals, or retry waits out an in-flight destination
-without losing a completed route or replaying a stale one. With
+tracking. While its provider runtime remains active, completed routes are
+observed separately from the pending send. Delayed readiness coalesces pending
+routes to the latest observed completion. With
 `pageviews: "none"`, the same completed-route context is applied for custom events
 without emitting automatic pageviews.
 
-The coordinator must successfully register its singleton Astro navigation
-observer before it starts Matomo. If that browser operation is temporarily
-unavailable, Matomo remains not loaded and a matching later bootstrap retries
-registration without adding duplicate listeners. Because navigation may have
-completed while no observer was available, setup then waits for the next actual
-Astro page-load event. That event supplies the current route; the adapter omits
-an invented edge and explicitly clears Matomo's referrer for that first route,
-preventing its own fallback to the potentially stale external document
-referrer. Later observed navigation restores ordinary virtual-referrer edges.
+Each provider runtime owns its navigation listeners; the shared client
+coordinator retains consent decisions, not a document-wide navigation history.
+A failed runtime removes its listeners and state. Matching re-entry therefore
+cannot reconstruct routes completed during that gap. When it establishes a
+route without a preceding observed route, it falls back to the allowed
+`document.referrer`, or an empty string if that referrer is absent or blocked.
+That can be the document's original external referrer rather than the last
+virtual route. Later observed completions use the preceding observed URL.
+Do not rely on recovery to reconstruct attribution across an unobserved gap.
 
-Immediate consent loads Matomo. Deferred and external modes fail closed without
-creating `_paq` or loading the tracker and report `consent-pending`; runtime
-consent activation is not part of the current contract.
+Immediate consent loads Matomo. Deferred and external modes create neither
+`_paq` nor the tracker script until grant. Withdrawal stops later package queue
+commands but cannot erase Matomo code or data already sent.
 
 ## Umami
 
@@ -300,11 +364,15 @@ superseded history is not replayed.
 Umami 3.2-or-later tracker. Earlier self-hosted trackers are not supported
 because they cannot provide the package's duplicate-pageview guarantee.
 
-Immediate consent loads Umami. Deferred and external modes fail closed without
-creating `window.umami` or loading the tracker and report `consent-pending`.
-The package accepts the vendor only when the configured script assigns the
-tracker during its own execution; unrelated or pre-existing globals cannot
-claim readiness.
+Immediate consent loads Umami. Deferred and external modes create neither a
+tracker script nor `window.umami` until grant. Withdrawal stops later package
+calls but cannot erase Umami code or data already sent.
+Initialization requires `window.umami` to be absent before script loading.
+After the configured script's load event, readiness checks that the current
+global has a `track` function. These timing and API-shape checks do not prove
+which script assigned that object or verify its collection host. Other
+same-origin code can assign the global during loading; keep initialization
+exclusive and trust the configured tracker script.
 
 Custom events use Umami's payload-factory form with the event name and data plus
 the last completed Astro route's URL, title, and referrer. This prevents the

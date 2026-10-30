@@ -87,10 +87,10 @@ test("verifier rejects extra, missing, tampered, reordered, mismatched, and malf
   ));
 });
 
-test("fixture contains exactly the ten generated files claimed by the manifest", async () => {
+test("fixture contains exactly the eleven generated files claimed by the manifest", async () => {
   const manifest = JSON.parse(await readFile(path.join(siteRoot, manifestName), "utf8"));
   const names = (await readdir(path.join(siteRoot, generatedDirectory))).sort();
   const claimed = manifest.files.map(({ path: filePath }) => path.basename(filePath)).sort();
-  assert.equal(names.length, 10);
+  assert.equal(names.length, 11);
   assert.deepEqual(names, claimed);
 });

@@ -76,11 +76,17 @@ import {
   EVENT_PROPERTY_KEY_MAX_LENGTH,
   EVENT_PROPERTY_STRING_MAX_LENGTH,
   configuredProviders,
+  consentStatuses,
   providerStatuses,
+  setConsent,
   track,
   type AstroAnalyticsClient,
+  type ConsentDecision,
+  type ConsentUpdateResult,
   type EventProperties,
   type ProviderName,
+  type ProviderConsentState,
+  type ProviderConsentStates,
   type ProviderRuntimeStatus,
   type ProviderRuntimeStatuses,
   type ProviderTrackFailureReason,
@@ -91,8 +97,8 @@ import {
 } from "@codeworkslabs/astro-analytics/client";
 ```
 
-`track()`, `configuredProviders()`, `providerStatuses()`, and the result types are described in the
-[event client guide](/analytics-for-astro/events/).
+`track()`, consent transitions, provider/status inspection, and the result types
+are described in the [event client guide](/analytics-for-astro/events/).
 The four constants are the numeric limits enforced by `track()` and may be used
 by forms or adapter code to mirror the package boundary.
 

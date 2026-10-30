@@ -11,15 +11,20 @@ bounded peer dependencies.
 
 ## Current version
 
-The repository currently identifies `0.1.0-alpha.20`. It is an unpublished
-development version with breaking contract cleanup:
+The repository currently identifies `0.1.0-alpha.25`. It is an unpublished
+development version with alpha-stage runtime contract changes:
 
 - `providers` is the sole provider configuration input;
 - `events` is boolean;
 - the public package exports only implemented configuration, client, and
-  Starlight contracts; and
-- all five provider runtimes use shared lifecycle, location, script, and event
-  infrastructure.
+  Starlight contracts;
+- all five provider runtimes use shared lifecycle, location, script, event, and
+  consent-transition infrastructure; and
+- GA4 provider-owned pageviews are the ordinary default, while manual
+  Astro-owned pageviews require an explicit unverified operator assertion; GA4
+  `none` is rejected; and
+- local authorization is retained across provider failure/re-entry, with
+  blocked-route gating on activation and fail-closed local withdrawal.
 
 The version in `package.json` identifies source intent. It does not prove an npm
 publication, Git tag, GitHub Release, deployment, or compatibility result.

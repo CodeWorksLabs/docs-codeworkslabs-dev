@@ -19,6 +19,12 @@ npm ci
 The lockfile pins the development verification environment, including Astro,
 Starlight, TypeScript, and Node type declarations.
 
+The current preparation gate uses Node 22.22.2, npm 11.12.1, Astro 7.3.3,
+Starlight 0.42.0 and TypeScript 5.9.3. These identify the source/typecheck
+environment, not proof that every version admitted by the peer ranges has
+been exercised in a clean consumer or native browser. Record those results
+separately against the exact artifact and consumer lockfile.
+
 ## Run the complete local source gate
 
 ```powershell

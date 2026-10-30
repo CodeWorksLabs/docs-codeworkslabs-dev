@@ -76,12 +76,35 @@ test("ordinary build is offline and leaves Brand Navigation committed inputs unc
   assert.deepEqual(await estateSnapshot(), before);
 });
 
+test("maintained-copy body edits preserve the imported provenance manifest", async () => {
+  const root = await fixture();
+  try {
+    const manifestPath = path.join(root, manifestFilename);
+    const manifestBytes = await readFile(manifestPath);
+    const manifest = JSON.parse(manifestBytes.toString("utf8"));
+    assert.equal(manifest.maintenanceMode, "docs-repository");
+    assert.match(manifest.members[0].importedPageSha256, /^[a-f0-9]{64}$/u);
+    const generated = path.join(root, members[0].generatedPath);
+    const original = await readFile(generated, "utf8");
+    const frontmatter = original.match(/^---\n[\s\S]*?\n---\n/u)?.[0];
+    assert.ok(frontmatter, "fixture must have frontmatter before the maintained body");
+    const edited = frontmatter + "\nMaintained body edit for qualification.\n" + original.slice(frontmatter.length);
+    assert.notEqual(edited, original);
+    await writeFile(generated, edited, "utf8");
+    const result = runVerifier(root);
+    assert.equal(result.status, 0, result.stdout + "\n" + result.stderr);
+    assert.deepEqual(await readFile(manifestPath), manifestBytes);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
 test("offline verifier rejects tampered, missing, extra, and mismatched members", async (t) => {
-  await t.test("tampered generated page", async () => {
+  await t.test("maintained-copy terminal source-notice tampering", async () => {
     await expectRejected(async (root) => {
       const target = path.join(root, members[0].generatedPath);
       await writeFile(target, `${await readFile(target, "utf8")}tampered\n`, "utf8");
-    }, /generated hash mismatch/u);
+    }, /Brand Navigation provenance wrapper mismatch/u);
   });
 
   await t.test("missing generated page", async () => {
@@ -107,7 +130,7 @@ test("offline verifier rejects tampered, missing, extra, and mismatched members"
     }, /manifest identity/u);
   });
 
-  await t.test("provenance mismatch even with a matching generated hash", async () => {
+  await t.test("maintained-copy provenance link tampering", async () => {
     await expectRejected(async (root) => {
       const generated = path.join(root, members[0].generatedPath);
       const content = (await readFile(generated, "utf8")).replace(
@@ -115,22 +138,14 @@ test("offline verifier rejects tampered, missing, extra, and mismatched members"
         "[Source elsewhere]",
       );
       await writeFile(generated, content, "utf8");
-      const manifestPath = path.join(root, manifestFilename);
-      const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
-      manifest.members[0].generatedSha256 = hash(content);
-      await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
     }, /provenance wrapper mismatch/u);
   });
 
-  await t.test("malformed UTF-8 even with a matching raw-byte hash", async () => {
+  await t.test("maintained-copy malformed UTF-8", async () => {
     await expectRejected(async (root) => {
       const generated = path.join(root, members[0].generatedPath);
       const bytes = Buffer.concat([await readFile(generated), Buffer.from([0xff])]);
       await writeFile(generated, bytes);
-      const manifestPath = path.join(root, manifestFilename);
-      const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
-      manifest.members[0].generatedSha256 = hash(bytes);
-      await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
     }, /Unable to read/u);
   });
 });

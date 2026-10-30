@@ -3,9 +3,9 @@ import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-const sourceRef = "ae6a9884e3cada297f11c641a90082f296380bcb";
-const expectedCommit = "ae6a9884e3cada297f11c641a90082f296380bcb";
-const expectedVersion = "0.1.0-alpha.20";
+const sourceRef = "725ea10b4a839e2f5a8c2959edb0c04481cbbc94";
+const expectedCommit = "725ea10b4a839e2f5a8c2959edb0c04481cbbc94";
+const expectedVersion = "0.1.0-alpha.25";
 const rootArgument = process.argv[2] === "--root" ? process.argv[3] : undefined;
 if (process.argv[2] === "--root" && !rootArgument) throw new Error("Verification root is required.");
 const siteRoot = rootArgument ?? process.cwd();
@@ -17,6 +17,7 @@ const expectedPagePaths = [
   "src/content/docs/analytics-for-astro/configuration.md",
   "src/content/docs/analytics-for-astro/api-reference.md",
   "src/content/docs/analytics-for-astro/events.md",
+  "src/content/docs/analytics-for-astro/verification-and-troubleshooting.md",
   "src/content/docs/analytics-for-astro/starlight.md",
   "src/content/docs/analytics-for-astro/runtime-and-safety.md",
   "src/content/docs/analytics-for-astro/development.md",
@@ -119,6 +120,13 @@ const pages = [
     target: "events.md",
     title: "Event client",
     description: "Bounded multi-provider custom events and exact result handling.",
+  },
+  {
+    source: "docs/verification-and-troubleshooting.md",
+    target: "verification-and-troubleshooting.md",
+    sourceTitle: "Verify tracking and diagnose missing data",
+    title: "Verify tracking and troubleshoot",
+    description: "Provider evidence, GA4 pageview ownership, Plausible goals and missing-event diagnosis.",
   },
   {
     source: "docs/starlight.md",

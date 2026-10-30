@@ -5,17 +5,17 @@ editUrl: false
 ---
 
 > **Pre-release documentation** · This public snapshot describes the commit-pinned
-> candidate `0.1.0-alpha.20` at product commit `ae6a9884e3cada297f11c641a90082f296380bcb`
+> candidate `0.1.0-alpha.25` at product commit `725ea10b4a839e2f5a8c2959edb0c04481cbbc94`
 > before any release tag. The package is not yet published to npm.
 
-These documents describe the npm-unpublished `0.1.0-alpha.20` source of
+These documents describe the npm-unpublished `0.1.0-alpha.25` source of
 `@codeworkslabs/astro-analytics`.
 
 The package provides Fathom, Plausible, Google Analytics 4, Matomo, and Umami
 adapters for completed-page lifecycle tracking and bounded custom events. It
 supports simultaneous providers, per-provider outcomes, blocked-query privacy,
-and a Starlight wrapper. It does not provide event queueing or runtime consent
-activation.
+runtime consent transitions, and a Starlight wrapper. It does not provide event
+queueing, a consent UI, or persistence of the site's consent decision.
 
 ## Guides
 
@@ -28,6 +28,7 @@ activation.
 7. [Development](/analytics-for-astro/development/)
 8. [Versioning and releases](/analytics-for-astro/versioning-and-releases/)
 9. [Changelog](/analytics-for-astro/release-notes/)
+10. [Verification and troubleshooting](/analytics-for-astro/verification-and-troubleshooting/)
 
 ## Package entry points
 

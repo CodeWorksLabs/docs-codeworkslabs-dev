@@ -9,8 +9,12 @@ Import the public event helper from the client entry point:
 ```ts
 import {
   configuredProviders,
+  consentStatuses,
   providerStatuses,
+  setConsent,
   track,
+  type ConsentDecision,
+  type ConsentUpdateResult,
   type EventProperties,
   type ProviderTrackFailureReason,
   type TrackResult,
@@ -42,10 +46,30 @@ runtime. It is intended for diagnostics and operator-facing test surfaces; it
 does not select or activate a provider.
 
 `providerStatuses()` returns an exact status for every configured provider:
-`ready`, `adapter-not-loaded`, or `consent-pending`. It performs no tracking and
-is the appropriate readiness signal for controls that must not fire probe
-events. Like `track()`, it is available only when `events: true` installs the
-shared browser client; pageview-only configurations return an empty status map.
+`ready`, `adapter-not-loaded`, `consent-pending`, or `consent-denied`. It
+performs no tracking and is the appropriate readiness signal for controls that
+must not fire probe events. The shared client is present for consent and status
+control even when `events` is false; `events: true` additionally permits
+`track()` dispatch.
+
+## Consent transitions
+
+```ts
+console.log(consentStatuses());
+const result = setConsent("granted");
+```
+
+`consentStatuses()` returns `pending`, `granted`, or `denied` for each provider.
+`setConsent("granted" | "denied")` applies one site decision to every configured
+adapter synchronously. Deferred and external providers load only after grant;
+denial before grant creates no provider script or global. Repeated decisions do
+not duplicate scripts or pageviews. Withdrawal blocks subsequent package calls;
+see [Runtime behavior](/analytics-for-astro/runtime-and-safety/) for provider-specific limits.
+
+The package does not persist the choice. A consent UI or CMP must store the
+decision and call `setConsent()` on each new document. The return value confirms
+that the local adapters accepted the transition, not that a provider deleted or
+withheld data already transmitted.
 
 ## Input limits
 
@@ -58,9 +82,10 @@ shared browser client; pageview-only configurations return an empty status map.
 | Number value | Must be finite |
 | Other values | Booleans are accepted; objects, arrays, `null`, symbols, and functions are rejected |
 
-Property bags must be ordinary or null-prototype records. Symbol-keyed property
-bags and branded objects such as `Map`, `Date`, `Set`, boxed primitives, and
-regular expressions are rejected.
+Property bags must be ordinary or null-prototype records containing only
+enumerable string-keyed data properties. Symbol-keyed, non-enumerable, and
+accessor properties are rejected, as are branded objects such as `Map`, `Date`,
+`Set`, boxed primitives, and regular expressions.
 
 ## Results
 
@@ -90,6 +115,7 @@ reason.
 | `disabled` | No usable browser client exists, including during SSR |
 | `adapter-not-loaded` | That provider API is not ready or its client boundary failed |
 | `consent-pending` | A provider is configured for deferred or external consent and is not loaded |
+| `consent-denied` | The site denied or withdrew package authorization for that provider |
 | `invalid-event` | The event name or properties failed validation |
 
 Input validation runs before environment and client lookup. Therefore,
@@ -109,10 +135,11 @@ provider's success.
 
 ## Browser global
 
-When configuration, environment policy, and `events: true` all permit injection,
-the bootstrap defines a frozen `window.astroAnalytics` client with a frozen,
-ordered `providers` list. The coordinator preserves its client across matching
-page bootstraps and leaves unrelated occupied globals unchanged.
+When configuration and environment policy permit injection, the bootstrap
+defines a frozen `window.astroAnalytics` client with a frozen, ordered
+`providers` list plus `consent()`, `setConsent()`, `status()`, and `track()`.
+The coordinator preserves its client across matching page bootstraps and leaves
+unrelated occupied globals unchanged.
 Provider adapters register independently, so one adapter cannot overwrite or
 suppress another by integration order. Direct calls to this declared public
 client receive the same event name and property validation as the imported
@@ -122,6 +149,11 @@ Fathom supports an optional monetary event value in cents. The adapter forwards
 only a non-negative safe-integer `_value` property. An invalid supplied `_value`
 returns `invalid-event`; other validated properties are not transmitted by this
 provider adapter.
+
+For provider-side confirmation, reporting setup and navigation timing, use the
+[verification and troubleshooting guide](/analytics-for-astro/verification-and-troubleshooting/).
+In particular, Plausible requires a matching custom-event goal for dashboard
+conversions; local adapter acceptance alone does not establish ingestion.
 
 Plausible receives validated properties as `props`; numeric and boolean values
 are serialized to strings to match its current tracker contract. Its current
