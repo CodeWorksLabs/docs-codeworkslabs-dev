@@ -9,9 +9,9 @@ Use this guide to work on the package itself. To add it to a website, follow
 
 ## Set up a checkout
 
-You need Node.js and npm, Git, and a checkout containing the candidate you are
-working on. The docs preview can be newer than the public repository, so ask
-the maintainer for the matching source when reproducing a preview issue.
+You need Node.js and npm, Git, and a checkout containing the version you are
+working on. To reproduce RC.1, check out the `v0.1.0-rc.1` tag in the public
+repository. Use a working branch for changes rather than editing the release tag.
 
 From the package repository root, install its locked dependencies and run its
 source checks:
@@ -25,7 +25,7 @@ npm run verify
 configuration, browser helpers, provider behavior, consent, navigation and the
 Astro/Starlight integration types.
 
-The Alpha.25 checks used Node 22.22.2, npm 11.12.1, Astro 7.3.3, Starlight 0.42.0
+The RC.1 checks used Node 22.22.2, npm 11.12.1, Astro 7.3.3, Starlight 0.42.0
 and TypeScript 5.9.3. These are tested versions, not a promise that every version
 in the peer ranges has been exercised.
 
@@ -66,7 +66,8 @@ platform-converted line endings. The repository uses LF for text. Keep the
 resulting tarball intact and record its checksum when sharing test results.
 
 Install it in a separate Astro site using the
-[tarball installation steps](/analytics-for-astro/getting-started/#1-install-the-package). Check a
+[installation steps](/analytics-for-astro/getting-started/#1-install-the-package), choosing the local
+tarball rather than the published package for your change. Check a
 plain Astro site and a Starlight site. For each site run its clean install,
 type checks, production build and production dependency audit. Test the real
 navigation and consent interactions described in the

@@ -4,9 +4,9 @@ import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { rewriteLinks } from "./analytics-docs-links.mjs";
 
-const sourceRef = "e72e7052ad56fc473e97cfbb616afff8b9c0569e";
-const expectedCommit = "e72e7052ad56fc473e97cfbb616afff8b9c0569e";
-const expectedVersion = "0.1.0-alpha.25";
+const sourceRef = "4bcd8623c46d5929b8901e7cb1942c7f3b7903bc";
+const expectedCommit = "4bcd8623c46d5929b8901e7cb1942c7f3b7903bc";
+const expectedVersion = "0.1.0-rc.1";
 const rootArgument = process.argv[2] === "--root" ? process.argv[3] : undefined;
 if (process.argv[2] === "--root" && !rootArgument) throw new Error("Verification root is required.");
 const siteRoot = rootArgument ?? process.cwd();

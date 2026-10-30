@@ -1,16 +1,16 @@
 {
   "repository": "CodeWorksLabs/astro-analytics",
-  "ref": "e72e7052ad56fc473e97cfbb616afff8b9c0569e",
-  "commit": "e72e7052ad56fc473e97cfbb616afff8b9c0569e",
-  "version": "0.1.0-alpha.25",
+  "ref": "4bcd8623c46d5929b8901e7cb1942c7f3b7903bc",
+  "commit": "4bcd8623c46d5929b8901e7cb1942c7f3b7903bc",
+  "version": "0.1.0-rc.1",
   "files": [
     {
       "path": "src/content/docs/analytics-for-astro/index.md",
-      "sha256": "fe8b0209c3be80fde52088418fe4fe5e763c26236b79a7ad5704205628a838a3"
+      "sha256": "3360f10b39d036cef249a1ad76a9640c36cd736a45dd60c82749deb4966b3592"
     },
     {
       "path": "src/content/docs/analytics-for-astro/getting-started.md",
-      "sha256": "4734ee1b873b5dcd64fe1868aa66eca2b05c507928398124e706ccc4a909964a"
+      "sha256": "7202e8bda7f7fecad2a0f132f511d091d9bd3bd5b2fa24cb39e131c43dcd5bd8"
     },
     {
       "path": "src/content/docs/analytics-for-astro/configuration.md",
@@ -38,15 +38,15 @@
     },
     {
       "path": "src/content/docs/analytics-for-astro/development.md",
-      "sha256": "27322a312d41b31b79ae661f01076c9af03ee91bd06f2839d608986fc4ace359"
+      "sha256": "ca5e4eb65d604d909af1913a84c8a135d24ba813873500501020731af704a88d"
     },
     {
       "path": "src/content/docs/analytics-for-astro/versioning-and-releases.md",
-      "sha256": "57d34491dd352c5f32371bce9dbd126da3c1a4fd9b770dc689358368d0f86512"
+      "sha256": "0fb9bab3730ce64eebcfebf156a2b61fc04d857b06da4d172c0b0f4d4a5e87a5"
     },
     {
       "path": "src/content/docs/analytics-for-astro/release-notes.md",
-      "sha256": "52563ad00113045338925a479567befc87db13781bf7099d4c8ca5f420f57662"
+      "sha256": "6d966ba0b53d900b4a7172cafee6bc153f56100b0a7d2bcdc74559056250b519"
     }
   ]
 }

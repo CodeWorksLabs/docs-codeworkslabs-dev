@@ -14,23 +14,23 @@ You need an Astro 7 site, Node.js 22.18 or later, and a Fathom site ID. Your Ast
 version may require a newer Node release. The package accepts Astro versions
 from 7.3.2 up to, but not including, 8.
 
-This preview is not available from the npm registry yet. Obtain a prerelease
-`.tgz` package from the maintainer before continuing. The public repository may
-lag this documentation preview; use the supplied package for this trial.
-See [Versions and availability](/analytics-for-astro/versioning-and-releases/).
+This guide uses RC.1. It is a release candidate for testing before the stable
+release; see [Versions and availability](/analytics-for-astro/versioning-and-releases/).
 
 ## 1. Install the package
 
-Put the supplied tarball in a `vendor` directory inside your site. From the
-directory containing your site's `package.json`, run:
+From the directory containing your site's `package.json`, install the exact
+release candidate:
 
 ```sh
-npm install ./vendor/codeworkslabs-astro-analytics-0.1.0-alpha.25.tgz
+npm install @codeworkslabs/astro-analytics@0.1.0-rc.1
 ```
 
-Use the actual filename if your supplied package has a different name. Keep the
-tarball, `package.json` and `package-lock.json` in your site's repository so a
-clean checkout can install the same package. The examples below assume npm.
+Commit the updated `package.json` and `package-lock.json` so a clean checkout can
+install the same version. These examples use npm. If your site intentionally
+vendors packages, download the `.tgz` from the
+[RC.1 release](https://github.com/CodeWorksLabs/astro-analytics/releases/tag/v0.1.0-rc.1),
+keep it under `vendor`, and run `npm install ./vendor/codeworkslabs-astro-analytics-0.1.0-rc.1.tgz` instead.
 
 ## 2. Connect Fathom
 
