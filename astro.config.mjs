@@ -111,7 +111,7 @@ export default defineConfig({
         },
       ],
       editLink: {
-        baseUrl: "https://github.com/CodeWorksLabs/brand-navigation/edit/main/",
+        baseUrl: "https://github.com/CodeWorksLabs/docs-codeworkslabs-dev/edit/main/",
       },
     }),
   ],

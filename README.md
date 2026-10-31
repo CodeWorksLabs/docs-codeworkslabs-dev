@@ -15,11 +15,16 @@ npm run test:astro-analytics-docs
 npm run test:brand-navigation
 npm run check
 npm run build
+npm run test:edit-links
 git diff --exit-code
 npm run deploy:dry-run
 ```
 
 The dry run does not publish. Deployment is deliberately separate and requires explicit authorization.
+
+`test:edit-links` checks the built HTML, so run it after `build`. Local pages
+inherit the docs repository edit URL. Explicit page `editUrl` overrides and
+`editUrl: false` remain authoritative for maintained copies and generated mirrors.
 
 ## Brand Navigation mirror
 

@@ -25,5 +25,6 @@ jobs:
       - run: npm run test:brand-navigation
       - run: npm run check
       - run: npm run build
+      - run: npm run test:edit-links
       - run: git diff --exit-code
       - run: npm run deploy:dry-run
