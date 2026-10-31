@@ -1,7 +1,7 @@
 ---
 title: API reference
 description: Public package entry points, exports, and browser helpers.
-editUrl: false
+editUrl: https://github.com/CodeWorksLabs/astro-analytics/edit/main/docs/api-reference.md
 ---
 
 Use the main entry point in your Astro configuration, the client entry point in

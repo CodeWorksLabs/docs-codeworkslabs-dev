@@ -7,6 +7,7 @@ import { rewriteLinks } from "./analytics-docs-links.mjs";
 const sourceRef = "0f1a4f5ac5e567c37a7ac2fcd8c82ce08dc6a9d6";
 const expectedCommit = "0f1a4f5ac5e567c37a7ac2fcd8c82ce08dc6a9d6";
 const expectedVersion = "0.1.0";
+const editBaseUrl = "https://github.com/CodeWorksLabs/astro-analytics/edit/main/";
 const rootArgument = process.argv[2] === "--root" ? process.argv[3] : undefined;
 if (process.argv[2] === "--root" && !rootArgument) throw new Error("Verification root is required.");
 const siteRoot = rootArgument ?? process.cwd();
@@ -24,6 +25,19 @@ const expectedPagePaths = [
   "src/content/docs/analytics-for-astro/development.md",
   "src/content/docs/analytics-for-astro/versioning-and-releases.md",
   "src/content/docs/analytics-for-astro/release-notes.md",
+];
+const expectedSourcePaths = [
+  "docs/README.md",
+  "docs/getting-started.md",
+  "docs/configuration.md",
+  "docs/api-reference.md",
+  "docs/events.md",
+  "docs/verification-and-troubleshooting.md",
+  "docs/starlight.md",
+  "docs/runtime-and-safety.md",
+  "docs/development.md",
+  "docs/versioning-and-releases.md",
+  "CHANGELOG.md",
 ];
 const targetRoot = join(siteRoot, "src", "content", "docs", "analytics-for-astro");
 
@@ -51,6 +65,11 @@ if (!suppliedSourceRoot) {
     const content = readFileSync(join(siteRoot, file.path));
     const sha256 = createHash("sha256").update(content).digest("hex");
     if (sha256 !== file.sha256) throw new Error(`Analytics documentation drift: ${file.path}`);
+    const frontmatter = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/u.exec(content.toString("utf8"));
+    const editFields = frontmatter?.[1].split(/\r?\n/u).filter((line) => /^\s*editUrl\s*:/u.test(line)) ?? [];
+    if (editFields.length !== 1 || editFields[0] !== `editUrl: ${editBaseUrl}${expectedSourcePaths[index]}`) {
+      throw new Error(`Analytics documentation edit URL is invalid: ${file.path}`);
+    }
   }
   console.log(`Verified ${manifest.files.length} Analytics for Astro pages from ${sourceRef}.`);
   process.exit(0);
@@ -183,7 +202,7 @@ for (const page of pages) {
     "---",
     `title: ${page.title}`,
     `description: ${page.description}`,
-    "editUrl: false",
+    `editUrl: ${editBaseUrl}${page.source}`,
     "---",
     "",
     "",

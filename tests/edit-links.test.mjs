@@ -54,14 +54,29 @@ for (const route of [
   "",
   "astro-analytics/",
   "astro-bluesky-comments/",
-  "analytics-for-astro/",
-  ...[
-    "getting-started", "configuration", "api-reference", "events",
-    "verification-and-troubleshooting", "starlight", "runtime-and-safety",
-    "development", "versioning-and-releases", "release-notes",
-  ].map((slug) => `analytics-for-astro/${slug}/`),
 ]) {
   test(`${route || "/"} keeps editing disabled by frontmatter`, async () => {
     assert.deepEqual(editLinks(await builtPage(route)), []);
+  });
+}
+
+for (const [slug, sourcePath] of [
+  ["", "docs/README.md"],
+  ["getting-started", "docs/getting-started.md"],
+  ["configuration", "docs/configuration.md"],
+  ["api-reference", "docs/api-reference.md"],
+  ["events", "docs/events.md"],
+  ["verification-and-troubleshooting", "docs/verification-and-troubleshooting.md"],
+  ["starlight", "docs/starlight.md"],
+  ["runtime-and-safety", "docs/runtime-and-safety.md"],
+  ["development", "docs/development.md"],
+  ["versioning-and-releases", "docs/versioning-and-releases.md"],
+  ["release-notes", "CHANGELOG.md"],
+]) {
+  const route = `analytics-for-astro/${slug ? `${slug}/` : ""}`;
+  test(`${route} edits its exact upstream Analytics source`, async () => {
+    assert.deepEqual(editLinks(await builtPage(route)), [
+      `https://github.com/CodeWorksLabs/astro-analytics/edit/main/${sourcePath}`,
+    ]);
   });
 }

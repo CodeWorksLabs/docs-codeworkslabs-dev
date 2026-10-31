@@ -1,7 +1,7 @@
 ---
 title: Analytics for Astro
 description: Configure privacy-conscious, multi-provider analytics for Astro and Starlight.
-editUrl: false
+editUrl: https://github.com/CodeWorksLabs/astro-analytics/edit/main/docs/README.md
 ---
 
 Connect your Astro website to Fathom, Plausible, Google Analytics 4, Matomo or

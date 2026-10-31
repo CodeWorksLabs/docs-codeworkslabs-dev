@@ -1,7 +1,7 @@
 ---
 title: Contributing and testing
 description: Set up a checkout, run tests and try your changes in a website.
-editUrl: false
+editUrl: https://github.com/CodeWorksLabs/astro-analytics/edit/main/docs/development.md
 ---
 
 Use this guide to work on the package itself. To add it to a website, follow

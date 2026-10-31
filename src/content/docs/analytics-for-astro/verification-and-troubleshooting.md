@@ -1,7 +1,7 @@
 ---
 title: Verify tracking and troubleshoot
 description: Provider evidence, GA4 pageview ownership, Plausible goals and missing-event diagnosis.
-editUrl: false
+editUrl: https://github.com/CodeWorksLabs/astro-analytics/edit/main/docs/verification-and-troubleshooting.md
 ---
 
 A working installation should show the pages you visit and the custom events

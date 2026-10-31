@@ -1,7 +1,7 @@
 ---
 title: Versions and availability
 description: Check package availability, supported versions and upgrade steps.
-editUrl: false
+editUrl: https://github.com/CodeWorksLabs/astro-analytics/edit/main/docs/versioning-and-releases.md
 ---
 
 ## Current availability

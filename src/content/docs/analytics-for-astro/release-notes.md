@@ -1,7 +1,7 @@
 ---
 title: Release notes
 description: Changes and upgrade notes for Analytics for Astro.
-editUrl: false
+editUrl: https://github.com/CodeWorksLabs/astro-analytics/edit/main/CHANGELOG.md
 ---
 
 This page records changes to Analytics for Astro. For installation and current

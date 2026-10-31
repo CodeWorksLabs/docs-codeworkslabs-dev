@@ -1,7 +1,7 @@
 ---
 title: Custom events
 description: Track button clicks and other actions, and understand each provider result.
-editUrl: false
+editUrl: https://github.com/CodeWorksLabs/astro-analytics/edit/main/docs/events.md
 ---
 
 Use custom events to measure actions a pageview does not explain: a signup, a

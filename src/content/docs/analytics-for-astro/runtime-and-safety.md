@@ -1,7 +1,7 @@
 ---
 title: Pageviews and privacy
 description: Understand pageviews, add consent controls and exclude sensitive URLs.
-editUrl: false
+editUrl: https://github.com/CodeWorksLabs/astro-analytics/edit/main/docs/runtime-and-safety.md
 ---
 
 This guide explains when tracking starts, how to connect a consent interface,

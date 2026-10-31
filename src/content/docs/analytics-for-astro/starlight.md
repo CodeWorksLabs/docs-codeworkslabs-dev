@@ -1,7 +1,7 @@
 ---
 title: Starlight integration
 description: Add Analytics for Astro through Starlight's plugin interface.
-editUrl: false
+editUrl: https://github.com/CodeWorksLabs/astro-analytics/edit/main/docs/starlight.md
 ---
 
 Add analytics to a Starlight documentation site through its `plugins` array.

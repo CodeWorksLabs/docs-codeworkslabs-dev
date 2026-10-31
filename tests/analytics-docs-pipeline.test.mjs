@@ -97,6 +97,50 @@ test("fixture contains exactly the eleven generated files claimed by the manifes
   assert.deepEqual(names, claimed);
 });
 
+test("every generated page declares its canonical upstream Edit page URL", async () => {
+  for (const [filename, sourcePath] of [
+    ["index.md", "docs/README.md"],
+    ["getting-started.md", "docs/getting-started.md"],
+    ["configuration.md", "docs/configuration.md"],
+    ["api-reference.md", "docs/api-reference.md"],
+    ["events.md", "docs/events.md"],
+    ["verification-and-troubleshooting.md", "docs/verification-and-troubleshooting.md"],
+    ["starlight.md", "docs/starlight.md"],
+    ["runtime-and-safety.md", "docs/runtime-and-safety.md"],
+    ["development.md", "docs/development.md"],
+    ["versioning-and-releases.md", "docs/versioning-and-releases.md"],
+    ["release-notes.md", "CHANGELOG.md"],
+  ]) {
+    const page = await readFile(path.join(siteRoot, generatedDirectory, filename), "utf8");
+    const header = /^---\n([\s\S]*?)\n---\n/u.exec(page);
+    assert.ok(header, filename);
+    assert.deepEqual(header[1].split("\n").filter((line) => /^\s*editUrl\s*:/u.test(line)), [
+      `editUrl: https://github.com/CodeWorksLabs/astro-analytics/edit/main/${sourcePath}`,
+    ], filename);
+  }
+});
+
+test("verifier rejects wrong edit destinations even with matching manifest hashes", async (t) => {
+  for (const [name, replacement] of [
+    ["disabled editing", "editUrl: false"],
+    ["wrong repository", "editUrl: https://github.com/CodeWorksLabs/brand-navigation/edit/main/docs/README.md"],
+    ["wrong source filename", "editUrl: https://github.com/CodeWorksLabs/astro-analytics/edit/main/docs/index.md"],
+    ["pinned non-editable source view", "editUrl: https://github.com/CodeWorksLabs/astro-analytics/blob/main/docs/README.md"],
+    ["missing edit field", ""],
+    ["duplicate edit field", "editUrl: https://github.com/CodeWorksLabs/astro-analytics/edit/main/docs/README.md\neditUrl: false"],
+  ]) {
+    await t.test(name, () => expectRejected(async (root) => {
+      const pagePath = path.join(root, generatedDirectory, "index.md");
+      const page = (await readFile(pagePath, "utf8")).replace(/^editUrl: .*$/mu, replacement);
+      await writeFile(pagePath, page);
+      const manifestPath = path.join(root, manifestName);
+      const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+      manifest.files[0].sha256 = hash(page);
+      await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+    }, /documentation edit URL is invalid/));
+  }
+});
+
 test("published links retain task-guide anchors and source-relative routes", () => {
   assert.equal(rewriteLinks("[Install](getting-started.md#1-install-the-package)"), "[Install](/analytics-for-astro/getting-started/#1-install-the-package)");
   assert.equal(rewriteLinks("[Versions](docs/versioning-and-releases.md)"), "[Versions](/analytics-for-astro/versioning-and-releases/)");

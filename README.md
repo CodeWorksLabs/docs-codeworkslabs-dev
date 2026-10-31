@@ -24,7 +24,12 @@ The dry run does not publish. Deployment is deliberately separate and requires e
 
 `test:edit-links` checks the built HTML, so run it after `build`. Local pages
 inherit the docs repository edit URL. Explicit page `editUrl` overrides and
-`editUrl: false` remain authoritative for maintained copies and generated mirrors.
+`editUrl: false` remain authoritative for pages which deliberately disable editing.
+The Analytics exporter emits ordinary Starlight `editUrl` frontmatter pointing
+to each page's canonical source in `CodeWorksLabs/astro-analytics` on `main`.
+The landing page edits `docs/README.md`; release notes edit `CHANGELOG.md`.
+Imported content remains pinned to the manifest's release commit; Edit page
+targets the maintained branch so changes can be proposed for the next release.
 
 ## Brand Navigation mirror
 

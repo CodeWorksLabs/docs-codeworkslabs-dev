@@ -1,7 +1,7 @@
 ---
 title: Getting started
 description: Install the package, connect a provider and check your first pageview.
-editUrl: false
+editUrl: https://github.com/CodeWorksLabs/astro-analytics/edit/main/docs/getting-started.md
 ---
 
 This guide adds pageview tracking to an existing Astro site using Fathom. You

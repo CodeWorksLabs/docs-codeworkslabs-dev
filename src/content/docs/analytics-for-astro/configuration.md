@@ -1,7 +1,7 @@
 ---
 title: Configuration reference
 description: Strict provider, environment, pageview, and consent configuration.
-editUrl: false
+editUrl: https://github.com/CodeWorksLabs/astro-analytics/edit/main/docs/configuration.md
 ---
 
 Choose your provider below and copy its example into `astro.config.mjs`. Replace
