@@ -6,15 +6,16 @@ editUrl: false
 
 ## Current availability
 
-The current release candidate is `@codeworkslabs/astro-analytics@0.1.0-rc.1`.
-Install it in your site with:
+The stable release is `@codeworkslabs/astro-analytics@0.1.0`. Install it in your
+site with:
 
 ```sh
-npm install @codeworkslabs/astro-analytics@0.1.0-rc.1
+npm install --save-exact @codeworkslabs/astro-analytics@0.1.0
 ```
 
-The npm distribution tag is `rc`. Pin the exact version for a reproducible
-trial. The [GitHub release](https://github.com/CodeWorksLabs/astro-analytics/releases/tag/v0.1.0-rc.1)
+The npm `latest` tag points to the stable release. Pinning the exact version
+and committing your lockfile makes later builds reproducible. The
+[GitHub release](https://github.com/CodeWorksLabs/astro-analytics/releases/tag/v0.1.0)
 also provides the package tarball and its checksum. See
 [Getting started](/analytics-for-astro/getting-started/) for the complete setup.
 
@@ -29,65 +30,64 @@ also provides the package tarball and its checksum. See
 
 Starlight is not required for plain Astro sites. Accepted ranges describe what
 the package allows; they do not mean every combination has been tested. The
-[contributor guide](/analytics-for-astro/development/) lists the versions used for the current
-source checks.
+[contributor guide](/analytics-for-astro/development/) lists the versions used for source checks.
 
 ## What the version means
 
-Analytics for Astro uses [Semantic Versioning](https://semver.org/). A suffix
-such as `alpha.25` identifies a prerelease. An `rc.1` suffix identifies a
-release candidate intended for final validation before the matching stable
-version. A preview's API can still change; read the release notes before upgrading.
+Analytics for Astro uses [Semantic Versioning](https://semver.org/). Version
+`0.1.0` is the first stable package release. It is still before `1.0.0`, so read
+the release notes for configuration changes before upgrading to a new minor
+version. Patch releases are intended for compatible fixes.
 
-After 1.0.0, patch versions are for compatible fixes, minor versions add
-compatible functionality, and major versions can change the public contract.
-Astro and Starlight compatibility is listed separately from the package version.
+A suffix such as `alpha.25` identifies a preview. An `rc.1` suffix identifies a
+release candidate for validation before the matching stable release. Preview
+APIs may change. Astro and Starlight compatibility is listed separately from
+the package version.
 
 ## Upgrade an existing installation
 
-1. Read the [release notes](/analytics-for-astro/release-notes/) for configuration or behavior changes.
-2. Run `npm install @codeworkslabs/astro-analytics@0.1.0-rc.1` in your site.
-3. If replacing a vendored alpha, remove its obsolete tarball only after checking
-   that nothing else references it and retaining your rollback copy.
+1. Read the [release notes](/analytics-for-astro/release-notes/).
+2. Run `npm install --save-exact @codeworkslabs/astro-analytics@0.1.0` in your site.
+3. If replacing a vendored alpha or release candidate, keep its rollback copy
+   and remove the obsolete tarball only after checking for other references.
 4. Commit the updated package and lock files together.
 5. Build and test before deploying. Confirm pageviews and custom events again.
 
-Keep the previous site revision and package available if you need to roll back.
-Do not reuse a published package version for different contents.
+RC.1 users do not need to change their configuration for 0.1.0. Early-alpha
+users should also check the migration notes in the changelog. Keep the previous
+site revision and package available for rollback. Published versions and
+release tags are never reused for different contents.
 
 ## For release maintainers
 
-Version numbers, source tags and package publication are separate steps. A
-release uses an immutable annotated Git tag `v<VERSION>` and a matching GitHub
-Release. An npm release, when published, uses that same version. Prereleases
-belong on a prerelease distribution tag rather than `latest`.
+Qualify the exact package tarball in both Astro and Starlight before publishing.
+Run source checks and consumer checks as described in
+[Development and verification](/analytics-for-astro/development/), then complete the provider
+checks in the [verification guide](/analytics-for-astro/verification-and-troubleshooting/).
 
-The package publishes publicly with the `rc` tag for this prerelease. Qualify the
-exact tarball in Astro and Starlight before publishing; see
-[Contributing and testing](/analytics-for-astro/development/).
+The version in `package.json`, the immutable annotated tag `v<VERSION>`, the
+GitHub Release and the npm package must agree. Publish the same tarball bytes
+you qualified, with an explicit distribution tag and access level.
 
-### Publish a release candidate safely
-
-Publish the exact tarball you qualified, using an explicit distribution tag and
-access level. From the directory containing that tarball, first check the command:
+For a stable release, first inspect a dry run:
 
 ```sh
-npm publish ./codeworkslabs-astro-analytics-0.1.0-rc.1.tgz --dry-run --tag rc --access public --ignore-scripts --registry=https://registry.npmjs.org/
+npm publish ./codeworkslabs-astro-analytics-0.1.0.tgz --dry-run --tag latest --access public --ignore-scripts --registry=https://registry.npmjs.org/
 ```
 
-Confirm that the output names the expected package, version and checksum and
-reports **tag rc** and **public access**. Then publish those same bytes:
+Confirm the package name, version, included files, checksum, **tag latest** and
+**public access**, then publish those same bytes:
 
 ```sh
-npm publish ./codeworkslabs-astro-analytics-0.1.0-rc.1.tgz --tag rc --access public --ignore-scripts --registry=https://registry.npmjs.org/
+npm publish ./codeworkslabs-astro-analytics-0.1.0.tgz --tag latest --access public --ignore-scripts --registry=https://registry.npmjs.org/
 ```
 
-Do not use a bare `npm publish` for a release candidate. The pinned npm CLI can
-select `latest` even when a package declares `publishConfig.tag`; that metadata
-is not a reliable safeguard. An unqualified dry-run that selects `latest` is an
-unsafe command, not approval to proceed. Always include the explicit flags above.
+For a release candidate, use its exact prerelease version and `--tag rc` in both
+commands. Other previews need an appropriate prerelease tag. Always pass the
+tag explicitly rather than relying on a default.
 
-After publishing, check the registry's package digest and distribution tags:
-`rc` must point to `0.1.0-rc.1`, and `latest` must not point to the release
-candidate. Confirm a registry installation works before publishing availability
-claims or rolling it out to sites.
+After publication, compare the registry's package integrity with the qualified
+tarball, confirm the distribution tags, and test a clean registry installation.
+For 0.1.0, `latest` must point to `0.1.0`; the older `rc` tag can continue to
+identify RC.1. Publish the matching GitHub Release and update the documentation
+from the released source commit before rolling the package out to sites.

@@ -7,6 +7,33 @@ editUrl: false
 This page records changes to Analytics for Astro. For installation and current
 availability, see [Versions and availability](/analytics-for-astro/versioning-and-releases/).
 
+## 0.1.0 — October 30, 2026
+
+The first stable release supports Fathom, Plausible, Google Analytics 4, Matomo
+and Umami on Astro and Starlight sites, individually or together.
+
+- Track pageviews on ordinary pages and Astro ClientRouter navigation.
+- Send custom events through one API, with a separate result for each provider.
+- Connect your own consent interface to grant, deny, withdraw or regrant tracking.
+- Follow complete setup, event, consent and troubleshooting examples.
+
+The runtime and configuration contract are unchanged from RC.1. Live trials
+confirmed pageviews and custom events with all five providers on plain Astro
+and Starlight sites. GA4 Astro-owned pageviews were verified with Enhanced
+Measurement off and on, keeping Google's history-change pageviews disabled.
+
+Install or upgrade with:
+
+```sh
+npm install --save-exact @codeworkslabs/astro-analytics@0.1.0
+```
+
+Rebuild and deploy your site, then confirm tracking in your provider dashboards.
+An accepted browser result is not a server-delivery guarantee. Consent UI and
+choice storage remain the site's responsibility; events are not queued or retried.
+See [Getting started](/analytics-for-astro/getting-started/) and
+[Versions and availability](/analytics-for-astro/versioning-and-releases/).
+
 ## 0.1.0-rc.1 — October 30, 2026
 
 The first release candidate brings the five provider integrations together with

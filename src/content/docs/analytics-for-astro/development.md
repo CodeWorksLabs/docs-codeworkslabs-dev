@@ -10,7 +10,7 @@ Use this guide to work on the package itself. To add it to a website, follow
 ## Set up a checkout
 
 You need Node.js and npm, Git, and a checkout containing the version you are
-working on. To reproduce RC.1, check out the `v0.1.0-rc.1` tag in the public
+working on. To reproduce 0.1.0, check out the `v0.1.0` tag in the public
 repository. Use a working branch for changes rather than editing the release tag.
 
 From the package repository root, install its locked dependencies and run its
@@ -25,9 +25,11 @@ npm run verify
 configuration, browser helpers, provider behavior, consent, navigation and the
 Astro/Starlight integration types.
 
-The RC.1 checks used Node 22.22.2, npm 11.12.1, Astro 7.3.3, Starlight 0.42.0
-and TypeScript 5.9.3. These are tested versions, not a promise that every version
-in the peer ranges has been exercised.
+The 0.1.0 source checks use Node 24.19.0, npm 11.12.1, Astro 7.3.3,
+Starlight 0.42.0 and TypeScript 5.9.3. The package's CI also checks Node
+22.22.2. Release verification builds the exact tarball in plain Astro and
+Starlight sites. These checks do not promise that every version in the peer
+ranges has been exercised.
 
 ## Find the code you need
 

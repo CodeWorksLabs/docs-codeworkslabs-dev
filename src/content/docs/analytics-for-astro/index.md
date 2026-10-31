@@ -44,5 +44,5 @@ retried; the verification guide shows how to check delivery.
 | Check availability and version compatibility | [Versions and availability](/analytics-for-astro/versioning-and-releases/) |
 | See what changed | [Release notes](/analytics-for-astro/release-notes/) |
 
-Testing RC.1? See [Versions and availability](/analytics-for-astro/versioning-and-releases/) for the
-current release and supported versions.
+See [Versions and availability](/analytics-for-astro/versioning-and-releases/) for the current
+release and supported versions.

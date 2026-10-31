@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "@astrojs/starlight": "^0.41.2",
-    "astro": "^7.4.2",
-    "@codeworkslabs/astro-analytics": "0.1.0-rc.1"
+    "@codeworkslabs/astro-analytics": "0.1.0",
+    "astro": "^7.4.2"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.6",
