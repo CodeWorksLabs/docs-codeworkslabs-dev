@@ -1,155 +1,137 @@
 ---
 title: Configuration reference
-description: Choose the thread, depth, presentation and moderation options for the Astro component.
+description: Configure automatic publication, page eligibility, live refresh and explicit snapshot alternatives.
 editUrl: false
 ---
 
-Pass settings to the Astro component. This is a per-page component; it does not
-need an integration entry in `astro.config.mjs` for ordinary Astro use.
+> **Preview reference:** Settings below match the local automation candidate.
+> Real-account setup is planned for validation on **22 November 2026**.
 
-## Component options
+## Automatic integration
 
-| Option | Default | Use |
+Import `@codeworkslabs/astro-bluesky-comments/integration` and add it to the
+existing Astro integrations array.
+
+| Option | Default | Purpose |
 | --- | --- | --- |
-| `uri` | Required | Individual HTTPS `bsky.app` post URL or post AT URI |
-| `heading` | `Discussion` | Discussion heading and region name |
-| `id` | Unset | Unique HTML identifier; supplies the heading anchor |
-| `depth` | `3` | Reply depth, integer from `0` to `20` |
-| `showRoot` | `false` | Include the original post before replies |
-| `showMetrics` | `true` | Show reply, repost, like and quote counts |
-| `showAvatars` | `false` | Allow author images for posts without a warning |
-| `fallbackText` | `The discussion could not be loaded here.` | Public message when the thread cannot be displayed |
-| `timeoutMs` | `8000` | Request/body timeout; integer from `100` to `60000` |
-| `locale` | Runtime locale | Date formatting and request language preference |
-| `moderation` | Conservative policy | Blocked, unavailable and warned-post handling |
-| `fetcher` | Server `fetch` | Trusted server-side fetch implementation for caching or tests |
+| `accountDid` | Required | Exact publishing-account DID, not a mutable handle |
+| `stateFile` | Required | Private durable filesystem state shared by builds and publisher |
+| `site` | Astro's `site` | Canonical HTTPS production site, including any site subpath |
+| `production` | `false` | Plan work only when explicitly true during an Astro build |
 
-Use a different `id` for each discussion block on the same page. An explicit
-ID must begin with a letter and contain only letters, digits, `_`, `:`, `.`,
-or `-`.
+The integration does not log into Bluesky or post during the build. It emits
+`bluesky-comments.publication.json` in the output directory. The release runner
+publishes after successful deployment, using protected authorization. State must
+remain outside public assets and output.
 
-`depth={0}` hides replies; use `showRoot` as well if you want the original post
-at that depth. The option limits nesting, not an operator-selected total
-comment count. Raising depth does not bypass the fixed response/work limits.
+See [Getting started](/astro-bluesky-comments/getting-started/) for environment
+values, initialization and release/recovery commands.
 
-## References and identity
+## Automatic page component
 
-Use an individual post reference, for example:
+Import `@codeworkslabs/astro-bluesky-comments/AutomatedComments.astro`.
 
-```text
-https://bsky.app/profile/codeworks360.bsky.social/post/3n2oynrepuk2m
-at://did:plc:3spld5by3w3ivohvdm3o2rep/app.bsky.feed.post/3n2oynrepuk2m
-```
+| Option | Default | Purpose |
+| --- | --- | --- |
+| `title` | Required | Title used for the initial discussion post |
+| `pageId` | Route pathname | Stable page identity; prefer the collection entry's persistent ID |
+| `canonicalUrl` | Route resolved on configured site | HTTPS page URL within that site; no credentials, query or fragment |
+| `enabled` | `true` | False excludes the page |
+| `draft` | `false` | True excludes the page |
+| `published` | `true` | False excludes the page |
+| `uri` | Unset | Explicit existing-post override; no automatic post is created |
 
-A profile URL is insufficient. Remove query strings or fragments from shared
-post links. DID references survive handle changes; the record key identifies
-the exact post. The component rejects a returned thread whose root cannot be
-matched to the configured reference.
+Use the component in a selected shared layout. An existing binding survives
+article edits; a canonical URL change requires reconciliation. Its initial post
+text is not automatically rewritten. The automatic component always uses live
+reading and does not accept a server `fetcher` or a snapshot `mode`.
 
-Syntax validation does not resolve a DID or guarantee every DID method is
-supported by the public service. Use a reference verified against the public
-AppView, such as the demo's `did:plc` identity.
+## Display and live-reader settings
+
+These options apply to the automatic component and the core component.
+
+| Option | Default | Purpose |
+| --- | --- | --- |
+| `heading` | `Discussion` | Heading and region label |
+| `id` | Unset | Unique HTML identifier for the block/heading |
+| `depth` | `3` | Reply depth, integer `0`–`20` |
+| `showRoot` | `false` | Include the original post |
+| `showMetrics` | `true` | Display engagement counts |
+| `showAvatars` | `false` | Allow images on posts without a warning |
+| `refreshIntervalMs` | `60000` | Live refresh interval; integer `30000`–`3600000` |
+| `timeoutMs` | `8000` | Request/body timeout; integer `100`–`60000` |
+| `locale` | Runtime locale | Date formatting and request language |
+| `fallbackText` | `The discussion could not be loaded here.` | Snapshot fallback message; live mode has its own loading/retry/stale messages |
+| `moderation` | Conservative policy | Handling described below |
+
+An explicit HTML `id` begins with a letter and uses only letters, digits,
+`_`, `:`, `.` or `-`. It is separate from the persistent `pageId`.
+`depth={0}` hides replies; include `showRoot` if the root should remain visible.
+
+Live mode polls only visible pages and backs off after failures. The interval is
+not an end-to-end freshness guarantee; public indexing/caching also applies.
 
 ## Moderation
 
-The core component accepts:
-
 ```astro
-<BlueskyComments
-  uri="at://did:plc:3spld5by3w3ivohvdm3o2rep/app.bsky.feed.post/3n2oynrepuk2m"
+<AutomatedComments
+  title={entry.data.title}
+  pageId={entry.id}
   showAvatars={false}
-  moderation={{
-    blocked: 'placeholder',
-    unavailable: 'placeholder',
-    warned: 'omit',
-  }}
+  moderation={{ blocked: 'placeholder', unavailable: 'placeholder', warned: 'omit' }}
 />
 ```
 
-| Setting | Choices | Default |
+| Policy | Choices | Default |
 | --- | --- | --- |
 | `blocked` | `omit`, `placeholder` | `placeholder` |
 | `unavailable` | `omit`, `placeholder` | `placeholder` |
 | `warned` | `omit`, `warn`, `show` | `warn` |
 
-Omitted or `undefined` settings retain defaults. Mandatory hidden restrictions
-are still omitted regardless of these choices. Supported warning labels are
-`!warn`, `porn`, `sexual`, `graphic-media` and `nudity`, including labels on
-the hydrated author. A warning disclosure retains text in HTML; `omit` excludes
-it. `show` deliberately displays warned text without the disclosure.
+Undefined fields preserve defaults. Mandatory `!hide` and
+`!no-unauthenticated` restrictions are omitted regardless of these choices.
+Warning labels include `!warn`, `porn`, `sexual`, `graphic-media` and
+`nudity`, including labels on the hydrated author. Disclosures retain text;
+`omit` excludes it. Labels are supplied by the public response; the package
+does not independently verify label signatures.
 
-Labels come from AppView or your trusted fetcher. The package does not query
-labelers independently or verify label signatures, and cannot enforce a
-restriction that the response does not supply.
+## Starlight frontmatter
 
-## Markdown and MDX collections
+Use `automatedBlueskyCommentsSchema` and the automatic footer. Ordinary docs
+need no per-page post reference. Set `blueskyComments: false` to exclude a page.
 
-An integrator can add an optional field to an existing collection schema:
+The automatic frontmatter object supports optional `uri`, `enabled`,
+`heading`, `fallbackText`, `depth`, `showRoot`, `showMetrics`,
+`showAvatars` and `refreshIntervalMs`. It does not expose `timeoutMs`,
+`locale`, `moderation` or HTML `id`; compose the component for those.
+See [Starlight integration](/astro-bluesky-comments/starlight/).
 
-```ts
-import { z } from 'astro/zod';
+## Manual and snapshot alternatives
 
-// Merge this into your collection's existing schema.
-const discussionField = z.object({
-  blueskyComments: z.object({ uri: z.string() }).optional(),
-});
-```
-
-Opt a content entry in with:
-
-```yaml
-blueskyComments:
-  uri: at://did:plc:3spld5by3w3ivohvdm3o2rep/app.bsky.feed.post/3n2oynrepuk2m
-```
-
-In the route that renders the entry, pass `post.data.blueskyComments` to the
-article layout as its `blueskyComments` prop. In that existing layout:
+The core export `@codeworkslabs/astro-bluesky-comments/astro` accepts a required
+individual post `uri` and `mode="live"` or `mode="snapshot"`. Its compatibility
+default is **snapshot**, unlike the always-live automatic component.
 
 ```astro
 ---
-import BlueskyComments from '../../vendor/astro-bluesky-comments/src/components/BlueskyComments.astro';
-
-interface Props {
-  blueskyComments?: { uri: string };
-}
-const { blueskyComments } = Astro.props;
+import BlueskyComments from '@codeworkslabs/astro-bluesky-comments/astro';
 ---
-<article><slot /></article>
-{blueskyComments && (
-  <BlueskyComments uri={blueskyComments.uri} showAvatars={false} />
-)}
+<BlueskyComments uri="at://did:plc:example/app.bsky.feed.post/example" mode="snapshot" />
 ```
 
-That import assumes a file directly under `src/layouts`. Adjust it for the
-chosen source-copy directory. Frontmatter alone does not render a component;
-the route/layout must pass and use the field. MDX also needs your site's MDX
-integration. Preserve the collection's loader, existing fields and layout.
+This core-only path does not create posts and needs no automation integration.
+A snapshot fetches on server/build render, has no live refresh script and changes
+only when that output is republished. A custom trusted server `fetcher` is
+supported for snapshots and rejected for live mode. Profiles are not valid post
+references; prefer a verified DID-based AT URI over a mutable handle.
 
-## Styling
+## Styling and limits
 
-The component inherits the surrounding font and text color. Override these
-CSS custom properties on a containing element:
+The component inherits its surrounding font and color. Theme overrides may set
+`--bsky-comments-border`, `--bsky-comments-surface`,
+`--bsky-comments-muted` and `--bsky-comments-warning`.
 
-```css
-.article-discussion {
-  --bsky-comments-border: #64748b;
-  --bsky-comments-surface: transparent;
-  --bsky-comments-muted: #475569;
-  --bsky-comments-warning: #9a6700;
-}
-```
-
-Choose values appropriate to both themes your site offers and retain visible
-keyboard focus. The package supplies no theme selector.
-
-## Fetching and limits
-
-One public thread request is made per component render. The timeout covers
-request and response-body reading; redirects are rejected and credentials are
-omitted. Decoded responses are bounded at 2 MiB, normalization at 1000 visited
-nodes and 1000 hidden-reply entries. A limit failure shows the fallback rather
-than silently truncating the accepted discussion.
-
-Custom `fetcher` functions run on the server/build host. They must preserve the
-destination/credential policy and supply the real hydrated thread identity and
-labels. There is no built-in cache or retry; the host owns any caching policy.
+Public thread reads omit credentials and reject redirects. Responses are bounded
+at 2 MiB, normalization at 1000 visited nodes and 1000 hidden-reply entries.
+Depth does not bypass these bounds. Publishing uses separate protected requests
+and durable state; it is not a visitor-browser operation.

@@ -1,60 +1,78 @@
 ---
 title: Bluesky Comments for Astro
-description: Display public Bluesky replies in an Astro page and operate the discussion on Bluesky.
+description: Connect published Astro pages to Bluesky discussions automatically and keep replies current.
 editUrl: false
 ---
 
-Display a public Bluesky discussion inside an Astro page. You choose the post
-that starts the discussion; visitors follow its Bluesky link to reply. Astro
-fetches the public thread and renders the replies into the page.
+Configure the integration once, then publish your articles normally. The intended
+workflow creates and connects a Bluesky discussion for each eligible page, reuses
+that discussion on later releases, and refreshes replies in the visitor's browser.
 
-**Current availability:** experimental private preview,
-`@codeworkslabs/astro-bluesky-comments@0.0.0`. There is no public npm release
-yet. The installation guide describes the source-copy method used by the live
-demo. See [Versions and availability](/astro-bluesky-comments/availability/).
+> **Experimental automation preview:** These guides describe the implemented local
+> candidate and its intended operation. Real-account end-to-end testing is planned
+> for **22 November 2026**; instructions may change after that test. There is no
+> public npm release. See [Versions and availability](/astro-bluesky-comments/availability/).
+
+## How it should work
+
+1. Install the supplied preview package and configure the account, selected
+   layouts and protected publishing runner once.
+2. Publish an eligible article through your site's normal release process.
+3. After deployment succeeds, the publisher verifies that page and creates its
+   Bluesky post, retaining the page-to-thread binding.
+4. Later builds and retries reuse the discussion. Visitors get current replies
+   without an operator rebuilding the site for each new comment.
+
+Your routine work is publishing content and moderating the discussion. Creating
+posts, copying post references into every new page, and deploying to refresh
+replies should not be recurring operator jobs.
 
 ## Start here
 
-- **Installing it in an Astro site?** Follow [Getting started](/astro-bluesky-comments/getting-started/).
-- **Running the discussion?** Read the [Operator guide](/astro-bluesky-comments/operator-guide/).
-- **Choosing what appears?** Use [Configuration](/astro-bluesky-comments/configuration/).
-- **Using Starlight?** Follow [Starlight integration](/astro-bluesky-comments/starlight/).
-- **A reply is missing or the page is stale?** Use [Verification and troubleshooting](/astro-bluesky-comments/troubleshooting/).
+- [Getting started](/astro-bluesky-comments/getting-started/): one-time installation and release setup.
+- [Operator guide](/astro-bluesky-comments/operator-guide/): normal publishing, moderation and exceptions.
+- [Configuration](/astro-bluesky-comments/configuration/): account, eligibility and display settings.
+- [Starlight integration](/astro-bluesky-comments/starlight/): automatic documentation-page discussions.
+- [Verify and troubleshoot](/astro-bluesky-comments/troubleshooting/): acceptance checks and recovery.
+- [Versions and availability](/astro-bluesky-comments/availability/): implemented versus live-tested behavior.
 
-## How it works
+## What is automatic
 
-1. An operator creates a public post on Bluesky, usually linking to the article.
-2. A site editor puts that post's URL or DID-based AT URI in the page settings.
-3. Astro fetches the thread when it renders the page. A static build publishes
-   a snapshot that remains until the next build and deployment.
-4. Visitors read replies on the site and use **View the discussion on Bluesky**
-   to join the conversation there.
+The build reserves a durable DID-based thread reference without posting to the
+account. A separate trusted publisher runs after successful production deployment,
+verifies the page's binding, and creates the post. Retained state and reconciliation
+allow retries and interrupted jobs to reuse the same post identity.
 
-The account is needed to create and manage the discussion. The website reads
-public replies anonymously: it needs the post reference, not the account's
-password, app password, access token or visitor login.
+Comments load on a visit and refresh about every **60 seconds** while the page is
+visible, with backoff during failures. Bluesky indexing and caching can add delay.
+This refresh does not require another site deployment.
 
-## What appears
+## What still needs an operator
 
-Replies appear first, including replies by the original author. The original
-post is hidden by default; you can include it with `showRoot`. A new post with
-no replies displays **No replies to display.** That is a valid empty discussion.
+One-time setup includes account authorization, durable private state, the
+post-deployment job and a periodic recovery job. The package does not provision
+hosting or schedule these jobs by itself. Account revocation, lost state, conflicting
+bindings and URL moves may need attention.
 
-Text and supported links, mentions and hashtags are rendered as HTML. Avatars
-are off by default. Sensitive content uses a warning disclosure; mandatory
-hidden restrictions are omitted. Quote posts, link cards and other embeds are
-not rendered.
+Visitors read replies without logging in. They follow **View the discussion on
+Bluesky** to reply using their own accounts; the site supplies no visitor login or
+reply form. The publishing account's credentials stay on the protected runner.
 
-The component adds no browser script for fetching or refreshing comments. It
-does not create posts, provide a reply form, schedule builds or store comments
-in a site database. Your existing Analytics, comments and layout integrations
-remain separate.
+## What appears on the page
 
-## Try the live demo
+Replies appear first. The root post is hidden by default, and a new discussion
+can correctly show **No replies to display.** Avatars are off by default. Text,
+safe links, mentions and hashtags are supported; reply embeds and media cards
+are not rendered. Sensitive content uses a warning disclosure, while mandatory
+hidden restrictions omit the affected branch.
+
+Live mode needs browser JavaScript and access to Bluesky's public API. Without
+JavaScript, readers use the discussion link. Manual existing-post references and
+explicit build snapshots remain available as alternatives.
+
+## Current public demo
 
 The [plain Astro demo](https://astro.demo.discussionbridge.dev/bluesky-comments/)
-uses a public test post from
-[codeworks360.bsky.social](https://bsky.app/profile/codeworks360.bsky.social).
-Its discussion is a build snapshot with avatars off. This is a bounded live
-trial, not a public package release or proof that every host configuration has
-been qualified.
+was previously deployed with a manually selected CodeWorks360 thread and avatars
+off. That earlier snapshot trial is not evidence that the new automated publishing
+workflow is deployed or has passed the planned account test.

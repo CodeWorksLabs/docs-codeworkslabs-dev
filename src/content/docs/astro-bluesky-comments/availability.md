@@ -1,72 +1,90 @@
 ---
 title: Versions and availability
-description: Understand the private preview, compatible toolchain and source-copy update process.
+description: Distinguish the automation preview, recorded local verification and the planned real-account trial.
 editUrl: false
 ---
 
-## Current availability
+## Current status
 
-As verified from the product source on 2026-11-19,
-`@codeworkslabs/astro-bluesky-comments` is an experimental private candidate,
-version `0.0.0`, with `private: true`. There is no public npm release or public
-release artifact qualified by these instructions. A live demo does not change
-that distribution status.
+As checked against the product source on **21 November 2026**,
+`@codeworkslabs/astro-bluesky-comments` remains an experimental private
+candidate, version `0.0.0`, with `private: true`. There is no public npm release.
+The current automation candidate is `ABC-20261119-AUTOMATION-R1`.
 
-The [getting-started guide](/astro-bluesky-comments/getting-started/) describes
-the source-copy installation used by the actual plain Astro demo. Preview
-access is arranged through CodeWorksLabs. There is no installable public
-version to pin in a registry command today.
+These guides describe how that candidate is intended to operate after one-time
+setup. They are provisional ahead of the **22 November 2026** real-account
+end-to-end trial and will be adjusted to match its results.
 
-## Compatibility and verification
+## Implemented and still to verify
 
-| Software | Declared requirement | Verified preview setup |
+| Area | Evidence/status |
+| --- | --- |
+| Automatic page-to-thread planning and retained identity | Implemented; local automated tests |
+| Post-deployment verification and account publisher | Implemented; controlled API fixtures, not a live account posting test |
+| Retry, interruption and concurrent-publisher handling | Local automated tests |
+| Browser refresh, deletion/moderation updates and failures | Built JavaScript tested with controlled browser responses |
+| Astro and Starlight layouts, exclusions and previews | Real local build fixtures |
+| Protected account connection and durable runner setup | Still needs the intended host/account trial |
+| Actual post creation and reply refresh on that account | Planned; not yet reported passed |
+
+The recorded 19 November candidate checks passed **62 data/automation tests**,
+**10 build test results**, **11 browser regressions**, strict TypeScript checking,
+CLI help/init/status smoke and package inspection. The browser fixture accelerated
+its poll clock; production defaults to 60 seconds. These are recorded local
+results, not checks rerun for this documentation edit.
+
+The earlier public Astro demo used a manually selected CodeWorks360 post and a
+build snapshot. It is historical evidence for that earlier trial, not proof of
+automated publication. These docs do not deploy the new package to that demo.
+
+## Distribution and compatibility
+
+Obtain the exact private archive through the preview arrangement or
+[CodeWorksLabs support](https://codeworkslabs.dev/support/). Install that supplied
+artifact and retain its integrity/lockfile. A `0.0.0` filename alone does not
+uniquely identify contents. Automation needs its compiled modules and dependencies;
+do not substitute the older manual source-copy recipe.
+
+| Software | Package declaration | Recorded local candidate setup |
 | --- | --- | --- |
-| Node.js | Package requires `>=22.18.0`; also meet Astro's requirements | `24.22.1` |
+| Node.js | `>=22.18.0`, also satisfy Astro | `24.22.1` |
 | Astro | `^7.0.0` | `7.4.2` |
-| Starlight, optional | `^0.42.7` | `0.42.7` in the integration fixture |
+| Starlight, optional | `^0.42.7` | `0.42.7` |
 
-Astro 7.4.2 itself requires Node `>=22.23.4`. The package's lower engine floor
-does not make older Node versions suitable for that Astro release. Accepted
-ranges are declarations, not evidence that every version combination has
-been exercised.
+These are historical test versions, not a claim that every accepted combination
+is qualified. Use a Node runtime supported by the site's installed Astro version
+and its approved, maintained toolchain.
 
-The plain Astro public demo was built and checked with an existing toolchain,
-public DID thread reads, no avatars and preserved site integrations. The
-Starlight behavior was checked in an isolated real-build fixture; it has not
-been presented here as a public Starlight site rollout.
+## Supported workflow and limits
 
-## What is supported by this preview
+The candidate supports production planning, verified post-deployment creation,
+durable filesystem state, a protected CLI publisher/recovery path, automatic
+live reads, conservative moderation and existing-post overrides. The operator
+configures the release and periodic recovery jobs once; the package does not
+provision infrastructure or install a scheduler.
 
-Manually configured public post references, anonymous server/build fetching,
-replies-first rendering, optional original post, conservative public-web
-moderation, text/rich-text facets, fallback and optional Starlight composition.
+Interactive OAuth onboarding and hosted KV/state adapters are not implemented.
+Use the supported protected app-password runner or a compatible bearer-session
+callback. A disposable CI cache is not a replacement for authoritative state.
 
-The package does not supply account authentication, posting, a site reply form,
-automatic post creation, automatic refresh scheduling, media/link-card embeds
-or a site comment database. Product behavior may change before a public alpha.
+The product does not provide visitor login/reply composition, a site comment
+database, copying full articles into Bluesky, or media/embed rendering in the
+reply list. Existing public discussions are not deleted when a site block is
+excluded. Article edits do not rewrite the original discussion post.
 
-## Update a source-copy installation
+## Updates and rollback
 
-1. Keep the previous source copy and a known working site artifact.
-2. Obtain an explicitly identified new preview, preserving its license and
-   provenance. Do not identify uncommitted source solely by its base commit.
-3. Replace the intended source copy as a coherent unit; preserve your page
-   references, layouts and other integrations.
-4. Build and check the emitted page, original permalink, moderation/fallback
-   behavior and existing site paths.
-5. Publish through the site's normal process and verify the public result.
+Keep the prior package, site artifact and authoritative state before an update.
+Install an exactly identified preview, preserve page IDs and bindings, and verify
+both publishing and reading through the normal release process.
 
-If rollback is needed, use the exact prior site/source artifact according to
-the site's deployment procedure. Do not silently combine files from different
-preview candidates or assume that a package version of `0.0.0` identifies
-unchanged contents.
+A code rollback must not roll back accepted discussion history or reinitialize
+state. An incomplete/stale state backup requires reconciliation before publishing.
+Do not combine files from different candidates or assume a base Git commit
+identifies uncommitted implementation bytes.
 
-## License and source access
+## License
 
-The reusable code is MIT-licensed; preserve its supplied `LICENSE` when copying
-it. Private preview distribution and public release readiness are separate
-from the license. These docs do not grant rights to unrelated artwork or site
-assets.
-
-For preview access and current release status, use
-[CodeWorksLabs support](https://codeworkslabs.dev/support/).
+The reusable code is MIT-licensed. Preserve its supplied `LICENSE`. Private
+distribution, public release readiness and rights to unrelated site artwork are
+separate matters.

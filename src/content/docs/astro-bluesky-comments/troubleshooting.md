@@ -1,72 +1,88 @@
 ---
 title: Verify and troubleshoot
-description: Check the first discussion, understand empty and fallback states, and diagnose stale replies.
+description: Verify automatic posting, thread reuse and live reply updates, and recover without duplicate discussions.
 editUrl: false
 ---
 
-Start with the individual public post on Bluesky and the exact post reference
-configured for the page. Keep a failed fetch separate from a successful thread
-with no visible replies.
+> **Preview acceptance:** The checklist below is for the real-account trial
+> planned for **22 November 2026**. Local fixture results are recorded in
+> [availability](/astro-bluesky-comments/availability/); the account trial has
+> not yet been reported as passed.
 
-## Verify the first installation
+## Planned account trial
 
-1. Open **View the discussion on Bluesky** from the site. Confirm the intended
-   account and post, not just a matching handle or article title.
-2. Confirm the page has a useful empty state or expected replies, no unintended
-   avatars, and the original discussion link.
-3. Add a public reply through Bluesky, rebuild and deploy the static site, then
-   check the published reply and its own permalink.
-4. Tab to the source link and any warning disclosure. Open the warning from
-   the keyboard. Check a narrow viewport and the themes the site supports.
-5. Confirm existing footer, navigation, Analytics and other comments remain
-   present where the site expects them.
+1. Configure one publishing account and durable private state for one demo.
+   Preserve Analytics, DiscussionBridge and existing layouts; keep avatars off.
+2. Build and successfully publish one eligible article. Confirm the publisher
+   checks its deployed marker and creates exactly one matching Bluesky post.
+3. Verify the account DID, article link, discussion permalink and empty state.
+4. Rebuild the same article unchanged. Confirm no second post is created.
+5. Add a public reply through Bluesky. Confirm it appears without rebuilding
+   or redeploying the site.
+6. Delete or restrict a test reply. Confirm a successful refresh removes or
+   changes the displayed content under the moderation policy.
+7. Exercise a temporary failure and recovery. Check stale/unavailable status,
+   then restored live replies.
+8. Retry interrupted publishing with the same state and plan. Confirm the same
+   post identity is reconciled rather than replaced.
+9. Confirm draft, disabled, preview and failed-release cases create no posts.
+10. Check keyboard navigation, warning disclosures, narrow layouts and supported
+    themes. With JavaScript disabled, the discussion link must remain usable.
 
-The component needs no browser JavaScript to render its discussion. Other
-site integrations may still add their own scripts or requests.
+Record the actual outcome and change these guides where testing shows a
+difference. A local build or controlled API fixture is not a real account test.
 
 ## Common symptoms
 
 | What you see | What to check |
 | --- | --- |
-| **No replies to display.** | The thread was read, but has no displayable replies under the current depth/policy. The original post is hidden by default. Add a reply, not another root post, then refresh the published snapshot. |
-| A new reply appears on Bluesky but not the site | Rebuild and deploy. Check that you deployed the new output, configured the correct post and have not retained a host cache. |
-| Deleted or hidden text is still present | Old static HTML remains until replaced. Refresh the build/deployment, or disable the discussion block and deploy if immediate removal is required. |
-| **The discussion could not be loaded here.** | Check public accessibility, reference syntax, AppView availability, build-host network access, timeout, limits and returned root identity. This message deliberately does not expose internal fetch details. |
-| **Some replies could not be loaded.** | A malformed reply branch was omitted while valid siblings were retained. Check a fresh upstream response before treating the partial snapshot as complete. |
-| The configured discussion link is missing | Check that the reference is a valid individual post URL/AT URI, rather than a profile, a link with tracking parameters, or an empty value. |
-| Original post is missing but replies appear | Expected with `showRoot={false}`. Enable `showRoot` if the page should include it. |
-| An account/post is absent | Check upstream restrictions, hidden replies and hydrated post/account labels, as well as your configured warning policy and depth. |
-| Sensitive content is collapsed | Expected default warning behavior. The disclosure is not access control; choose `warned: 'omit'` on the core component to exclude the text from HTML. |
-| No Starlight discussion appears | Confirm the collection schema, Footer composition and page opt-in. Preserve any existing Footer override. |
-| Build reports an invalid setting | Check type/range requirements and Starlight frontmatter validation. Wrong types or unsupported explicit policy choices are not silently accepted. |
+| No automatic block in a normal preview | Expected when there is no existing-post override: previews do not allocate publication work. Check the selected layout and production configuration for the real release path. |
+| A production page has no discussion post | Check the post-deployment job, explicit production flag, page eligibility, durable state and exact deployed manifest/marker. A successful build is not a completed account publication. |
+| New post is temporarily unavailable | The publisher may still be running or the public service may not have indexed it. Check job/state status; no second build should be needed. |
+| **No replies to display.** | A successful read has no displayable replies. The root post is hidden by default. Add a reply to the connected thread. |
+| New replies do not appear | In live mode, check JavaScript, CSP, public API access, page visibility, backoff, correct thread and upstream caching. In explicit snapshot mode, rebuild and deploy. |
+| Last loaded replies remain during failure | The live reader labels them stale. A successful refresh should replace them; do not assume the old view is current. |
+| Deleted/restricted text remains | Wait for a successful live refresh and check upstream labels/cache. Snapshot HTML remains until republished. For an urgent incident, disable the block and deploy. |
+| **Some replies could not be loaded.** | Valid siblings remain while malformed branches are omitted. Check fresh upstream data; the result is partial. |
+| State is missing or conflicts | Stop and restore/reconcile authoritative state. Do not delete it, reinitialize a routine job or change IDs to force a replacement thread. |
+| Account authorization fails | Check protected identifier/app-password/PDS settings and exact account DID. Never put secrets in public config or support messages. |
+| Production marker verification fails | Confirm that the exact build was actually deployed at its canonical HTTPS URL and caches have caught up. The publisher must not bypass this check. |
+| Starlight comments are missing | Check the automatic schema/footer pair, ordinary versus splash/draft page, exclusions and preserved custom footer. |
+| Original post is absent | Expected with `showRoot={false}`. The replies-first display does not mean the thread is disconnected. |
 
-## Network and privacy checks
+## Inspect and recover
 
-The default thread fetch is server-side to
-`https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread`. Ensure the build
-or render host can reach it. A visitor-browser CORS workaround is not needed
-for this component's server-rendered Bluesky fetch.
+```sh
+npx --no-install bluesky-comments status
+npx --no-install bluesky-comments publish --site https://site.example/
+```
 
-With avatars off, the Bluesky component inserts no author image requests.
-With avatars on, visitors may request third-party author image URLs; posts
-behind a warning disclosure still suppress their avatars. Evaluate that choice
-with your site's image policy. Source and reply links navigate to Bluesky; the package uses
-UGC/referrer protections on its links.
+The runner must use its configured protected environment and authoritative
+`BLUESKY_COMMENTS_STATE_FILE`. Recovery reads the currently deployed plan and
+skips published posts. Preserve pending intents after an interrupted request.
+A conflicting record or URL move needs reconciliation; a deleted original post
+is not silently recreated.
 
-Other components have independent network paths. For example, a native forum
-discussion's browser refresh can fail while the server-rendered Bluesky block
-continues to work. Diagnose the failing component's request rather than
-changing the Bluesky thread reference to repair an unrelated integration.
+## Network and privacy
 
-## What to include in a support request
+Live reads come from the visitor's browser to `https://public.api.bsky.app`
+with credentials omitted. Check the page's JavaScript and `connect-src` CSP.
+Avatars off prevents author image requests, not the public thread request.
 
-Provide the page URL, public post URL/AT URI, source version or source-copy
-identity, Astro/Node/Starlight versions, static versus on-demand rendering,
-build/deployment time, visible message and relevant settings. Say whether a
-new build was actually deployed and whether a custom fetcher/cache is used.
+Account posting is a separate trusted-runner operation to the account service.
+It never belongs in browser JavaScript. Snapshot reads instead happen during
+server/build rendering and have their own freshness behavior.
 
-Do not include account passwords, app passwords, tokens, private environment
-files or provider credentials. Public discussion references are sufficient
-to begin investigating an anonymous-read problem.
+Other integrations have separate network paths. Diagnose the actual failing
+request; an unrelated forum-refresh failure is not a reason to change the
+Bluesky thread or weaken its checks.
 
-[Contact CodeWorksLabs support](https://codeworkslabs.dev/support/).
+## Support information
+
+Provide the page URL, public thread reference, candidate/archive identity,
+Astro/Node/Starlight versions, live versus snapshot mode, visible state, deployment
+time and whether the publisher/recovery job completed. Include non-secret status
+counts and whether the durable state is intact.
+
+Do not send passwords, app passwords, tokens, private environment files or raw
+private journals. [Contact CodeWorksLabs support](https://codeworkslabs.dev/support/).

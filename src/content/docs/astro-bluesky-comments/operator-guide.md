@@ -1,98 +1,100 @@
 ---
 title: Operator guide
-description: Start a discussion, refresh replies and maintain a public Bluesky comment thread.
+description: Publish normally while the integration creates discussions and refreshes public replies.
 editUrl: false
 ---
 
-The operator manages the discussion on Bluesky. The site editor connects its
-post reference to an Astro page and publishes updated builds. One person can
-hold both roles; neither role needs to put Bluesky login credentials in the site.
+After one-time setup, your routine jobs are publishing articles and moderating
+the discussion. The release workflow should create and connect eligible pages'
+Bluesky posts; visitors' browsers should keep replies current.
 
-## Start a discussion for a page
+> **Experimental workflow:** This describes the intended operation of the local
+> automation candidate. Real-account testing is planned for **22 November 2026**.
 
-1. Publish the article or choose its intended public URL.
-2. From the account you control, create a public Bluesky post describing the
-   article and linking to it.
-3. Copy the individual post URL and give it to the site editor. Prefer a
-   DID-based AT URI when the editor has verified the account's DID.
-4. Set that reference for the page and publish a build.
-5. Follow **View the discussion on Bluesky** from the website to verify the
-   mapping before inviting replies.
+## Publish an article
 
-The mapping is manual. The package does not watch an account's feed, create
-posts, match posts to articles or merge several discussions. Use a deliberate
-post-to-page mapping so readers join the intended conversation.
+1. Publish an eligible article through the site's normal process.
+2. The production build reserves its discussion reference.
+3. After deployment succeeds, the trusted publisher verifies the actual page
+   and creates the Bluesky post with the article link.
+4. The page's live reader loads that discussion as it becomes available.
 
-Creating the original post does not create a displayed comment. By default,
-the site shows its replies and leaves the original post out. **No replies to
-display.** is expected until somebody replies and the site is refreshed.
+No recurring manual post creation or copying of post references should be needed.
+The original post is not a displayed reply; an empty new discussion is normal.
+Bluesky indexing and caching may delay first visibility.
 
-## What a visitor does
+## Edit or rebuild an article
 
-A visitor can read rendered replies on your site without signing into Bluesky.
-To participate, they follow the discussion link and reply through Bluesky using
-their own account. There is no reply form or sign-in flow supplied by this
-component on the Astro page.
+Later releases reuse the stored discussion. An unchanged rebuild, retry or
+interrupted job should not create another post. Editing an article does not
+rewrite its original Bluesky post or move its replies.
 
-## Refresh replies on a static site
+Keep each page's ID stable. Changing a stored page's canonical URL stops for
+reconciliation and preserves the original binding. Do not invent a new ID or
+delete state just to clear that error.
 
-1. Check the public thread on Bluesky for the new or changed reply.
-2. Ask the site operator to run the normal build and deployment.
-3. Open the public page and verify the expected text and reply permalink.
+## Replies update automatically
 
-New replies, deletions, moderation changes and engagement counts remain at the
-last successful render until an updated build is deployed. Reloading the
-browser, clearing its cache or rebuilding without deployment does not replace
-the published snapshot. The package installs no timer, webhook or scheduler.
+Visitors receive a public read on page load, followed by a refresh about every
+60 seconds while the page is visible. Hidden-page polling pauses; failures back
+off. New replies, deletions and moderation changes do not normally require the
+operator to rebuild or redeploy the site.
 
-An on-demand Astro route fetches when the server renders it; host caching may
-still affect freshness. Changing a static route to on-demand rendering needs
-the site's own server adapter and operational design.
+During a network failure, previously loaded replies may remain with a visible
+stale-status message. They are replaced on a successful refresh. Upstream caching
+can delay changes, so this is not a promise of immediate synchronization.
 
-## Moderate the public discussion
+Visitors follow **View the discussion on Bluesky** to participate using their own
+accounts. The site supplies no visitor sign-in or reply form.
 
-Use the discussion account and Bluesky's moderation tools. The anonymous site
-renderer applies the post/account labels and hidden-reply information supplied
-by the public response when it next fetches the thread. It does not reproduce
-your account's complete signed-in moderation preferences.
+## Moderate on Bluesky
 
-Default behavior:
+Use the account's normal Bluesky tools. The reader applies the restrictions and
+hydrated labels supplied by the public response; it does not reproduce all
+signed-in moderation preferences or fetch labelers independently.
 
-- Mandatory `!hide` and `!no-unauthenticated` restrictions omit the affected
-  post and its reply branch.
-- Supported sensitive labels put text behind a warning disclosure.
-- Blocked or unavailable posts use text placeholders when reported that way
-  by the upstream response.
+- Mandatory hidden restrictions omit the affected post and branch.
+- Supported sensitive labels use a warning disclosure by default.
+- Reported blocked or unavailable posts use placeholders.
 
-A warning is a display disclosure: the text is still in the generated HTML.
-If sensitive text must be omitted, the site integrator can use
-`moderation={{ warned: 'omit' }}` on the core component. See
-[Configuration](/astro-bluesky-comments/configuration/#moderation).
+A disclosure is not access control: its text remains in the live DOM. Choose
+`moderation={{ warned: 'omit' }}` through a composed component if that text must
+be omitted. Automatic mode embeds no old comment text in the initial page HTML.
 
-After a moderation action, rebuild and deploy, then verify the actual page.
-Deleting or hiding a post on Bluesky does not retroactively remove its text
-from HTML that was already published. If an old snapshot must be removed
-immediately, disable the page's discussion block and publish that change using
-your site's normal process; do not wait for a browser reload to remove it.
+Previously visible browser content can remain until a successful refresh. For an
+urgent incident, the site owner can disable the block and deploy that change.
+Snapshot mode has a different freshness model: its old HTML remains until rebuilt
+and deployed.
 
-## Change or stop a discussion
+## Handle exceptional failures
 
-To move a page to a different post, update its reference, rebuild and deploy.
-Existing replies are not copied or moved between Bluesky threads. Explain the
-new discussion location to readers when that matters.
+The publisher retries transient errors within a job. The configured recovery job
+can later resume the deployed plan without a new site build. Inspect local counts:
 
-To stop displaying comments, remove the component or remove the page's opt-in
-frontmatter where its layout supports that choice, then rebuild and deploy.
-This removes the site's rendered block; it does not delete the Bluesky thread.
+```sh
+npx --no-install bluesky-comments status
+```
 
-## Day-to-day settings
+This uses `BLUESKY_COMMENTS_STATE_FILE`; an explicit `--state-file` is also
+accepted. Keep the state and exact deployed plan when investigating a failure.
 
-Keep avatars off unless you deliberately want author-image requests in visitor
-browsers. Keep the conservative warning policy unless your site has chosen a
-different supported policy. Neither decision changes the account's settings
-on Bluesky.
+| Situation | Operator action |
+| --- | --- |
+| Temporary API outage | Let retries/recovery run; check runner status if it persists |
+| Revoked or invalid account authorization | Repair the protected runner configuration |
+| Missing or stale state | Stop publishing and restore/reconcile authoritative bindings; never reinitialize a routine job |
+| Conflicting post or canonical URL move | Preserve the binding and request reconciliation |
+| A deleted original Bluesky post | Decide deliberately how to replace or retire the discussion; the publisher will not silently recreate it |
 
-Keep a record of each page's post reference, the source version installed and
-the last published build. When a build shows the fallback, use
-[Verification and troubleshooting](/astro-bluesky-comments/troubleshooting/)
-before changing the discussion mapping.
+## Choose or stop an existing discussion
+
+An explicit `uri` override uses an existing post and skips automatic creation for
+that page. It does not migrate replies or grant ownership of somebody else's
+post. Turning the override off returns to any retained automatic binding.
+
+Excluding a page or removing the component removes the site block when that site
+change is deployed. It does not delete the Bluesky post or its replies.
+
+Keep avatars off unless the site deliberately enables them. Live public API
+reads still contact Bluesky from the visitor's browser with credentials omitted;
+avatar settings do not remove that network path.

@@ -1,106 +1,134 @@
 ---
 title: Starlight integration
-description: Add optional per-page Bluesky discussions while preserving the Starlight footer.
+description: Configure the automatic footer once so eligible documentation pages receive Bluesky discussions.
 editUrl: false
 ---
 
-Starlight uses the same renderer and public-thread behavior as ordinary Astro.
-The optional schema adds per-page settings, and the supplied footer wrapper
-keeps Starlight's standard footer before the discussion.
+Use the automation integration and automatic Starlight footer to connect ordinary
+documentation pages without assigning a post reference to each page.
 
-The preview's declared peer range is Starlight `^0.42.7` with Astro `^7.0.0`.
-The integration fixture was verified with Starlight 0.42.7 and Astro 7.4.2.
-This does not imply compatibility with every older Starlight installation.
+> **Experimental preview:** The local Starlight build is verified; real-account
+> end-to-end testing is planned for **22 November 2026**. Setup may change.
 
-## 1. Add the source preview
+## 1. Complete the common setup
 
-Follow [Getting started](/astro-bluesky-comments/getting-started/#1-add-an-exact-source-copy)
-to copy the exact preview to `vendor/astro-bluesky-comments/`. The paths below
-use that self-contained copy. Do not import a sibling site's installed files.
+Install the supplied private package archive and initialize authoritative durable
+state once. Configure the protected publisher and successful-deployment hook
+from [Getting started](/astro-bluesky-comments/getting-started/).
 
-## 2. Extend the existing docs schema
+Preserve your installed Starlight, existing collections and other integrations.
+This guide does not install a second theme or change unrelated comments systems.
 
-For a site with the standard collection setup, `src/content.config.ts` is:
+## 2. Extend the docs schema
+
+In the existing `src/content.config.ts`:
 
 ```ts
 import { defineCollection } from 'astro:content';
 import { docsLoader } from '@astrojs/starlight/loaders';
 import { docsSchema } from '@astrojs/starlight/schema';
-import { blueskyCommentsSchema } from '../vendor/astro-bluesky-comments/src/starlight/schema';
+import { automatedBlueskyCommentsSchema } from '@codeworkslabs/astro-bluesky-comments/starlight';
 
 export const collections = {
   docs: defineCollection({
     loader: docsLoader(),
-    schema: docsSchema({ extend: blueskyCommentsSchema }),
+    schema: docsSchema({ extend: automatedBlueskyCommentsSchema }),
   }),
 };
 ```
 
-Preserve other collections. If the docs schema already has extensions, merge
-the fields instead of replacing them. For an existing object extension:
-
-```ts
-schema: docsSchema({
-  extend: existingExtension.merge(blueskyCommentsSchema),
-}),
-```
-
-That merge example assumes `existingExtension` is a compatible Zod object.
-Keep any existing function-based extension's arguments and merge inside it
-according to your installed Starlight schema API.
+Preserve other collections. Merge existing schema extensions instead of replacing
+them. For an existing compatible Zod object, use
+`existingExtension.merge(automatedBlueskyCommentsSchema)`; preserve the arguments
+of function-based extensions and merge inside the existing function.
 
 ## 3. Compose the footer
 
-If you currently use the stock footer, create `src/components/BlueskyFooter.astro`:
+If the site uses the stock footer, create `src/components/BlueskyFooter.astro`:
 
 ```astro
 ---
-import Footer from '../../vendor/astro-bluesky-comments/src/starlight/Footer.astro';
+import Footer from '@codeworkslabs/astro-bluesky-comments/starlight/AutomatedFooter.astro';
 ---
 <Footer><slot /></Footer>
 ```
 
-In your existing `starlight()` options in `astro.config.mjs`, add:
+Keep Starlight and add the Bluesky integration in `astro.config.mjs`:
 
 ```js
-components: {
-  Footer: './src/components/BlueskyFooter.astro',
-},
+import { defineConfig } from 'astro/config';
+import starlight from '@astrojs/starlight';
+import blueskyComments from '@codeworkslabs/astro-bluesky-comments/integration';
+
+export default defineConfig({
+  site: 'https://docs.example/',
+  integrations: [
+    blueskyComments({
+      accountDid: 'did:plc:example',
+      stateFile: process.env.BLUESKY_COMMENTS_STATE_FILE,
+      production: process.env.BLUESKY_COMMENTS_PRODUCTION === '1',
+    }),
+    starlight({
+      title: 'Your documentation',
+      components: { Footer: './src/components/BlueskyFooter.astro' },
+    }),
+  ],
+});
 ```
 
-Merge with your existing component overrides. The wrapper renders the native
-footer and then adds comments only for configured pages.
+Merge these settings into the existing configuration. Preserve Analytics,
+DiscussionBridge, navigation and other component overrides.
 
-If you already have a custom Footer, preserve it. Compose the core comments
-component into that footer using the current page's settings instead of
-silently replacing your custom layout. The schema validates the frontmatter;
-your custom component still needs to read and render it.
+An existing custom footer should compose `AutomatedComments` after its existing
+content, using `Astro.locals.starlightRoute.entry.id` and the entry's title.
+Do not replace a custom footer with the stock-footer wrapper.
 
-## 4. Opt a page in
+## 4. Set page policy once, with exceptions
 
-Add this to one documentation page's frontmatter:
+Ordinary documentation pages are automatic; they need no
+`blueskyComments.uri`. The automatic footer excludes splash and draft pages.
+
+To exclude another page:
+
+```yaml
+blueskyComments: false
+```
+
+To adjust a page:
 
 ```yaml
 blueskyComments:
-  uri: at://did:plc:3spld5by3w3ivohvdm3o2rep/app.bsky.feed.post/3n2oynrepuk2m
   heading: Discussion
   depth: 3
   showAvatars: false
+  refreshIntervalMs: 60000
 ```
 
-The schema also supports `fallbackText`, `showRoot` and `showMetrics`.
-It does not expose `timeoutMs`, `locale`, `moderation`, `fetcher` or `id`
-through page frontmatter. Use a composed core component if you need those
-advanced options, and preserve the same validation/opt-in boundary.
+To keep an existing discussion, add its verified individual post reference:
 
-## 5. Verify the result
+```yaml
+blueskyComments:
+  uri: at://did:plc:example/app.bsky.feed.post/example
+```
 
-Build and preview with your site's existing commands. Check an opted-in doc,
-a splash page if your site uses one, and a page without `blueskyComments`.
-The native footer should remain; unconfigured pages should have no new
-discussion. Use keyboard navigation to reach the source link and any warning.
+That override does not create or edit a post. Advanced moderation, locale,
+timeout and HTML ID settings require a composed component; they are not
+automatic frontmatter fields.
 
-For a package-manager-installed preview, the equivalent exports are
-`@codeworkslabs/astro-bluesky-comments/starlight` and
-`@codeworkslabs/astro-bluesky-comments/starlight/Footer.astro`. They describe
-the available API, not the availability of a public npm release.
+## 5. Verify the release path
+
+Check an ordinary doc, an excluded doc and a splash page. The native/custom
+footer must remain. Production builds should plan only eligible automatic
+pages; normal previews must not create account posts.
+
+After the normal deployment succeeds, the protected publisher verifies the
+deployed page markers and creates the discussion. Confirm a reply appears without
+another build, avatars remain off, and keyboard access to the discussion link
+and warning disclosures still works.
+
+## Retained manual footer
+
+The earlier `blueskyCommentsSchema` and `/starlight/Footer.astro` export remain
+available for explicitly configured per-page `uri` values. That footer does not
+create discussions; its default rendering is a snapshot unless a live mode is
+selected. Use the automatic schema/footer pair for the set-and-forget workflow.
